@@ -6,13 +6,13 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:09:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/03/24 11:22:59 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:27:55 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../resources/minishell.h"
 
-void	minishell_loop(void)
+void	minishell_loop(t_lexer *token)
 {
 	char	*str;
 	char	*str1;
@@ -28,16 +28,16 @@ void	minishell_loop(void)
 			str = strcat(str, str1);
 			free(str1);
 		}
-		lexer(str);
+		lexer(str, token);
 		add_history(str);
 		free(str);
 	}
 }
 
-t_lexer	*lexer(char *str)
+t_lexer	*lexer(char *str, t_lexer *token)
 {
 	t_lexer	*list;
-	t_lexer	*current;
+	t_lexer	*get_token;
 	int		i;
 
 	list = NULL;
@@ -46,31 +46,55 @@ t_lexer	*lexer(char *str)
 	{
 		if (str[i] == ' ' || str[i] == '\t')
 			i++;
-		current = tokenizer(&str[i], i);
-		if (!current)
-		{
-			free_lexer_list(list);
-			return NULL;
-		}
-		add_token_to_list(&list, current);
+		get_token = tokenizer(str, token);
+		
 	}
 	return (list);
 }
-
-t_lexer		*tokenizer(char	*str, int i)
+void	init_token(t_lexer *token)
 {
-	t_lexer	*token;
-	
 	token = malloc(sizeof(t_lexer));
-	if (!token)
-		return NULL;
-	token->str = NULL;
-	token->token = WORD;
-	token->i = i;
 	token->next = NULL;
-	token->prev = NULL;
-	
+	token->str = NULL;
+	token->token_type = WORD;
 }
+t_lexer	*tokenizer(char *str, t_lexer *token)
+{
+	int	i;
+
+	i = 0;
+	init_token(token);
+	while (str[i])
+	{
+		if (str[i] == '|')
+		{
+			token->token_type = PIPE;
+			token->str = ft_strdup("|");
+		}
+		else if (str[i] == '>')
+		{
+			if (str[i + 1] == '>')
+			{
+				token->token_type = APPEND;
+				token->str = ft_strdup(">>");
+			}
+			token->token_type = REDIREC_OUT;
+			token->str = ft_strdup(">");
+		}
+		else if (str[i] == '<')
+		{
+			if (str[i + 1] == '<')
+			{
+				token->token_type = HEREDOC;
+				token->str = ft_strdup("<<");
+			}
+			token->token_type = REDIREC_IN;
+			token->str = ft_strdup("<");
+		}
+	}
+	return (token);
+}
+
 int	check_quotes(char *str)
 {
 	int	i;
