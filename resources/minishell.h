@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/03/24 10:38:13 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:04:56 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }					t_lexer;
 
-void	minishell_loop(t_lexer *lex);
+void	minishell_loop(void);
 int					check_quotes(char *str);
 #endif

@@ -6,13 +6,13 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:09:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/03/24 10:47:03 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:22:59 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../resources/minishell.h"
 
-void	minishell_loop(t_lexer *lex)
+void	minishell_loop(void)
 {
 	char	*str;
 	char	*str1;
@@ -28,28 +28,48 @@ void	minishell_loop(t_lexer *lex)
 			str = strcat(str, str1);
 			free(str1);
 		}
-		tokenizer(str, lex);
+		lexer(str);
 		add_history(str);
 		free(str);
 	}
 }
 
-t_lexer	*tokenizer(char *str, t_lexer *lex)
+t_lexer	*lexer(char *str)
 {
-	t_lexer *list;
-	int i;
-	
-	i = 0;
+	t_lexer	*list;
+	t_lexer	*current;
+	int		i;
+
 	list = NULL;
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] == ' ' || str[i] == '\t')
 			i++;
-		else if (str[i] == '"')
+		current = tokenizer(&str[i], i);
+		if (!current)
 		{
-			
+			free_lexer_list(list);
+			return NULL;
 		}
+		add_token_to_list(&list, current);
 	}
+	return (list);
+}
+
+t_lexer		*tokenizer(char	*str, int i)
+{
+	t_lexer	*token;
+	
+	token = malloc(sizeof(t_lexer));
+	if (!token)
+		return NULL;
+	token->str = NULL;
+	token->token = WORD;
+	token->i = i;
+	token->next = NULL;
+	token->prev = NULL;
+	
 }
 int	check_quotes(char *str)
 {

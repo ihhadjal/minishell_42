@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/03/24 10:38:36 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:04:50 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int	main(int argc, char **argv, char **env)
 		ft_printf("this program should not have any argument\n");
 		exit(1);
 	}
-	minishell_loop(&lex);
+	minishell_loop();
 	return (0);
 }
