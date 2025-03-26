@@ -6,37 +6,11 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:09:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/03/26 14:00:27 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/03/26 14:08:49 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../resources/minishell.h"
-
-void	minishell_loop(void)
-{
-	char	*str;
-	char	*str1;
-	t_lexer	*lex;
-
-	while (1)
-	{
-		str = readline("Minishell: ");
-		if (!str)
-			break ;
-		while (!check_quotes(str))
-		{
-			str1 = readline("> ");
-			str = strcat(str, str1);
-			free(str1);
-		}
-		lex = lexer(str);
-		if (!lex)
-			return ;
-		add_history(str);
-		free(str);
-		free_lexer_list(lex);
-	}
-}
 
 t_lexer	*lexer(char *str)
 {
@@ -88,8 +62,7 @@ t_lexer	*get_word(char *str, t_lexer *token)
 	int	quote;
 
 	i = 0;
-	while (str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != '|'
-		&& str[i] != '<' && str[i] != '>')
+	while (str[i] && !is_sep(str[i]))
 	{
 		if (str[i] == '"' || str[i] == '\'')
 		{
@@ -107,7 +80,10 @@ t_lexer	*get_word(char *str, t_lexer *token)
 	token->token_type = WORD;
 	return (token);
 }
-
+int	is_sep(char c)
+{
+	return (c == ' ' || c == '\t' || c == '|' || c == '<' || c == '>');
+}
 int	check_quotes(char *str)
 {
 	int	i;
