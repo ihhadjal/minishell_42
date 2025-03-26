@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/03/26 11:20:36 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:51:55 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int					check_quotes(char *str);
 int					is_sep(char c);
 void				add_token_to_list(t_lexer **list, t_lexer *token);
 void				free_lexer_list(t_lexer *list);
-void				print_tokens(t_lexer *head);
 t_lexer				*get_word(char *str, t_lexer *token);
 int					pipe_token(char *str, t_lexer *token);
 int					redirec_out_token(char *str, t_lexer *token);

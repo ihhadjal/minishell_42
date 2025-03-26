@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/03/26 13:52:48 by ihhadjal         ###   ########.fr       */
+/*   Created: 2025/03/26 13:49:42 by ihhadjal          #+#    #+#             */
+/*   Updated: 2025/03/26 13:53:03 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../resources/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+void	free_lexer_list(t_lexer *list)
 {
-	(void)env;
-	if (argc != 1 || argv[1])
+	t_lexer	*tmp;
+
+	while (list)
 	{
-		ft_printf("this program should not have any argument\n");
-		exit(1);
+		tmp = list->next;
+		free(list->str);
+		free(list);
+		list = tmp;
 	}
-	minishell_loop();
-	return (0);
 }
