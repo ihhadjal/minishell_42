@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:09:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/03/26 11:59:29 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:45:52 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_lexer	*get_token(char *str)
 	redirec_out_token(str, token);
 	if (token->str == NULL)
 		token = get_word(str, token);
+	printf("%s\n", token->str);
 	return (token);
 }
 
@@ -146,6 +147,7 @@ t_lexer	*get_word(char *str, t_lexer *token)
 		if (str[i] == '"' || str[i] == '\'')
 		{
 			quote = str[i];
+			i++;
 			while (str[i] && str[i] != quote)
 				i++;
 			if (str[i] == quote)
@@ -154,8 +156,8 @@ t_lexer	*get_word(char *str, t_lexer *token)
 		else
 			i++;
 	}
-	token->token_type = WORD;
 	token->str = ft_substr(str, 0, i);
+	token->token_type = WORD;
 	return (token);
 }
 
