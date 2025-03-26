@@ -6,11 +6,11 @@
 #    By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 12:12:56 by ihhadjal          #+#    #+#              #
-#    Updated: 2025/03/26 13:51:29 by ihhadjal         ###   ########.fr        #
+#    Updated: 2025/03/26 14:04:37 by ihhadjal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = code/main.c code/minishell.c code/utils.c code/utils2.c
+SRCS = code/main.c code/minishell.c code/minishell_helper.c
 OBJS = ${SRCS:.c=.o}
 NAME = minishell
 CC = gcc

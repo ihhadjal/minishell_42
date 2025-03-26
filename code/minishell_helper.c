@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 13:47:05 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/03/26 13:52:34 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:59:33 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,17 @@ int	redirec_in_token(char *str, t_lexer *token)
 	}
 	return (1);
 }
-
-int	is_sep(char c)
+void	free_lexer_list(t_lexer *list)
 {
-	return (c == ' ' || c == '\t' || c == '|' || c == '<' || c == '>');
+	t_lexer	*tmp;
+
+	while (list)
+	{
+		tmp = list->next;
+		free(list->str);
+		free(list);
+		list = tmp;
+	}
 }
 
 void	add_token_to_list(t_lexer **list, t_lexer *token)
