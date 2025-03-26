@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:09:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/03/25 14:34:27 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:59:29 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	minishell_loop(void)
 		lex = lexer(str);
 		if (!lex)
 			return ;
+		if (lex)
+			print_tokens(lex);
 		add_history(str);
 		free(str);
 		free_lexer_list(lex);
@@ -42,29 +44,29 @@ t_lexer	*lexer(char *str)
 {
 	int		i;
 	t_lexer	*list;
-	t_lexer	*get_token;
+	t_lexer	*token;
 
-	list = NULL;
 	i = 0;
+	list = NULL;
 	while (str[i])
 	{
-		while (str[i] == ' ' || str[i] == '\t')
+		if (str[i] == ' ' || str[i] == '\t')
 			i++;
 		if (str[i] == '\0')
 			break ;
-		get_token = tokenizer(&str[i]);
-		if (!get_token)
+		token = get_token(&str[i]);
+		if (!token)
 		{
 			free_lexer_list(list);
 			exit(1);
 		}
-		add_token_to_list(&list, get_token);
-		i += ft_strlen(get_token->str);
+		add_token_to_list(&list, token);
+		i += ft_strlen(token->str);
 	}
 	return (list);
 }
 
-t_lexer	*tokenizer(char *str)
+t_lexer	*get_token(char *str)
 {
 	t_lexer	*token;
 
@@ -74,56 +76,76 @@ t_lexer	*tokenizer(char *str)
 	token->next = NULL;
 	token->str = NULL;
 	token->token_type = WORD;
+	pipe_token(str, token);
+	redirec_in_token(str, token);
+	redirec_out_token(str, token);
+	if (token->str == NULL)
+		token = get_word(str, token);
+	return (token);
+}
+
+int	pipe_token(char *str, t_lexer *token)
+{
 	if (str[0] == '|')
 	{
 		token->str = ft_strdup("|");
 		token->token_type = PIPE;
+		return (0);
 	}
-	else if (str[0] == '>')
+	return (1);
+}
+
+int	redirec_out_token(char *str, t_lexer *token)
+{
+	if (str[0] == '>')
 	{
 		if (str[1] == '>')
 		{
 			token->str = ft_strdup(">>");
 			token->token_type = APPEND;
+			return (0);
 		}
 		else
 		{
 			token->str = ft_strdup(">");
 			token->token_type = REDIREC_OUT;
+			return (0);
 		}
 	}
-	else if (str[0] == '<')
+	return (1);
+}
+
+int	redirec_in_token(char *str, t_lexer *token)
+{
+	if (str[0] == '<')
 	{
 		if (str[1] == '<')
 		{
 			token->str = ft_strdup("<<");
 			token->token_type = HEREDOC;
+			return (0);
 		}
 		else
 		{
 			token->str = ft_strdup("<");
 			token->token_type = REDIREC_IN;
+			return (0);
 		}
 	}
-	else
-	{
-		token = get_word(token, str);
-	}
-	return (token);
+	return (1);
 }
 
-t_lexer	*get_word(t_lexer *token, char *str)
+t_lexer	*get_word(char *str, t_lexer *token)
 {
-	int		i;
-	char	quote;
-	
+	int	i;
+	int	quote;
+
 	i = 0;
 	while (str[i] && !is_sep(str[i]))
 	{
 		if (str[i] == '"' || str[i] == '\'')
 		{
 			quote = str[i];
-			i++;
 			while (str[i] && str[i] != quote)
 				i++;
 			if (str[i] == quote)
@@ -141,6 +163,7 @@ int	is_sep(char c)
 {
 	return (c == ' ' || c == '\t' || c == '|' || c == '<' || c == '>');
 }
+
 int	check_quotes(char *str)
 {
 	int	i;
@@ -162,19 +185,20 @@ int	check_quotes(char *str)
 		return (0);
 	return (1);
 }
+
 void	add_token_to_list(t_lexer **list, t_lexer *token)
 {
 	t_lexer	*tmp;
 
-	if (!*list)
-	{
+	if (*list == NULL)
 		*list = token;
-		return ;
+	else
+	{
+		tmp = *list;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = token;
 	}
-	tmp = *list;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = token;
 }
 
 void	free_lexer_list(t_lexer *list)
@@ -192,9 +216,9 @@ void	free_lexer_list(t_lexer *list)
 
 void	print_tokens(t_lexer *head)
 {
-	t_lexer *current;
-	char *token_names[] = {"WORD", "PIPE", "REDIREC_IN", "REDIREC_OUT",
-		"APPEND", "HEREDOC"};
+	t_lexer	*current;
+	char	*token_names[] = {"WORD", "PIPE", "REDIREC_IN", "REDIREC_OUT",
+			"APPEND", "HEREDOC"};
 
 	current = head;
 	while (current)

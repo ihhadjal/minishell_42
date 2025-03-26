@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/03/25 13:55:09 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:20:36 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,15 @@ typedef struct s_lexer
 }					t_lexer;
 
 void				minishell_loop(void);
-t_lexer				*tokenizer(char *str);
+t_lexer				*get_token(char *str);
 t_lexer				*lexer(char *str);
 int					check_quotes(char *str);
 int					is_sep(char c);
 void				add_token_to_list(t_lexer **list, t_lexer *token);
 void				free_lexer_list(t_lexer *list);
-void print_tokens(t_lexer *head);
-t_lexer				*get_word(t_lexer *token, char *str);
+void				print_tokens(t_lexer *head);
+t_lexer				*get_word(char *str, t_lexer *token);
+int					pipe_token(char *str, t_lexer *token);
+int					redirec_out_token(char *str, t_lexer *token);
+int					redirec_in_token(char *str, t_lexer *token);
 #endif
