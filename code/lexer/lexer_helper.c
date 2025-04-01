@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   lexer_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 13:47:05 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/03/26 13:59:33 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/01 10:59:02 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../resources/minishell.h"
+#include "../../resources/minishell.h"
 
 int	pipe_token(char *str, t_lexer *token)
 {
