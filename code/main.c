@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/03/28 15:22:30 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/01 11:55:57 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,22 @@
 
 int	main(int argc, char **argv, char **env)
 {
+	t_mini	mini;
 	(void)env;
 	if (argc != 1 || argv[1])
 	{
 		ft_printf("this program should not have any argument\n");
 		exit(1);
 	}
-	minishell_loop();
+	minishell_loop(&mini);
 	return (0);
 }
 
-void	minishell_loop(void)
+void	minishell_loop(t_mini *mini)
 {
 	char	*str;
-	char	*str1;
-	char	*tmp;
 	t_lexer	*lex;
-
+	
 	while (1)
 	{
 		str = readline("Minishell: ");
@@ -38,11 +37,11 @@ void	minishell_loop(void)
 			break ;
 		while (!check_quotes(str))
 		{
-			tmp = str;
-			str1 = readline("> ");
-			str = ft_strjoin(str, str1);
-			free(str1);
-			free(tmp);
+			mini->tmp = str;
+			mini->str1 = readline("> ");
+			str = ft_strjoin(str, mini->str1);
+			free(mini->str1);
+			free(mini->tmp);
 		}
 		lex = lexer(str);
 		if (!lex)

@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/03/26 13:51:55 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/01 11:55:17 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,13 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 }					t_lexer;
 
-void				minishell_loop(void);
+typedef struct s_mini
+{
+	char			*str1;
+	char			*tmp;
+}					t_mini;
+
+void				minishell_loop(t_mini *mini);
 t_lexer				*get_token(char *str);
 t_lexer				*lexer(char *str);
 int					check_quotes(char *str);
@@ -51,4 +57,5 @@ t_lexer				*get_word(char *str, t_lexer *token);
 int					pipe_token(char *str, t_lexer *token);
 int					redirec_out_token(char *str, t_lexer *token);
 int					redirec_in_token(char *str, t_lexer *token);
+
 #endif
