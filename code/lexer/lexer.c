@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:09:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/01 10:59:15 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/07 12:43:07 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,22 +86,28 @@ int	is_sep(char c)
 }
 int	check_quotes(char *str)
 {
-	int	i;
-	int	single_quote;
-	int	double_quote;
+    int	i;
+    int	single_quote;
+    int	double_quote;
 
-	i = 0;
-	single_quote = 0;
-	double_quote = 0;
-	while (str[i])
-	{
-		if (str[i] == '"')
-			double_quote++;
-		else if (str[i] == '\'')
-			single_quote++;
-		i++;
-	}
-	if (double_quote % 2 != 0 || single_quote % 2 != 0)
-		return (0);
-	return (1);
+    i = 0;
+    single_quote = 0;
+    double_quote = 0;
+    while (str[i])
+    {
+        if (str[i] == '"')
+        {
+            if (single_quote % 2 == 0)
+                double_quote++;
+        }
+        else if (str[i] == '\'')
+        {
+            if (double_quote % 2 == 0)
+                single_quote++;
+        }
+        i++;
+    }
+    if (single_quote % 2 != 0 || double_quote % 2 != 0)
+        return (0);
+    return (1);
 }

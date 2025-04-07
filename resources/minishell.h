@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/01 11:55:17 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/06 18:57:46 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,20 @@ typedef enum e_tokens
 
 typedef struct s_lexer
 {
-	char			*str;
-	t_tokens		token_type;
+	char *str;           // ici je stock le token;
+	t_tokens token_type; // c'est le type du token ex: PIPE
 	struct s_lexer	*next;
 }					t_lexer;
+
+typedef struct s_parser
+{
+	char **str;           // contient les arguments de la commande pour execve
+	int redirections_num; // c'est le nombre de redirections
+	char *hd_file_name;   // nom du fichier temp pour le heredoc
+	t_lexer *redictions;  // liste de redirections pour la commande
+	struct s_parser	*next;
+	struct s_parser	*prev;
+}					t_parser;
 
 typedef struct s_mini
 {
@@ -47,6 +57,7 @@ typedef struct s_mini
 }					t_mini;
 
 void				minishell_loop(t_mini *mini);
+void				print_list(t_lexer *lex);
 t_lexer				*get_token(char *str);
 t_lexer				*lexer(char *str);
 int					check_quotes(char *str);
