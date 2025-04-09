@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/07 12:07:29 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:48:37 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,18 @@ int	main(int argc, char **argv, char **env)
 
 void	minishell_loop(t_mini *mini)
 {
-	char	*str;
-	t_lexer	*lex;
+	char		*str;
+	t_lexer		*lex;
+	t_command	*parse;
 
 	while (1)
 	{
 		str = readline("Minishell: ");
 		if (!str)
 			break ;
-		while (!check_quotes(str))
-		{
-			mini->tmp = str;
-			mini->str1 = readline("> ");
-			str = ft_strjoin(str, mini->str1);
-			free(mini->str1);
-			free(mini->tmp);
-		}
+		quotes_loop(&str, mini);
 		lex = lexer(str);
-		if (!lex)
-			return ;
 		add_history(str);
-		free(str);
-		free_lexer_list(lex);
+		free_all(str, lex);
 	}
 }
