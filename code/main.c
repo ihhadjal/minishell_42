@@ -7,9 +7,13 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*   Updated: 2025/04/14 19:21:44 by ihhadjal         ###   ########.fr       */
 =======
 /*   Updated: 2025/04/14 19:15:44 by ihhadjal         ###   ########.fr       */
+>>>>>>> dev
+=======
+/*   Updated: 2025/04/14 19:42:05 by ihhadjal         ###   ########.fr       */
 >>>>>>> dev
 /*                                                                            */
 /* ************************************************************************** */
@@ -43,7 +47,6 @@ void	minishell_loop(t_mini *mini)
 		quotes_loop(&str, mini);
 		lex = lexer(str);
 		print_list(lex);
-		// parse = parser(lex, redirec);
 		add_history(str);
 		free_all(str, lex);
 	}
