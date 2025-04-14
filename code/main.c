@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/14 14:37:39 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/14 19:15:44 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	minishell_loop(t_mini *mini)
 {
 	char		*str;
 	t_lexer		*lex;
-	// t_command	*parse;
-	// t_redirections *redirec;
 
 	while (1)
 	{
