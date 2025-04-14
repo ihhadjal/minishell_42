@@ -6,8 +6,9 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:15:35 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/14 19:21:09 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/14 19:24:34 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../resources/minishell.h"
+
