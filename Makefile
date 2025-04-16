@@ -6,11 +6,12 @@
 #    By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 12:12:56 by ihhadjal          #+#    #+#              #
-#    Updated: 2025/04/01 12:58:55 by ihhadjal         ###   ########.fr        #
+#    Updated: 2025/04/16 09:40:40 by ihhadjal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = code/main.c code/lexer/lexer.c code/lexer/lexer_helper.c code/utils/utils.c
+SRCS = code/main.c code/lexer/lexer.c code/lexer/lexer_helper.c code/utils/utils.c \
+		code/parser/parser.c code/parser/parser_helper.c
 OBJS = ${SRCS:.c=.o}
 NAME = minishell
 CC = gcc
