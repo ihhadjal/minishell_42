@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/16 20:03:40 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/04/17 16:07:05 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@ int	main(int argc, char **argv, char **env)
 		ft_printf("this program should not have any argument\n");
 		exit(1);
 	}
-	minishell_loop(&mini, env);
+	minishell_loop(&mini);
 	return (0);
 }
 
-void	minishell_loop(t_mini *mini, char **env)
+void	minishell_loop(t_mini *mini)
 {
 	char		*str;
 	t_lexer		*lex;
-	// t_command	*parse;
-
+	t_parser_commands *pars;
+	
+	int i = 0;
 	while (1)
 	{
 		str = readline("Minishell: ");
@@ -39,8 +40,12 @@ void	minishell_loop(t_mini *mini, char **env)
 			break ;
 		quotes_loop(&str, mini);
 		lex = lexer(str);
-		builtin(lex, env);
+		print_list(lex);
+		pars = parser(lex, mini);
+		if (!pars)
+			printf("error\n");
 		add_history(str);
 		free_all(str, lex);
+		i++;
 	}
 }

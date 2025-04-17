@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   parser_helper.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 21:54:15 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/17 09:24:08 by ihhadjal         ###   ########.fr       */
+/*   Created: 2025/04/16 09:37:43 by ihhadjal          #+#    #+#             */
+/*   Updated: 2025/04/16 11:23:16 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/libft.h"
+#include "../../resources/minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	init_new_cmd(t_mini *mini)
 {
-	size_t	i;
-
-	i = 0;
-	if (n == 0)
-		return (0);
-	while (s1[i] && s2[i] && s1[i] == s2[i] && i < (n - 1))
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	mini->new_cmd->cmd_str = NULL;
+	mini->new_cmd->num_redirections = 0;
+	mini->new_cmd->hd_file_name = NULL;
+	mini->new_cmd->redirections = NULL;
+	mini->new_cmd->next = NULL;
+	mini->new_cmd->prev = NULL;
 }
-
-// int main(void)
-// {
-// 	char s1[] = "iheb crack";
-// 	char s2[] = "crack";
-
-// 	printf("%d", ft_strncmp(s1, s2, 10));
-// 	return 0;
-// }

@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   lexer_helper_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 21:54:15 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/17 09:24:08 by ihhadjal         ###   ########.fr       */
+/*   Created: 2025/04/17 09:01:42 by ihhadjal          #+#    #+#             */
+/*   Updated: 2025/04/17 10:34:38 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/libft.h"
+#include "../../resources/minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	builtin_tokens2(char *str, t_lexer *lexer)
 {
-	size_t	i;
-
-	i = 0;
-	if (n == 0)
-		return (0);
-	while (s1[i] && s2[i] && s1[i] == s2[i] && i < (n - 1))
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	if (!ft_strncmp(str, "env", 3) && is_sep(str[3]))
+	{
+		lexer->str = ft_strdup("env");
+		lexer->token_type = ENV;
+	}
+	else if (!ft_strncmp(str, "exit", 4) && is_sep(str[4]))
+	{
+		lexer->str = ft_strdup("exit");
+		lexer->token_type = EXIT;
+	}
 }
-
-// int main(void)
-// {
-// 	char s1[] = "iheb crack";
-// 	char s2[] = "crack";
-
-// 	printf("%d", ft_strncmp(s1, s2, 10));
-// 	return 0;
-// }
