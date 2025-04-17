@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/16 15:46:16 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:34:49 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@ typedef enum e_tokens
 	REDIREC_OUT,
 	APPEND,
 	HEREDOC,
+	ECHO,
+	CD,
+	PWD,
+	EXPORT,
+	UNSET,
+	ENV,
+	EXIT,
 }								t_tokens;
 
 typedef struct s_lexer
@@ -72,6 +79,8 @@ t_lexer							*get_word(char *str, t_lexer *token);
 int								pipe_token(char *str, t_lexer *token);
 int								redirec_out_token(char *str, t_lexer *token);
 int								redirec_in_token(char *str, t_lexer *token);
+void							builtin_tokens(char *str, t_lexer *lexer);
+void							builtin_tokens2(char *str, t_lexer *lexer);
 void							quotes_loop(char **str, t_mini *mini);
 void							free_all(char *str, t_lexer *lex);
 void							init_new_cmd(t_mini *mini);

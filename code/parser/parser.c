@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 09:18:17 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/16 18:49:21 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/16 19:27:42 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_parser_commands	*parser(t_lexer *lexer, t_mini *mini)
 {
-	while (lexer->next)
+	while (lexer)
 	{
 		pipe_handler(lexer, mini);
 		redirections_handler(lexer, mini);

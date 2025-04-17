@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:09:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/07 12:45:09 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:35:15 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ t_lexer	*get_token(char *str)
 	token->next = NULL;
 	token->str = NULL;
 	token->token_type = WORD;
+	builtin_tokens(str, token);
+	builtin_tokens2(str, token);
 	pipe_token(str, token);
 	redirec_in_token(str, token);
 	redirec_out_token(str, token);
@@ -82,7 +84,8 @@ t_lexer	*get_word(char *str, t_lexer *token)
 }
 int	is_sep(char c)
 {
-	return (c == ' ' || c == '\t' || c == '|' || c == '<' || c == '>');
+	return (c == ' ' || c == '\t' || c == '\0' || c == '|' || c == '<'
+		|| c == '>');
 }
 int	check_quotes(char *str)
 {
