@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/09 18:41:18 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/16 19:57:37 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,13 @@ typedef struct s_lexer
 	struct s_lexer			*next;
 }							t_lexer;
 
-typedef struct s_redirections
-{
-	t_tokens				redirec_type;
-	char					*str;
-	struct s_redirections	*next;
-}							t_redirections;
-
-typedef struct s_command
-{
-	char					**str;
-	t_redirections			*redirections;
-	struct s_command		*next;
-
-}							t_command;
-
 typedef struct s_mini
 {
 	char					*str1;
 	char					*tmp;
 }							t_mini;
 
-void						minishell_loop(t_mini *mini);
+void						minishell_loop(t_mini *mini, char **env);
 void						print_list(t_lexer *lex);
 t_lexer						*get_token(char *str);
 t_lexer						*lexer(char *str);
@@ -75,5 +60,6 @@ int							redirec_out_token(char *str, t_lexer *token);
 int							redirec_in_token(char *str, t_lexer *token);
 void						quotes_loop(char **str, t_mini *mini);
 void						free_all(char *str, t_lexer *lex);
+void	builtin(t_lexer *builtin, char **env);
 
 #endif

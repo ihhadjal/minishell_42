@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/09 18:48:37 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/16 20:03:40 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ int	main(int argc, char **argv, char **env)
 		ft_printf("this program should not have any argument\n");
 		exit(1);
 	}
-	minishell_loop(&mini);
+	minishell_loop(&mini, env);
 	return (0);
 }
 
-void	minishell_loop(t_mini *mini)
+void	minishell_loop(t_mini *mini, char **env)
 {
 	char		*str;
 	t_lexer		*lex;
-	t_command	*parse;
+	// t_command	*parse;
 
 	while (1)
 	{
@@ -39,6 +39,7 @@ void	minishell_loop(t_mini *mini)
 			break ;
 		quotes_loop(&str, mini);
 		lex = lexer(str);
+		builtin(lex, env);
 		add_history(str);
 		free_all(str, lex);
 	}
