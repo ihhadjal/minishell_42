@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:09:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/17 10:35:15 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/18 19:24:46 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,13 @@ t_lexer	*get_word(char *str, t_lexer *token)
 	token->token_type = WORD;
 	return (token);
 }
+
 int	is_sep(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\0' || c == '|' || c == '<'
 		|| c == '>');
 }
+
 int	check_quotes(char *str)
 {
 	int	i;

@@ -6,25 +6,25 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:57:56 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/17 10:32:32 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/18 19:26:19 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../resources/minishell.h"
 
-void	print_list(t_lexer *lex)
-{
-	char	*token_names[] = {"WORD", "PIPE", "REDIREC_IN", "REDIREC_OUT",
-			"APPEND", "HEREDOC", "ECHO", "CD", "PWD", "EXPORT", "UNSET", "ENV",
-			"EXIT"};
+// void	print_list(t_lexer *lex)
+// {
+// 	char	*token_names[] = {"WORD", "PIPE", "REDIREC_IN", "REDIREC_OUT",
+// 			"APPEND", "HEREDOC", "ECHO", "CD", "PWD", "EXPORT", "UNSET", "ENV",
+// 			"EXIT"};
 
-	while (lex)
-	{
-		printf("token str: %s, token type: %s\n", lex->str,
-			token_names[lex->token_type]);
-		lex = lex->next;
-	}
-}
+// 	while (lex)
+// 	{
+// 		printf("token str: %s, token type: %s\n", lex->str,
+// 			token_names[lex->token_type]);
+// 		lex = lex->next;
+// 	}
+// }
 
 void	quotes_loop(char **str, t_mini *mini)
 {
@@ -37,6 +37,7 @@ void	quotes_loop(char **str, t_mini *mini)
 		free(mini->tmp);
 	}
 }
+
 void	builtin_tokens(char *str, t_lexer *lexer)
 {
 	if (!ft_strncmp(str, "echo", 4) && is_sep(str[4]))
@@ -65,6 +66,7 @@ void	builtin_tokens(char *str, t_lexer *lexer)
 		lexer->token_type = UNSET;
 	}
 }
+
 void	free_all(char *str, t_lexer *lex)
 {
 	free(str);

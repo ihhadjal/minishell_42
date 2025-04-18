@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 09:18:17 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/16 19:27:42 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/18 19:14:53 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,53 +14,26 @@
 
 t_parser_commands	*parser(t_lexer *lexer, t_mini *mini)
 {
-	while (lexer)
-	{
-		pipe_handler(lexer, mini);
-		redirections_handler(lexer, mini);
-		lexer = lexer->next;
-	}
-	return (mini->cmd_list);
-}
-void	pipe_handler(t_lexer *lexer, t_mini *mini)
-{
-	mini->cmd_list = NULL;
-	mini->current_cmd = NULL;
-	if (lexer->token_type == PIPE)
+	mini->first_cmd = NULL;
+	mini->cmd_parser = NULL;
+	mini->current_token = lexer;
+	while (mini->current_token)
 	{
 		mini->new_cmd = malloc(sizeof(t_parser_commands));
-		if (mini->new_cmd == NULL)
+		if (!mini->new_cmd)
 			exit(1);
 		init_new_cmd(mini);
-		if (mini->cmd_list == NULL)
-			mini->cmd_list = mini->new_cmd;
-		else if (mini->current_cmd != NULL)
+		if (!mini->first_cmd)
+			mini->first_cmd = mini->new_cmd;
+		if (mini->cmd_parser)
 		{
-			mini->current_cmd->next = mini->new_cmd;
-			mini->new_cmd->prev = mini->current_cmd;
+			mini->cmd_parser->next = mini->new_cmd;
+			mini->new_cmd->prev = mini->cmd_parser;
 		}
-		mini->current_cmd = mini->new_cmd;
+		mini->cmd_parser = mini->new_cmd;
+		if (mini->current_token && mini->current_token->token_type == PIPE)
+			mini->current_token = mini->current_token->next;
+		mini->current_token = mini->current_token->next;
 	}
-}
-void	redirections_handler(t_lexer *lexer, t_mini *mini)
-{
-	t_lexer *new_redirection;
-	t_lexer *tmp;
-	if (lexer->token_type == REDIREC_IN || lexer->token_type == REDIREC_OUT
-		|| lexer->token_type == HEREDOC || lexer->token_type == APPEND)
-	{
-		new_redirection = malloc(sizeof(t_lexer));
-		new_redirection->str = ft_strdup(lexer->str);
-		new_redirection->token_type = lexer->token_type;
-		if (!mini->current_cmd)
-			mini->current_cmd = (t_parser_commands *)new_redirection;
-		else
-		{
-			tmp = (t_lexer *)mini->current_cmd;
-			while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = new_redirection;
-		}
-		mini->current_cmd->num_redirections++;
-	}
+	return (mini->first_cmd);
 }

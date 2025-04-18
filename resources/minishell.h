@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/17 10:34:49 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/18 19:13:58 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_parser_commands
 	char						**cmd_str;
 	int							num_redirections;
 	int							*hd_file_name;
-	t_tokens					*redirections;
+	t_lexer						*redirections;
 	struct s_parser_commands	*next;
 	struct s_parser_commands	*prev;
 }								t_parser_commands;
@@ -61,9 +61,10 @@ typedef struct s_mini
 {
 	char						*str1;
 	char						*tmp;
-	t_parser_commands			*cmd_list;
-	t_parser_commands			*current_cmd;
+	t_parser_commands			*first_cmd;
+	t_parser_commands			*cmd_parser;
 	t_parser_commands			*new_cmd;
+	t_lexer						*current_token;
 }								t_mini;
 
 void							minishell_loop(t_mini *mini);
@@ -85,7 +86,5 @@ void							quotes_loop(char **str, t_mini *mini);
 void							free_all(char *str, t_lexer *lex);
 void							init_new_cmd(t_mini *mini);
 t_parser_commands				*parser(t_lexer *lexer, t_mini *mini);
-void							pipe_handler(t_lexer *lexer, t_mini *mini);
-void							redirections_handler(t_lexer *lexer,
-									t_mini *mini);
+// t_lexer							*organize_commands(t_mini *mini);
 #endif
