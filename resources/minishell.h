@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/17 16:08:14 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/04/20 21:59:41 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef enum e_tokens
 	UNSET,
 	ENV,
 	EXIT,
+	ECHO2,
 }								t_tokens;
 
 typedef struct s_lexer
@@ -91,4 +92,6 @@ t_parser_commands				*parser(t_lexer *lexer, t_mini *mini);
 void							pipe_handler(t_lexer *lexer, t_mini *mini);
 void							redirections_handler(t_lexer *lexer,
 									t_mini *mini);
+void	builtin(t_lexer *builtin, char **env);
+int	is_number(char *str);									
 #endif

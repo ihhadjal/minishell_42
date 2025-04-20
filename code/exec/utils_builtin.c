@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_helper_2.c                                   :+:      :+:    :+:   */
+/*   utils_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 09:01:42 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/20 17:07:04 by fakambou         ###   ########.fr       */
+/*   Created: 2025/04/20 20:57:53 by fakambou          #+#    #+#             */
+/*   Updated: 2025/04/20 21:58:53 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../resources/minishell.h"
 
-void	builtin_tokens2(char *str, t_lexer *lexer)
+int	is_number(char *str)
 {
-	if (!ft_strncmp(str, "env", 3) && is_sep(str[3]))
+	int	i;
+
+	i = 0;
+	if (str[0] == '-' || str[0] == '+')
+		i++;
+	while(str[i])
 	{
-		lexer->str = ft_strdup("env");
-		lexer->token_type = ENV;
+		if (str[i] >= '0' && str[i] <= '9')
+			return (0);
+		i++;
 	}
-	else if (!ft_strncmp(str, "exit", 4) && is_sep(str[4]))
-	{
-		lexer->str = ft_strdup("exit");
-		lexer->token_type = EXIT;
-	}
-	// else if (!ft_strncmp(str, "echo -n", 7) && is_sep(str[7]))
-	// {
-	// 	lexer->str = ft_strdup("echo -n");
-	// 	lexer->token_type = ECHO2;
-	// }
+	return (1);
 }
