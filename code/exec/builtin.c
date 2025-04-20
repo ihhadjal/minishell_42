@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:03:00 by fakambou          #+#    #+#             */
-/*   Updated: 2025/04/20 22:18:49 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/04/20 22:30:21 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	ft_exit(t_lexer *lexer)
 	int	exitt;
 
 	ft_putstr("exit\n");
-	if (!lexer || !lexer->next || !lexer->next->str)
+	if (!lexer || !lexer->next || !lexer->next->str[1])
 		exit(0);
 	if (is_number(lexer->next->str))
 	{
