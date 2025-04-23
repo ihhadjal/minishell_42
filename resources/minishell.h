@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/22 12:32:35 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:18:47 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ typedef struct s_mini
 {
 	char						*str1;
 	char						*tmp;
+	int							i;
+	char						**new_array;
 	t_parser_commands			*first_list_element;
 	t_parser_commands			*new_list_element;
 	t_parser_commands			*current_list_element;
@@ -71,6 +73,7 @@ typedef struct s_mini
 	t_lexer						*head;
 	t_lexer						*current;
 	t_lexer						*filename;
+    t_lexer *processed_token;
 
 }								t_mini;
 
@@ -99,4 +102,5 @@ void							init_new_redirection(t_mini *mini);
 void								handle_heredocs(t_mini *mini);
 void								handle_filename(t_mini *mini);
 void							create_parser_node(t_mini *mini);
+char	**add_string_to_array(char **array, char *str, t_mini *mini);
 #endif

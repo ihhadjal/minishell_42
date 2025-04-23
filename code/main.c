@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/22 14:19:57 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:43:33 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ void	minishell_loop(t_mini *mini)
 		// print_list(lex);
 		pars = parser(lex, mini);
 		if (!pars)
-			printf("error\n");
+			printf("eror");
 		add_history(str);
 		free_all(str, lex);
-		i++;
 	}
 }
