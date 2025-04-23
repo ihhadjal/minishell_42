@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 09:37:43 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/21 18:36:35 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:24:08 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,32 @@ void	init_new_cmd(t_mini *mini)
 
 void	handle_heredocs(t_mini *mini)
 {
+	t_lexer *token_tmp;
+
+	token_tmp = mini->token;
 	if (mini->token->token_type == HEREDOC)
 	{
-		if (mini->token->next)
-			mini->token = mini->token->next;
-		else
-			printf("syntax error: add a heredoc filename\n");
-		mini->current_list_element->hd_file_name = mini->token->str;
+		if (token_tmp->next)
+			token_tmp = token_tmp->next;
+		mini->current_list_element->hd_file_name = token_tmp->str;
 	}
 }
 
 void	handle_filename(t_mini *mini)
 {
-	if (mini->token->token_type == WORD)
+	t_lexer *token_tmp;
+
+	token_tmp = mini->token;
+	if (token_tmp->token_type == WORD)
 	{
-		mini->new_redirec_element->str = ft_strdup(mini->token->str);
-		mini->token = mini->token->next;
+		mini->filename = malloc(sizeof(t_lexer));
+		if (!mini->filename)
+			exit (1);
+		mini->filename->str = ft_strdup(token_tmp->str);
+		mini->filename->token_type = token_tmp->token_type;
+		mini->filename->next = NULL;
+		mini->current->next = mini->filename;
+		mini->current = mini->filename;
 	}
 }
 

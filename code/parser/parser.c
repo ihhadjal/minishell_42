@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 09:18:17 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/21 19:01:09 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:32:34 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_parser_commands	*parser(t_lexer *lexer, t_mini *mini)
 		if (mini->current_token)
 			mini->current_token = mini->current_token->next;
 	}
+	printf("%s\n", mini->first_list_element->redirections->str);
 	return (mini->first_list_element);
 }
 
@@ -43,38 +44,38 @@ t_lexer	*redirections_and_commands_handler(t_mini *mini)
 		|| mini->token->token_type == APPEND
 		|| mini->token->token_type == HEREDOC)
 	{
-		create_redirection_node(mini->head, mini->current, mini);
+		create_redirection_node(mini);
 		mini->current_list_element->num_redirections++;
 		handle_heredocs(mini);
 		if (mini->token->next)
 			mini->token = mini->token->next;
 		else
-			printf("syntax error: add a filename\n");
+			printf("Minishell: syntax error near unexpected token newline\n");
 		handle_filename(mini);
 	}
-	else
-		handle_command_arguments(mini);
+	// else
+	// 	handle_command_arguments(mini);
 	mini->current_list_element->redirections = mini->head;
 	return (mini->token);
 }
-void	handle_commands_arguments(t_mini *mini)
-{
+// void	handle_commands_arguments(t_mini *mini)
+// {
 	
-}
-void	create_redirection_node(t_lexer *head, t_lexer *current, t_mini *mini)
+// }
+void	create_redirection_node(t_mini *mini)
 {
 	mini->new_redirec_element = malloc(sizeof(t_lexer));
 	if (!mini->new_redirec_element)
 		exit(1);
-	if (!head)
+	if (!mini->head)
 	{
-		head = mini->new_redirec_element;
-		current = head;
+		mini->head = mini->new_redirec_element;
+		mini->current = mini->head;
 	}
 	else
 	{
-		current->next = mini->new_redirec_element;
-		current = mini->new_redirec_element;
+		mini->current->next = mini->new_redirec_element;
+		mini->current = mini->new_redirec_element;
 	}
 	mini->new_redirec_element->str = ft_strdup(mini->token->str);
 	mini->new_redirec_element->token_type = mini->token->token_type;

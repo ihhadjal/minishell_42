@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/21 15:38:53 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:19:57 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	minishell_loop(t_mini *mini)
 			break ;
 		quotes_loop(&str, mini);
 		lex = lexer(str);
+		// print_list(lex);
 		pars = parser(lex, mini);
 		if (!pars)
 			printf("error\n");
