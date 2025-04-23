@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:57:56 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/17 18:51:57 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:52:34 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	quotes_loop(char **str, t_mini *mini)
 		free(mini->tmp);
 	}
 }
+
 void	builtin_tokens(char *str, t_lexer *lexer)
 {
 	if (!ft_strncmp(str, "echo", 4) && is_sep(str[4]))
@@ -65,6 +66,7 @@ void	builtin_tokens(char *str, t_lexer *lexer)
 		lexer->token_type = UNSET;
 	}
 }
+
 void	free_all(char *str, t_lexer *lex)
 {
 	free(str);

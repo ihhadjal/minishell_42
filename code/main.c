@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/23 16:17:17 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:57:37 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,9 @@ int	main(int argc, char **argv, char **env)
 
 void	minishell_loop(t_mini *mini)
 {
-	char		*str;
-	t_lexer		*lex;
-	t_parser_commands *pars;
-	
-	int i = 0;
+	char				*str;
+	t_lexer				*lex;
+	t_parser_commands	*pars;
 	while (1)
 	{
 		str = readline("Minishell: ");
@@ -43,8 +41,11 @@ void	minishell_loop(t_mini *mini)
 		if (!pars)
 			pars = parser(lex, mini);
 		builtin(lex);
+		// print_list(lex);
+		pars = parser(lex, mini);
+		if (!pars)
+			printf("eror");
 		add_history(str);
 		free_all(str, lex);
-		i++;
 	}
 }
