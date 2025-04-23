@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:03:00 by fakambou          #+#    #+#             */
-/*   Updated: 2025/04/20 22:30:21 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/04/21 18:55:49 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,14 @@ int	ft_exit(t_lexer *lexer)
 	int	exitt;
 
 	ft_putstr("exit\n");
-	if (!lexer || !lexer->next || !lexer->next->str[1])
+	if (!lexer || !lexer->next)
 		exit(0);
 	if (is_number(lexer->next->str))
 	{
 		ft_printf("exit: numeric argument required\n");
 		exit (255);
 	}
-	if (lexer->next->next->str)
+	if (lexer->next->next && lexer->next->next->str)
 	{
 		ft_printf("exit: too many arguments\n");
 		return(1);
@@ -102,7 +102,7 @@ int	ft_exit(t_lexer *lexer)
 	exitt = ft_atoi(lexer->next->str);
 	exit(exitt);
 }
-void	builtin(t_lexer *builtin, char **env)
+void	builtin(t_lexer *builtin)
 {
 	while (builtin)
 	{
@@ -118,8 +118,8 @@ void	builtin(t_lexer *builtin, char **env)
 		}
 		else if (builtin->token_type == PWD)
 			get_pwd();
-		else if (builtin->token_type == ENV)
-			put_env(env);
+		// else if (builtin->token_type == ENV)
+		// 	put_env(env);
 		else if (builtin->token_type == EXIT)
 			ft_exit(builtin);
 		builtin = builtin->next;

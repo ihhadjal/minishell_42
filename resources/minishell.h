@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/20 21:59:41 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:16:26 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,15 @@ typedef struct s_mini
 	t_parser_commands			*new_cmd;
 }								t_mini;
 
-void							minishell_loop(t_mini *mini, char **env);
+typedef struct s_env
+{
+	char			*name;
+	struct s_env	*next;
+	char			*value;
+}					 t_env;
+
+
+void							minishell_loop(t_mini *mini);
 void							print_list(t_lexer *lex);
 t_lexer							*get_token(char *str);
 t_lexer							*lexer(char *str);
@@ -92,6 +100,7 @@ t_parser_commands				*parser(t_lexer *lexer, t_mini *mini);
 void							pipe_handler(t_lexer *lexer, t_mini *mini);
 void							redirections_handler(t_lexer *lexer,
 									t_mini *mini);
-void	builtin(t_lexer *builtin, char **env);
-int	is_number(char *str);									
+void							builtin(t_lexer *builtin);
+int								is_number(char *str);
+
 #endif
