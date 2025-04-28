@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:03:00 by fakambou          #+#    #+#             */
-/*   Updated: 2025/04/23 22:11:34 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/28 18:30:17 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	put_echo(t_lexer *lexer)
 		lexer = lexer->next;
 	}
 	if (newline)
-		ft_putchar('n');
+		ft_putchar('\n');
 }
 
 int	cd(t_lexer *lexer)
