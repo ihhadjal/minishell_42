@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:03:00 by fakambou          #+#    #+#             */
-/*   Updated: 2025/04/21 18:55:49 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/04/23 22:11:34 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	put_echo(t_lexer *lexer)
 		if (lexer->next->str[0] == '-' && lexer->next->str[1] == 'n')
 			while (lexer->next->str[i] == 'n')
 				i++;
+		else
+			i = 0;
 		if (lexer->next->str[i] != '\0')
 			break ;
 		newline = 0;
@@ -64,7 +66,7 @@ void	put_echo(t_lexer *lexer)
 		lexer = lexer->next;
 	}
 	if (newline)
-		ft_putchar('\n');
+		ft_putchar('n');
 }
 
 int	cd(t_lexer *lexer)

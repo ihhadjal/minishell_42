@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 09:18:17 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/23 14:29:58 by iheb             ###   ########.fr       */
+/*   Updated: 2025/04/23 20:58:52 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ t_parser_commands	*parser(t_lexer *lexer, t_mini *mini)
         while (mini->current_token && mini->current_token->token_type != PIPE)
         {
             mini->processed_token = redirections_and_commands_handler(mini);
-            if (!mini->processed_token)
-				exit (1);
-            mini->current_token = mini->processed_token->next;
+			mini->current_token = mini->processed_token->next;
         }
         mini->new_list_element->redirections = mini->head;
         create_parser_node(mini);
@@ -54,9 +52,8 @@ t_lexer	*redirections_and_commands_handler(t_mini *mini)
         next_token = mini->token->next;
         if (!next_token || next_token->token_type != WORD)
             printf("minishell: syntax error near unexpected token\n");
-        mini->new_redirec_element->str = ft_strdup(next_token->str);
-        if (!mini->new_redirec_element->str)
-            exit(1);
+		if (next_token)
+        	mini->new_redirec_element->str = ft_strdup(next_token->str);
         mini->new_list_element->num_redirections++;
         return (next_token);
     }
