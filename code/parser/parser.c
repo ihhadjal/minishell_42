@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 09:18:17 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/23 20:58:52 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/28 16:05:25 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_parser_commands	*parser(t_lexer *lexer, t_mini *mini)
         while (mini->current_token && mini->current_token->token_type != PIPE)
         {
             mini->processed_token = redirections_and_commands_handler(mini);
+			if (!mini->processed_token)
+				return NULL;
 			mini->current_token = mini->processed_token->next;
         }
         mini->new_list_element->redirections = mini->head;
@@ -35,6 +37,7 @@ t_parser_commands	*parser(t_lexer *lexer, t_mini *mini)
         if (mini->current_token && mini->current_token->token_type == PIPE)
             mini->current_token = mini->current_token->next;
     }
+	free(mini->new_list_element);
     return (mini->first_list_element);
 }
 
@@ -51,7 +54,7 @@ t_lexer	*redirections_and_commands_handler(t_mini *mini)
         create_redirection_node(mini);
         next_token = mini->token->next;
         if (!next_token || next_token->token_type != WORD)
-            printf("minishell: syntax error near unexpected token\n");
+            printf("minishell: syntax error near unexpected token 'newline'\n");
 		if (next_token)
         	mini->new_redirec_element->str = ft_strdup(next_token->str);
         mini->new_list_element->num_redirections++;
@@ -61,6 +64,7 @@ t_lexer	*redirections_and_commands_handler(t_mini *mini)
     {
         mini->new_list_element->cmd_str = add_string_to_array(
 			mini->new_list_element->cmd_str, mini->token->str, mini);
+		free(mini->new_array);
         return (mini->token);
     }
     return (mini->token);
@@ -104,9 +108,9 @@ char	**add_string_to_array(char **array, char *str, t_mini *mini)
 			mini->i++;
 		}
 	}
-    mini->new_array[mini->i] = ft_strdup(str);
-    if (!mini->new_array[mini->i])
-        exit(1);
+    mini->array_temp = ft_strdup(str);
+	mini->new_array[mini->i] = mini->array_temp;
+	free(mini->array_temp);
     mini->new_array[mini->i + 1] = NULL;
     free(array);
     return (mini->new_array);

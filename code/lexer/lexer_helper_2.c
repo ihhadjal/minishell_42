@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:01:42 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/23 21:27:53 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/28 15:08:35 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,19 @@ void	builtin_tokens2(char *str, t_lexer *lexer)
 		lexer->str = ft_strdup("exit");
 		lexer->token_type = EXIT;
 	}
-	// else if (!ft_strncmp(str, "echo -n", 7) && is_sep(str[7]))
-	// {
-	// 	lexer->str = ft_strdup("echo -n");
-	// 	lexer->token_type = ECHO2;
-	// }
+}
+
+void	free_parser_list(t_parser_commands *parse)
+{
+	t_parser_commands *tmp;
+
+	while (parse)
+	{
+		tmp = parse->next;
+		free(parse->cmd_str);
+		free(parse->hd_file_name);
+		free(parse->redirections);
+		free(tmp);
+		parse = tmp;
+	}
 }

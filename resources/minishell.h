@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/23 21:45:24 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/28 15:25:01 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_lexer
 	struct s_lexer				*next;
 }								t_lexer;
 
-
 typedef struct s_parser_commands
 {
 	char						**cmd_str;
@@ -59,36 +58,34 @@ typedef struct s_parser_commands
 	struct s_parser_commands	*prev;
 }								t_parser_commands;
 
-
-
 typedef struct s_mini
 {
 	char						*str1;
 	char						*tmp;
 	int							i;
-	int	newline;
+	int							newline;
 	char						**new_array;
+	char						*array_temp;
 	t_parser_commands			*first_list_element;
 	t_parser_commands			*new_list_element;
 	t_parser_commands			*current_list_element;
-	t_lexer *current_token; // current_token = lexer dans parsing;
-	t_lexer *token;         // token = current_token dans redirection_handler;
+	t_lexer						*current_token;
+	t_lexer						*token;
 	t_lexer						*new_redirec_element;
 	t_lexer						*add_to_the_back;
 	t_lexer						*head;
 	t_lexer						*current;
 	t_lexer						*filename;
-    t_lexer *processed_token;
+	t_lexer						*processed_token;
 
 }								t_mini;
 
 typedef struct s_env
 {
-	char			*name;
-	struct s_env	*next;
-	char			*value;
-}					 t_env;
-
+	char						*name;
+	struct s_env				*next;
+	char						*value;
+}								t_env;
 
 void							minishell_loop(t_mini *mini);
 void							print_list(t_lexer *lex);
@@ -118,9 +115,11 @@ int								is_number(char *str);
 t_lexer							*redirections_and_commands_handler(t_mini *mini);
 void							create_redirection_node(t_mini *mini);
 void							init_new_redirection(t_mini *mini);
-void								handle_heredocs(t_mini *mini);
-void								handle_filename(t_mini *mini);
+void							handle_heredocs(t_mini *mini);
+void							handle_filename(t_mini *mini);
 void							create_parser_node(t_mini *mini);
-char	**add_string_to_array(char **array, char *str, t_mini *mini);
-void	print_parser_list(t_parser_commands *head);
+char							**add_string_to_array(char **array, char *str,
+									t_mini *mini);
+void							print_parser_list(t_parser_commands *head);
+void							free_parser_list(t_parser_commands *parse);
 #endif
