@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+         #
+#    By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 12:12:56 by ihhadjal          #+#    #+#              #
-#    Updated: 2025/04/20 20:58:13 by fakambou         ###   ########.fr        #
+#    Updated: 2025/04/30 12:23:54 by iheb             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = code/main.c code/lexer/lexer.c code/lexer/lexer_helper.c code/utils/utils.c \
 		code/parser/parser.c code/parser/parser_helper.c code/lexer/lexer_helper_2.c \
-		code/exec/builtin.c code/exec/utils_builtin.c
+		code/exec/builtin.c code/exec/utils_builtin.c code/parser/parser_helper2.c 
 OBJS = ${SRCS:.c=.o}
 NAME = minishell
 CC = gcc

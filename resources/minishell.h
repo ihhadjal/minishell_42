@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/28 15:25:01 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:54:53 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,7 @@ void							create_parser_node(t_mini *mini);
 char							**add_string_to_array(char **array, char *str,
 									t_mini *mini);
 void							print_parser_list(t_parser_commands *head);
-void							free_parser_list(t_parser_commands *parse);
+void	free_parser_list(t_parser_commands *list);
+void	free_redirections_list(t_lexer *list);
+void    redirection_cleanup(t_mini *mini);
 #endif

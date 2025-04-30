@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 09:18:17 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/28 18:40:23 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:57:09 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ t_parser_commands	*parser(t_lexer *lexer, t_mini *mini)
 		{
 			mini->processed_token = redirections_and_commands_handler(mini);
 			if (!mini->processed_token)
-				return (NULL);
+			{
+				free(mini->new_list_element);
+				return NULL;
+			}
 			mini->current_token = mini->processed_token->next;
 		}
 		mini->new_list_element->redirections = mini->head;
@@ -35,8 +38,6 @@ t_parser_commands	*parser(t_lexer *lexer, t_mini *mini)
 		if (mini->current_token && mini->current_token->token_type == PIPE)
 			mini->current_token = mini->current_token->next;
 	}
-	free(mini->new_list_element);
-	free(mini->new_array);
 	return (mini->first_list_element);
 }
 
@@ -53,8 +54,8 @@ t_lexer	*redirections_and_commands_handler(t_mini *mini)
 		create_redirection_node(mini);
 		next_token = mini->token->next;
 		if (!next_token || next_token->token_type != WORD)
-			printf("minishell: syntax error near unexpected token 'newline'\n");
-		if (next_token)
+			redirection_cleanup(mini);
+		if (next_token && mini->new_redirec_element)
 			mini->new_redirec_element->str = ft_strdup(next_token->str);
 		mini->new_list_element->num_redirections++;
 		return (next_token);
@@ -71,7 +72,7 @@ void	create_redirection_node(t_mini *mini)
 {
 	mini->new_redirec_element = malloc(sizeof(t_lexer));
 	if (!mini->new_redirec_element)
-		exit(1);
+		return ;
 	mini->new_redirec_element->str = NULL;
 	mini->new_redirec_element->token_type = mini->token->token_type;
 	mini->new_redirec_element->next = NULL;
@@ -96,7 +97,7 @@ char	**add_string_to_array(char **array, char *str, t_mini *mini)
 	}
 	mini->new_array = malloc(sizeof(char *) * (mini->i + 2));
 	if (!mini->new_array)
-		exit(1);
+		return NULL;
 	mini->i = 0;
 	if (array)
 	{
@@ -106,10 +107,9 @@ char	**add_string_to_array(char **array, char *str, t_mini *mini)
 			mini->i++;
 		}
 	}
-	mini->array_temp = ft_strdup(str);
-	mini->new_array[mini->i] = mini->array_temp;
-	free(mini->array_temp);
+	mini->new_array[mini->i] = ft_strdup(str);
 	mini->new_array[mini->i + 1] = NULL;
-	free(array);
+	if (array)
+		free(array);
 	return (mini->new_array);
 }
