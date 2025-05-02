@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/30 12:23:28 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/02 15:33:37 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ void	minishell_loop(t_mini *mini)
 		lex = lexer(str);
 		builtin(lex);
 		// print_list(lex);
-		pars = parser(lex, mini);
-		if (pars)
-			free_parser_list(pars);
-		// error_handling(lex, pars);
+		if (error_handling(lex) != 0)
+		{
+			pars = parser(lex, mini);
+			if (pars)
+				free_parser_list(pars);
+		}
 		// print_parser_list(pars);
 		add_history(str);
 		free_all(str, lex);
