@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/02 15:42:01 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:10:57 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,4 +130,5 @@ void							redirection_cleanup(t_mini *mini);
 int							error_handling(t_lexer *lex);
 void							check_next_token(t_lexer *next_lexer);
 int handle_redirection_errors(t_lexer *lex);
+int	handle_redirection_errors2(t_lexer *lex);
 #endif
