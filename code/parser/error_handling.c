@@ -6,7 +6,7 @@
 /*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:02:26 by iheb              #+#    #+#             */
-/*   Updated: 2025/05/05 11:49:12 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/05 12:16:33 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	error_handling(t_lexer *lex)
 		{
 			if (handle_redirection_errors(lex) == 0)
 				return (0);
-			else if (handle_redirection_errors2(lex) == 0)
-				return (0);
 		}
+		if (handle_redirection_errors2(lex) == 0)
+			return (0);
 		lex = lex->next;
 	}
 	return (1);
@@ -59,18 +59,13 @@ int	handle_redirection_errors(t_lexer *lex)
 
 int	handle_redirection_errors2(t_lexer *lex)
 {
-    if (lex->token_type == PIPE)
-    {
-        if (!lex->next)
-        {
-			ft_putendl_fd("syntax error near unexpected token `|'", 2);
-            return (0);
-        }
-        else if (lex->next->token_type == PIPE)
-        {
-			ft_putendl_fd("syntax error near unexpected token `||'", 2);
-            return (0);
-        }
-    }
-    return (1);
+	if (lex->token_type == PIPE)
+	{
+		if (!lex->next)
+			printf("%s\n", "syntax error near unexpected token `|'");
+		else if (lex->str[0] == '|')
+			printf("%s\n", "syntax error near unexpected token `|'");
+		return (0);
+	}
+	return (1);
 }
