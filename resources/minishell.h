@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/02 16:10:57 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:43:09 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef enum e_tokens
 	ENV,
 	EXIT,
 	ECHO2,
+	FAKE_REDIREC,
+	FAKE_REDIREC2,
 }								t_tokens;
 
 typedef struct s_lexer
@@ -131,4 +133,5 @@ int							error_handling(t_lexer *lex);
 void							check_next_token(t_lexer *next_lexer);
 int handle_redirection_errors(t_lexer *lex);
 int	handle_redirection_errors2(t_lexer *lex);
+int	fake_redirec_token(char *str, t_lexer *token);
 #endif

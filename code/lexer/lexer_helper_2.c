@@ -6,7 +6,7 @@
 /*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:01:42 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/30 11:59:07 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/05 11:43:26 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,26 @@ void	builtin_tokens2(char *str, t_lexer *lexer)
 		lexer->str = ft_strdup("exit");
 		lexer->token_type = EXIT;
 	}
+}
+int	fake_redirec_token(char *str, t_lexer *token)
+{
+	if (str[0] == '<')
+	{
+		if (str[1] == '>')
+		{
+			token->str = ft_strdup("<>");
+			token->token_type = FAKE_REDIREC;
+			return (0);
+		}
+	}
+	else if (str[0] == '>')
+	{
+		if (str[1] == '<')
+		{
+			token->str = ft_strdup("><");
+			token->token_type = FAKE_REDIREC2;
+			return (0);
+		}
+	}
+	return (1);
 }

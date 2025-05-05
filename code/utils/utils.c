@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:57:56 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/23 20:58:39 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:44:25 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_list(t_lexer *lex)
 {
 	char	*token_names[] = {"WORD", "PIPE", "REDIREC_IN", "REDIREC_OUT",
 			"APPEND", "HEREDOC", "ECHO", "CD", "PWD", "EXPORT", "UNSET", "ENV",
-			"EXIT", "ECHO2"};
+			"EXIT", "ECHO2", "FAKE_REDIRECTION", "FAKE_REDIRECTION2"};
 	while (lex)
 	{
 		printf("token str: %s, token type: %s\n", lex->str,

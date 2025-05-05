@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_helper2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:18:52 by iheb              #+#    #+#             */
-/*   Updated: 2025/05/02 15:06:55 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:37:23 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	free_parser_list(t_parser_commands *list)
 void    redirection_cleanup(t_mini *mini)
 {
     t_lexer *temp;
-	printf("%s\n", NEWLINE_ERROR);
+            
+	ft_putendl_fd("syntax error near unexpected token `newline'", 2);
     if (mini->head == mini->new_redirec_element)
                 mini->head = NULL;
     else if (mini->current == mini->new_redirec_element)
