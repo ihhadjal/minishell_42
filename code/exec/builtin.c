@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:03:00 by fakambou          #+#    #+#             */
-/*   Updated: 2025/05/03 14:42:24 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/08 11:59:00 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,10 @@ void	builtin(t_lexer *builtin)
 		// 	put_env(env);
 		else if (builtin->token_type == EXIT)
 			ft_exit(builtin);
+		// else if (builtin->token_type == EXPORT)
+		// {
+		// 	export_builtin(builtin);
+		// }
 		builtin = builtin->next;
 	}
 }

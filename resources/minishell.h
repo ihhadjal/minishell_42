@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/05 11:43:09 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/08 15:59:26 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,13 @@ typedef struct s_mini
 
 }								t_mini;
 
-typedef struct s_env
+typedef struct s_environnement
 {
-	char						*name;
-	struct s_env				*next;
-	char						*value;
-}								t_env;
+	char						*variable_name;
+	char						*variable_value;
+	// bool						is_exported;
+	struct s_environnement		*next;
+}								t_environnement;
 
 void							minishell_loop(t_mini *mini);
 void							print_list(t_lexer *lex);
@@ -129,9 +130,12 @@ void							print_parser_list(t_parser_commands *head);
 void							free_parser_list(t_parser_commands *list);
 void							free_redirections_list(t_lexer *list);
 void							redirection_cleanup(t_mini *mini);
-int							error_handling(t_lexer *lex);
+int								error_handling(t_lexer *lex);
 void							check_next_token(t_lexer *next_lexer);
-int handle_redirection_errors(t_lexer *lex);
-int	handle_redirection_errors2(t_lexer *lex);
-int	fake_redirec_token(char *str, t_lexer *token);
+int								handle_redirection_errors(t_lexer *lex);
+int								handle_redirection_errors2(t_lexer *lex);
+int								fake_redirec_token(char *str, t_lexer *token);
+void							export_builtin(t_lexer *builtin);
+void							init_env_container(t_environnement *env_container);
+t_environnement					*get_env(char **env);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/05 11:49:22 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/08 15:58:11 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,20 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_mini	mini;
-
-	(void)env;
+	t_environnement *mini_env;
+	
 	if (argc != 1 || argv[1])
 	{
 		ft_putendl_fd("this program should not have any argument\n", 2);
 		exit(1);
 	}
-	minishell_loop(&mini);
+	else
+	{
+		mini_env = get_env(env);
+		if (!mini_env)
+			return (0);
+		minishell_loop(&mini);
+	}
 	return (0);
 }
 
