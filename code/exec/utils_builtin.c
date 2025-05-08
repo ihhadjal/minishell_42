@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 20:57:53 by fakambou          #+#    #+#             */
-/*   Updated: 2025/05/08 15:59:16 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:14:14 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,18 @@ t_environnement	*get_env(char **env)
 	return (head);
 }
 
-void	init_env_container(t_environnement *env_container)
+void	export_builtin(t_lexer *builtin, t_environnement *mini_env)
 {
-	env_container->is_exported = false;
-	env_container->next = NULL;
-	env_container->variable_name = NULL;
-	env_container->variable_value = NULL;
+	(void)mini_env;
+	if (builtin->token_type == EXPORT && !builtin->next)
+		print_env(mini_env);
+}
+
+void	print_env(t_environnement *mini_env)
+{
+	while (mini_env)
+	{
+		printf("%s%s%c%s\n", "declare -x ", mini_env->variable_name, '=', mini_env->variable_value);
+		mini_env = mini_env->next;
+	}
 }

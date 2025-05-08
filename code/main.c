@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/08 15:58:11 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:04:46 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,12 @@ int	main(int argc, char **argv, char **env)
 	else
 	{
 		mini_env = get_env(env);
-		if (!mini_env)
-			return (0);
-		minishell_loop(&mini);
+		minishell_loop(&mini, mini_env);
 	}
 	return (0);
 }
 
-void	minishell_loop(t_mini *mini)
+void	minishell_loop(t_mini *mini, t_environnement *mini_env)
 {
 	char				*str;
 	t_lexer				*lex;
@@ -50,7 +48,7 @@ void	minishell_loop(t_mini *mini)
 			pars = parser(lex, mini);
 			if (pars)
 			{
-				builtin(lex);
+				builtin(lex, mini_env);
 				free_parser_list(pars);
 			}
 		}

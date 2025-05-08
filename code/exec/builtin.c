@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:03:00 by fakambou          #+#    #+#             */
-/*   Updated: 2025/05/08 11:59:00 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:06:46 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	ft_exit(t_lexer *lexer)
 	exitt = ft_atoi(lexer->next->str);
 	exit(exitt);
 }
-void	builtin(t_lexer *builtin)
+void	builtin(t_lexer *builtin, t_environnement *mini_env)
 {
 	while (builtin)
 	{
@@ -124,10 +124,10 @@ void	builtin(t_lexer *builtin)
 		// 	put_env(env);
 		else if (builtin->token_type == EXIT)
 			ft_exit(builtin);
-		// else if (builtin->token_type == EXPORT)
-		// {
-		// 	export_builtin(builtin);
-		// }
+		else if (builtin->token_type == EXPORT)
+		{
+			export_builtin(builtin, mini_env);
+		}
 		builtin = builtin->next;
 	}
 }
