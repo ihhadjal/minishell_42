@@ -1,42 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_builtin.c                                    :+:      :+:    :+:   */
+/*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 20:57:53 by fakambou          #+#    #+#             */
-/*   Updated: 2025/04/23 18:10:43 by fakambou         ###   ########.fr       */
+/*   Created: 2025/05/13 18:05:15 by fakambou          #+#    #+#             */
+/*   Updated: 2025/05/13 18:07:20 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../resources/minishell.h"
 
-int	is_number(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str[0] == '-' || str[0] == '+')
-		i++;
-	while (str[i])
-	{
-		if (str[i] >= '0' && str[i] <= '9')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void	put_env(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-	{
-		ft_putstr(env[i]);
-		ft_putchar('\n');
-		i++;
-	}
-}
+vo

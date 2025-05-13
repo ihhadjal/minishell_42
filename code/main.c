@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/23 17:57:37 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/04/23 21:00:40 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ void	minishell_loop(t_mini *mini)
 			break ;
 		quotes_loop(&str, mini);
 		lex = lexer(str);
-		if (!pars)
-			pars = parser(lex, mini);
 		builtin(lex);
-		// print_list(lex);
+		//print_list(lex);
 		pars = parser(lex, mini);
 		if (!pars)
 			printf("eror");

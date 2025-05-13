@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:03:00 by fakambou          #+#    #+#             */
-/*   Updated: 2025/04/21 18:55:49 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:35:59 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,9 @@ int	get_pwd(void)
 	else
 	{
 		perror("pwd");
-		return(1);
+		return (1);
 	}
 	return (0);
-}
-
-void	put_env(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-	{
-		ft_putstr(env[i]);
-		ft_putchar('\n');
-		i++;
-	}
 }
 
 void	put_echo(t_lexer *lexer)
@@ -51,6 +38,8 @@ void	put_echo(t_lexer *lexer)
 		if (lexer->next->str[0] == '-' && lexer->next->str[1] == 'n')
 			while (lexer->next->str[i] == 'n')
 				i++;
+		else
+			i = 0;
 		if (lexer->next->str[i] != '\0')
 			break ;
 		newline = 0;
@@ -77,10 +66,11 @@ int	cd(t_lexer *lexer)
 	if (chdir(lexer->next->str) != 0)
 	{
 		perror("cd");
-		return(1);
+		return (1);
 	}
-	return(0);
+	return (0);
 }
+
 
 int	ft_exit(t_lexer *lexer)
 {
@@ -97,11 +87,12 @@ int	ft_exit(t_lexer *lexer)
 	if (lexer->next->next && lexer->next->next->str)
 	{
 		ft_printf("exit: too many arguments\n");
-		return(1);
+		return (1);
 	}
 	exitt = ft_atoi(lexer->next->str);
 	exit(exitt);
 }
+
 void	builtin(t_lexer *builtin)
 {
 	while (builtin)
@@ -114,7 +105,7 @@ void	builtin(t_lexer *builtin)
 		else if (builtin->token_type == CD)
 		{
 			cd(builtin);
-			break;
+			break ;
 		}
 		else if (builtin->token_type == PWD)
 			get_pwd();
@@ -125,3 +116,4 @@ void	builtin(t_lexer *builtin)
 		builtin = builtin->next;
 	}
 }
+

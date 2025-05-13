@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:09:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/18 19:24:46 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/04/23 20:59:32 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_lexer	*lexer(char *str)
 	list = NULL;
 	while (str[i])
 	{
-		if (str[i] == ' ' || str[i] == '\t')
+		while (str[i] == ' ' || str[i] == '\t')
 			i++;
 		if (str[i] == '\0')
 			break ;

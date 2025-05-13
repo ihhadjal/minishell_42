@@ -1,0 +1,9 @@
+salam,
+fares
+exec
+lexer
+main.c
+main.o
+parser
+test.txt
+utils
