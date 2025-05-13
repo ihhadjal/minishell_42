@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/23 17:52:04 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/05/08 17:09:09 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+# define NEWLINE_ERROR "syntax error near unexpected token `newline'"
+# define HEREDOC_ERROR "syntax error near unexpected token `<<'"
+# define APPEND_ERROR "syntax error near unexpected token `>>'"
 typedef enum e_tokens
 {
 	WORD,
@@ -39,6 +42,8 @@ typedef enum e_tokens
 	ENV,
 	EXIT,
 	ECHO2,
+	FAKE_REDIREC,
+	FAKE_REDIREC2,
 }								t_tokens;
 
 typedef struct s_lexer
@@ -47,7 +52,6 @@ typedef struct s_lexer
 	t_tokens					token_type;
 	struct s_lexer				*next;
 }								t_lexer;
-
 
 typedef struct s_parser_commands
 {
@@ -59,37 +63,38 @@ typedef struct s_parser_commands
 	struct s_parser_commands	*prev;
 }								t_parser_commands;
 
-
-
 typedef struct s_mini
 {
 	char						*str1;
 	char						*tmp;
 	int							i;
+	int							newline;
 	char						**new_array;
+	char						*array_temp;
 	t_parser_commands			*first_list_element;
 	t_parser_commands			*new_list_element;
 	t_parser_commands			*current_list_element;
-	t_lexer *current_token; // current_token = lexer dans parsing;
-	t_lexer *token;         // token = current_token dans redirection_handler;
+	t_lexer						*current_token;
+	t_lexer						*token;
 	t_lexer						*new_redirec_element;
 	t_lexer						*add_to_the_back;
 	t_lexer						*head;
 	t_lexer						*current;
 	t_lexer						*filename;
-    t_lexer *processed_token;
+	t_lexer						*processed_token;
 
 }								t_mini;
 
-typedef struct s_env
+typedef struct s_environnement
 {
-	char			*name;
-	struct s_env	*next;
-	char			*value;
-}					 t_env;
+	char						*variable_name;
+	char						*variable_value;
+	// bool						is_exported;
+	struct s_environnement		*next;
+}								t_environnement;
 
-
-void							minishell_loop(t_mini *mini);
+void							minishell_loop(t_mini *mini,
+									t_environnement *mini_env);
 void							print_list(t_lexer *lex);
 t_lexer							*get_token(char *str);
 t_lexer							*lexer(char *str);
@@ -111,14 +116,28 @@ t_parser_commands				*parser(t_lexer *lexer, t_mini *mini);
 void							pipe_handler(t_lexer *lexer, t_mini *mini);
 void							redirections_handler(t_lexer *lexer,
 									t_mini *mini);
-void							builtin(t_lexer *builtin);
+void							builtin(t_lexer *builtin, t_environnement *mini_env);
 int								is_number(char *str);
 
 t_lexer							*redirections_and_commands_handler(t_mini *mini);
 void							create_redirection_node(t_mini *mini);
 void							init_new_redirection(t_mini *mini);
-void								handle_heredocs(t_mini *mini);
-void								handle_filename(t_mini *mini);
+void							handle_heredocs(t_mini *mini);
+void							handle_filename(t_mini *mini);
 void							create_parser_node(t_mini *mini);
-char	**add_string_to_array(char **array, char *str, t_mini *mini);
+char							**add_string_to_array(char **array, char *str,
+									t_mini *mini);
+void							print_parser_list(t_parser_commands *head);
+void							free_parser_list(t_parser_commands *list);
+void							free_redirections_list(t_lexer *list);
+void							redirection_cleanup(t_mini *mini);
+int								error_handling(t_lexer *lex);
+void							check_next_token(t_lexer *next_lexer);
+int								handle_redirection_errors(t_lexer *lex);
+int								handle_redirection_errors2(t_lexer *lex);
+int								fake_redirec_token(char *str, t_lexer *token);
+void							export_builtin(t_lexer *builtin, t_environnement *mini_env);
+void							init_env_container(t_environnement *env_container);
+t_environnement					*get_env(char **env);
+void	print_env(t_environnement *mini_env);
 #endif

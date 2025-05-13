@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:09:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/23 20:59:32 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/05/13 18:12:48 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_lexer	*get_token(char *str)
 	pipe_token(str, token);
 	redirec_in_token(str, token);
 	redirec_out_token(str, token);
+	fake_redirec_token(str, token);
 	if (token->str == NULL)
 		token = get_word(str, token);
 	return (token);

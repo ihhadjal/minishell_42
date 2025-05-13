@@ -6,13 +6,14 @@
 #    By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/08 12:12:56 by ihhadjal          #+#    #+#              #
-#    Updated: 2025/05/13 18:05:54 by fakambou         ###   ########.fr        #
+#    Updated: 2025/05/13 18:13:20 by fakambou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = code/main.c code/lexer/lexer.c code/lexer/lexer_helper.c code/utils/utils.c \
 		code/parser/parser.c code/parser/parser_helper.c code/lexer/lexer_helper_2.c \
-		code/exec/builtin.c code/exec/utils_builtin.c code/exec/redirections.c
+		code/exec/builtin.c code/exec/utils_builtin.c code/parser/parser_helper2.c \
+		code/parser/error_handling.c
 OBJS = ${SRCS:.c=.o}
 NAME = minishell
 CC = gcc

@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 09:18:17 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/23 18:23:33 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/05/13 18:14:50 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,88 +14,91 @@
 
 t_parser_commands	*parser(t_lexer *lexer, t_mini *mini)
 {
-    mini->first_list_element = NULL;
-    mini->current_list_element = NULL;
-    mini->current_token = lexer;
-    while (mini->current_token)
-    {
-        mini->new_list_element = malloc(sizeof(t_parser_commands));
-        if (!mini->new_list_element)
-            exit(1);
-        init_new_cmd(mini);
-        mini->head = NULL; 
-        mini->current = NULL;
-        while (mini->current_token && mini->current_token->token_type != PIPE)
-        {
-            mini->processed_token = redirections_and_commands_handler(mini);
-            mini->current_token = mini->current_token->next;
-        }
-        mini->new_list_element->redirections = mini->head;
-        create_parser_node(mini);
-        if (mini->current_token && mini->current_token->token_type == PIPE)
-            mini->current_token = mini->current_token->next;
-    }
-    return (mini->first_list_element);
+	mini->first_list_element = NULL;
+	mini->current_list_element = NULL;
+	mini->current_token = lexer;
+	while (mini->current_token)
+	{
+		mini->new_list_element = malloc(sizeof(t_parser_commands));
+		init_new_cmd(mini);
+		mini->head = NULL;
+		mini->current = NULL;
+		while (mini->current_token && mini->current_token->token_type != PIPE)
+		{
+			mini->processed_token = redirections_and_commands_handler(mini);
+			if (!mini->processed_token)
+			{
+				free(mini->new_list_element);
+				return NULL;
+			}
+			mini->current_token = mini->processed_token->next;
+		}
+		mini->new_list_element->redirections = mini->head;
+		create_parser_node(mini);
+		if (mini->current_token && mini->current_token->token_type == PIPE)
+			mini->current_token = mini->current_token->next;
+	}
+	return (mini->first_list_element);
 }
 
 t_lexer	*redirections_and_commands_handler(t_mini *mini)
 {
-    t_lexer *next_token;
+	t_lexer	*next_token;
 
-    mini->token = mini->current_token;
-    if (mini->token->token_type == REDIREC_IN
-        || mini->token->token_type == REDIREC_OUT
-        || mini->token->token_type == APPEND
-        || mini->token->token_type == HEREDOC)
-    {
-        create_redirection_node(mini);
-        next_token = mini->token->next;
-        if (!next_token || next_token->token_type != WORD)
-            printf("minishell: syntax error near unexpected token\n");
-		if (next_token)
-        	mini->new_redirec_element->str = ft_strdup(next_token->str);
-        mini->new_list_element->num_redirections++;
-        return (next_token);
-    }
-    else if (mini->token->token_type == WORD)
-    {
-        mini->new_list_element->cmd_str = add_string_to_array(
-			mini->new_list_element->cmd_str, mini->token->str, mini);
-        return (mini->token);
-    }
-    return (mini->token);
+	mini->token = mini->current_token;
+	if (mini->token->token_type == REDIREC_IN
+		|| mini->token->token_type == REDIREC_OUT
+		|| mini->token->token_type == APPEND
+		|| mini->token->token_type == HEREDOC)
+	{
+		create_redirection_node(mini);
+		next_token = mini->token->next;
+		if (!next_token || next_token->token_type != WORD)
+			redirection_cleanup(mini);
+		if (next_token && mini->new_redirec_element)
+			mini->new_redirec_element->str = ft_strdup(next_token->str);
+		mini->new_list_element->num_redirections++;
+		return (next_token);
+	}
+	else if (mini->token->token_type == WORD)
+	{
+		mini->new_list_element->cmd_str = add_string_to_array(mini->new_list_element->cmd_str,
+				mini->token->str, mini);
+		return (mini->token);
+	}
+	return (mini->token);
 }
 void	create_redirection_node(t_mini *mini)
 {
 	mini->new_redirec_element = malloc(sizeof(t_lexer));
-    if (!mini->new_redirec_element)
-        exit(1);
-    mini->new_redirec_element->str = NULL;
-    mini->new_redirec_element->token_type = mini->token->token_type;
-    mini->new_redirec_element->next = NULL;
-    if (!mini->head)
-    {
-        mini->head = mini->new_redirec_element;
-        mini->current = mini->head;
-    }
-    else
-    {
-        mini->current->next = mini->new_redirec_element;
-        mini->current = mini->new_redirec_element;
-    }
+	if (!mini->new_redirec_element)
+		return ;
+	mini->new_redirec_element->str = NULL;
+	mini->new_redirec_element->token_type = mini->token->token_type;
+	mini->new_redirec_element->next = NULL;
+	if (!mini->head)
+	{
+		mini->head = mini->new_redirec_element;
+		mini->current = mini->head;
+	}
+	else
+	{
+		mini->current->next = mini->new_redirec_element;
+		mini->current = mini->new_redirec_element;
+	}
 }
 char	**add_string_to_array(char **array, char *str, t_mini *mini)
 {
 	mini->i = 0;
 	if (array)
 	{
-    	while (array[mini->i])
-        	mini->i++;
+		while (array[mini->i])
+			mini->i++;
 	}
-    mini->new_array = malloc(sizeof(char *) * (mini->i + 2));
-    if (!mini->new_array)
-        exit(1);
-    mini->i = 0;
+	mini->new_array = malloc(sizeof(char *) * (mini->i + 2));
+	if (!mini->new_array)
+		return NULL;
+	mini->i = 0;
 	if (array)
 	{
 		while (array[mini->i])
@@ -104,10 +107,9 @@ char	**add_string_to_array(char **array, char *str, t_mini *mini)
 			mini->i++;
 		}
 	}
-    mini->new_array[mini->i] = ft_strdup(str);
-    if (!mini->new_array[mini->i])
-        exit(1);
-    mini->new_array[mini->i + 1] = NULL;
-    free(array);
-    return (mini->new_array);
+	mini->new_array[mini->i] = ft_strdup(str);
+	mini->new_array[mini->i + 1] = NULL;
+	if (array)
+		free(array);
+	return (mini->new_array);
 }

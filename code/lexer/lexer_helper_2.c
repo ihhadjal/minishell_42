@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_helper_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:01:42 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/23 17:53:53 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/05/08 11:43:19 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,26 @@ void	builtin_tokens2(char *str, t_lexer *lexer)
 		lexer->str = ft_strdup("exit");
 		lexer->token_type = EXIT;
 	}
-	// else if (!ft_strncmp(str, "echo -n", 7) && is_sep(str[7]))
-	// {
-	// 	lexer->str = ft_strdup("echo -n");
-	// 	lexer->token_type = ECHO2;
-	// }
+}
+int	fake_redirec_token(char *str, t_lexer *token)
+{
+	if (str[0] == '<')
+	{
+		if (str[1] == '>')
+		{
+			token->str = ft_strdup("<>");
+			token->token_type = FAKE_REDIREC;
+			return (0);
+		}
+	}
+	else if (str[0] == '>')
+	{
+		if (str[1] == '<')
+		{
+			token->str = ft_strdup("><");
+			token->token_type = FAKE_REDIREC2;
+			return (0);
+		}
+	}
+	return (1);
 }
