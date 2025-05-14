@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:57:06 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/14 15:57:55 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:58:13 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ void	free_env_variables(t_environnement *temp)
 
 void	export_with_arguments(t_environnement *mini_env, t_lexer *builtin)
 {
-	t_environnement *env_argument;
+	t_environnement	*env_argument;
 	t_environnement	*current;
 
-	
 	current = mini_env;
 	while (builtin)
 	{
 		builtin = builtin->next;
-		if (builtin->token_type == EXPORT && !ft_strchr(builtin->next->str, '='))
+		if (builtin->token_type == EXPORT && !ft_strchr(builtin->next->str,
+				'='))
 			return ;
 		else
 		{
@@ -62,24 +62,24 @@ void	export_with_arguments(t_environnement *mini_env, t_lexer *builtin)
 		builtin = builtin->next;
 	}
 }
-t_environnement	*add_argument_to_env(t_lexer *builtin, t_environnement *mini_env)
+t_environnement	*add_argument_to_env(t_lexer *builtin,
+		t_environnement *mini_env)
 {
-	t_environnement *new_argument_node;
-	t_environnement *current;
-	t_environnement *head;
+	t_environnement	*new_argument_node;
+	t_environnement	*current;
+	t_environnement	*head;
 	t_environnement	*temp;
-	// t_lexer			*next_token;
-	
 
-	// next_token = builtin->next;
 	current = mini_env;
 	head = NULL;
 	while (current)
 	{
 		new_argument_node = malloc(sizeof(t_environnement));
-		new_argument_node->variable_name = ft_strdup(builtin->str);
-		if(!new_argument_node->variable_value)
-			new_argument_node->variable_value = ft_strdup(" ");
+		new_argument_node->variable_name = ft_strdup(ft_substr(builtin->str, 0,
+					ft_strlen(ft_strchr(builtin->str, '=') + 1)));
+		new_argument_node->variable_value = ft_strdup(ft_substr(builtin->str,
+					ft_strlen(ft_strchr(builtin->str, '=')),
+					ft_strlen(builtin->str)));
 		if (!head)
 			head = new_argument_node;
 		else
