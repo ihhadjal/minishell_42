@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 20:57:53 by fakambou          #+#    #+#             */
-/*   Updated: 2025/05/14 12:00:22 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:30:47 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_environnement	*get_env(char **env)
 	t_environnement	*mini_env;
 
 	i = 0;
+	head = NULL;
 	while (env[i])
 	{
 		equal_sign = ft_strchr(env[i], '=');
@@ -54,14 +55,16 @@ void	export_builtin(t_lexer *builtin, t_environnement *mini_env)
 		current = env_copy;
 		while (current)
 		{
-			printf("%s%s%c%s\n", "declare -x ", current->variable_name, '=',
-				current->variable_value);
+			printf("%s%s%c%c%s%c\n", "declare -x ", current->variable_name, '=',
+				'"', current->variable_value, '"');
 			temp = current;
-			free(temp->variable_name);
-			free(temp->variable_value);
-			free(temp);
+			free_env_variables(temp);
 			current = current->next;
 		}
+	}
+	else if (builtin->token_type == EXPORT && builtin->next->token_type == WORD)
+	{
+		export_with_arguments(mini_env, builtin);
 	}
 }
 
@@ -79,7 +82,8 @@ t_environnement	*env_sort(t_environnement *env_copy)
 		current = env_copy;
 		while (current->next)
 		{
-			if (ft_strcmp(current->variable_name, current->next->variable_name) > 0)
+			if (ft_strcmp(current->variable_name,
+					current->next->variable_name) > 0)
 			{
 				temp_name = current->variable_name;
 				current->variable_name = current->next->variable_name;
@@ -122,6 +126,7 @@ void	print_env(t_environnement *mini_env)
 {
 	while (mini_env)
 	{
+		
 		printf("%s%c%s\n", mini_env->variable_name, '=',
 			mini_env->variable_value);
 		mini_env = mini_env->next;
