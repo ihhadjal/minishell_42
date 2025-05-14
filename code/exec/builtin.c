@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:03:00 by fakambou          #+#    #+#             */
-/*   Updated: 2025/05/08 16:06:46 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/13 18:08:47 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,14 @@ void	builtin(t_lexer *builtin, t_environnement *mini_env)
 		}
 		else if (builtin->token_type == PWD)
 			get_pwd();
-		// else if (builtin->token_type == ENV)
-		// 	put_env(env);
 		else if (builtin->token_type == EXIT)
 			ft_exit(builtin);
 		else if (builtin->token_type == EXPORT)
 		{
 			export_builtin(builtin, mini_env);
 		}
+		else if (!ft_strncmp(builtin->str, "env", 3) && is_sep(builtin->str[3]))
+			print_env(mini_env);
 		builtin = builtin->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/08 17:09:09 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:55:06 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ void							handle_filename(t_mini *mini);
 void							create_parser_node(t_mini *mini);
 char							**add_string_to_array(char **array, char *str,
 									t_mini *mini);
-void							print_parser_list(t_parser_commands *head);
 void							free_parser_list(t_parser_commands *list);
 void							free_redirections_list(t_lexer *list);
 void							redirection_cleanup(t_mini *mini);
@@ -140,4 +139,8 @@ void							export_builtin(t_lexer *builtin, t_environnement *mini_env);
 void							init_env_container(t_environnement *env_container);
 t_environnement					*get_env(char **env);
 void	print_env(t_environnement *mini_env);
+char  **sort_variable_name(t_environnement *mini_env);
+t_environnement	*copy_env(t_environnement *mini_env);
+t_environnement	*env_sort(t_environnement *env_copy);
+void	value_swap(t_environnement *current, char *temp_value);
 #endif
