@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/14 15:09:44 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/15 09:49:11 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,5 @@ t_environnement	*env_sort(t_environnement *env_copy);
 void	value_swap(t_environnement *current, char *temp_value);
 void	free_env_variables(t_environnement *temp);
 void	export_with_arguments(t_environnement *mini_env, t_lexer *builtin);
-t_environnement	*add_argument_to_env(t_lexer *builtin, t_environnement *mini_env);
+t_environnement	*add_argument_to_env(t_lexer *builtin);
 #endif

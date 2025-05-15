@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 20:57:53 by fakambou          #+#    #+#             */
-/*   Updated: 2025/05/14 16:30:47 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/15 10:18:35 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ void	export_builtin(t_lexer *builtin, t_environnement *mini_env)
 
 	if (builtin->token_type == EXPORT && !builtin->next)
 	{
+		print_env(mini_env);
 		env_copy = copy_env(mini_env);
 		env_copy = env_sort(env_copy);
+		print_env(env_copy);
 		current = env_copy;
 		while (current)
 		{
@@ -113,6 +115,7 @@ t_environnement	*copy_env(t_environnement *mini_env)
 		new_node = malloc(sizeof(t_environnement));
 		new_node->variable_name = ft_strdup(current->variable_name);
 		new_node->variable_value = ft_strdup(current->variable_value);
+		new_node->next = NULL;
 		if (!head)
 			head = new_node;
 		else
@@ -122,11 +125,11 @@ t_environnement	*copy_env(t_environnement *mini_env)
 	}
 	return (head);
 }
+
 void	print_env(t_environnement *mini_env)
 {
 	while (mini_env)
 	{
-		
 		printf("%s%c%s\n", mini_env->variable_name, '=',
 			mini_env->variable_value);
 		mini_env = mini_env->next;
