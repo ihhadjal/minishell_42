@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/08 17:09:09 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:41:01 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/wait.h>
 
 # define NEWLINE_ERROR "syntax error near unexpected token `newline'"
 # define HEREDOC_ERROR "syntax error near unexpected token `<<'"
@@ -118,7 +119,7 @@ void							redirections_handler(t_lexer *lexer,
 									t_mini *mini);
 void							builtin(t_lexer *builtin, t_environnement *mini_env);
 int								is_number(char *str);
-
+void							redirections(t_lexer *redirections);
 t_lexer							*redirections_and_commands_handler(t_mini *mini);
 void							create_redirection_node(t_mini *mini);
 void							init_new_redirection(t_mini *mini);

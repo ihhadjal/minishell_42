@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/13 18:13:13 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:14:47 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	minishell_loop(t_mini *mini, t_environnement *mini_env)
 			{
 				builtin(lex, mini_env);
 				free_parser_list(pars);
+				redirections(lex);
 			}
 		}
 		// print_parser_list(pars);
