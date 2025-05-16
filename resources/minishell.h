@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/15 09:49:11 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:49:10 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ t_parser_commands				*parser(t_lexer *lexer, t_mini *mini);
 void							pipe_handler(t_lexer *lexer, t_mini *mini);
 void							redirections_handler(t_lexer *lexer,
 									t_mini *mini);
-void							builtin(t_lexer *builtin, t_environnement *mini_env);
+void							builtin(t_lexer *builtin,
+									t_environnement *mini_env);
 int								is_number(char *str);
 
 t_lexer							*redirections_and_commands_handler(t_mini *mini);
@@ -134,15 +135,31 @@ void							check_next_token(t_lexer *next_lexer);
 int								handle_redirection_errors(t_lexer *lex);
 int								handle_redirection_errors2(t_lexer *lex);
 int								fake_redirec_token(char *str, t_lexer *token);
-void							export_builtin(t_lexer *builtin, t_environnement *mini_env);
+void							export_builtin(t_lexer *builtin,
+									t_environnement *mini_env);
 void							init_env_container(t_environnement *env_container);
 t_environnement					*get_env(char **env);
-void	print_env(t_environnement *mini_env);
-char  **sort_variable_name(t_environnement *mini_env);
-t_environnement	*copy_env(t_environnement *mini_env);
-t_environnement	*env_sort(t_environnement *env_copy);
-void	value_swap(t_environnement *current, char *temp_value);
-void	free_env_variables(t_environnement *temp);
-void	export_with_arguments(t_environnement *mini_env, t_lexer *builtin);
-t_environnement	*add_argument_to_env(t_lexer *builtin);
+void							print_env(t_environnement *mini_env);
+char							**sort_variable_name(t_environnement *mini_env);
+t_environnement					*copy_env(t_environnement *mini_env);
+t_environnement					*env_sort(t_environnement *env_copy);
+void							value_swap(t_environnement *current,
+									char *temp_value);
+void							free_env_variables(t_environnement *temp);
+void							export_with_arguments(t_environnement *mini_env,
+									t_lexer *builtin);
+t_environnement					*add_argument_to_env(t_lexer *builtin);
+void							handle_unset_builtin(t_lexer *builtin,
+									t_environnement *mini_env);
+void							unset_builtin(t_lexer *builtin,
+									t_environnement *mini_env);
+void							delete_node(t_lexer *builtin,
+									t_environnement **mini_env);
+void							free_node(char *var_name,
+									t_environnement *current);
+int	get_pwd(void);
+void	put_env(char **env);
+void	put_echo(t_lexer *lexer);
+int	cd(t_lexer *lexer);
+int	ft_exit(t_lexer *lexer);
 #endif

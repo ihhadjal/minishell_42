@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/14 14:36:43 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/15 18:14:15 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,3 +56,4 @@ void	minishell_loop(t_mini *mini, t_environnement *mini_env)
 		free_all(str, lex);
 	}
 }
+

@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:03:00 by fakambou          #+#    #+#             */
-/*   Updated: 2025/05/14 16:06:09 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:46:39 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	get_pwd(void)
 	else
 	{
 		perror("pwd");
-		return(1);
+		return (1);
 	}
 	return (0);
 }
@@ -79,9 +79,9 @@ int	cd(t_lexer *lexer)
 	if (chdir(lexer->next->str) != 0)
 	{
 		perror("cd");
-		return(1);
+		return (1);
 	}
-	return(0);
+	return (0);
 }
 
 int	ft_exit(t_lexer *lexer)
@@ -94,40 +94,13 @@ int	ft_exit(t_lexer *lexer)
 	if (is_number(lexer->next->str))
 	{
 		ft_printf("exit: numeric argument required\n");
-		exit (255);
+		exit(255);
 	}
 	if (lexer->next->next && lexer->next->next->str)
 	{
 		ft_printf("exit: too many arguments\n");
-		return(1);
+		return (1);
 	}
 	exitt = ft_atoi(lexer->next->str);
 	exit(exitt);
-}
-void	builtin(t_lexer *builtin, t_environnement *mini_env)
-{
-	while (builtin)
-	{
-		if ((builtin->token_type == ECHO))
-		{
-			put_echo(builtin);
-			break ;
-		}
-		else if (builtin->token_type == CD)
-		{
-			cd(builtin);
-			break;
-		}
-		else if (builtin->token_type == PWD)
-			get_pwd();
-		else if (builtin->token_type == EXIT)
-			ft_exit(builtin);
-		else if (builtin->token_type == EXPORT)
-		{
-			export_builtin(builtin, mini_env);
-		}
-		else if (!ft_strncmp(builtin->str, "env", 3) && is_sep(builtin->str[3]))
-			print_env(mini_env);
-		builtin = builtin->next;
-	}
 }

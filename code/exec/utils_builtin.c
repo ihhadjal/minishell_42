@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 20:57:53 by fakambou          #+#    #+#             */
-/*   Updated: 2025/05/15 10:18:35 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:56:31 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ t_environnement	*get_env(char **env)
 		if (equal_sign)
 		{
 			mini_env = malloc(sizeof(t_environnement));
-			mini_env->variable_name = ft_substr(env[i], 0, equal_sign - env[i]);
+			mini_env->variable_name = ft_substr(env[i], 0, equal_sign - env[i]
+					+ 1);
 			mini_env->variable_value = ft_strdup(equal_sign + 1);
 			mini_env->next = NULL;
 			if (!head)
@@ -57,8 +58,8 @@ void	export_builtin(t_lexer *builtin, t_environnement *mini_env)
 		current = env_copy;
 		while (current)
 		{
-			printf("%s%s%c%c%s%c\n", "declare -x ", current->variable_name, '=',
-				'"', current->variable_value, '"');
+			printf("%s%s%c%s%c\n", "declare -x ", current->variable_name, '"',
+				current->variable_value, '"');
 			temp = current;
 			free_env_variables(temp);
 			current = current->next;
@@ -130,8 +131,7 @@ void	print_env(t_environnement *mini_env)
 {
 	while (mini_env)
 	{
-		printf("%s%c%s\n", mini_env->variable_name, '=',
-			mini_env->variable_value);
+		printf("%s%s\n", mini_env->variable_name, mini_env->variable_value);
 		mini_env = mini_env->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:57:06 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/15 09:49:08 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/15 15:53:50 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_environnement	*add_argument_to_env(t_lexer *builtin)
 	equal_sign = ft_strchr(builtin->str, '=');
 	if (equal_sign)
 	{
-		name_lenght = equal_sign - builtin->str;
+		name_lenght = equal_sign - builtin->str + 1;
 		new_argument_node->variable_name = ft_strdup(ft_substr(builtin->str, 0,
 					name_lenght));
 		new_argument_node->variable_value = ft_strdup(equal_sign + 1);
