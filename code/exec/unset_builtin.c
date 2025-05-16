@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 14:46:18 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/16 14:46:44 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:47:01 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,11 @@ void	handle_unset_builtin(t_lexer *builtin, t_environnement *mini_env)
 {
 	if (builtin->token_type == UNSET && builtin->next->token_type == WORD)
 	{
-		delete_node(builtin, &mini_env);
+		while (builtin->next)
+		{
+			delete_node(builtin, &mini_env);
+			builtin = builtin->next;
+		}
 	}
 }
 
