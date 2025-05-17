@@ -6,7 +6,7 @@
 /*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:02:26 by iheb              #+#    #+#             */
-/*   Updated: 2025/05/05 12:16:33 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/17 22:02:59 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	error_handling(t_lexer *lex)
 {
+	if (lex->str[0] == '|')
+		ft_putendl_fd("syntax error near unexpected token `|'", 2);
 	while (lex)
 	{
 		if (lex->token_type == FAKE_REDIREC || lex->token_type == FAKE_REDIREC2)
@@ -62,9 +64,7 @@ int	handle_redirection_errors2(t_lexer *lex)
 	if (lex->token_type == PIPE)
 	{
 		if (!lex->next)
-			printf("%s\n", "syntax error near unexpected token `|'");
-		else if (lex->str[0] == '|')
-			printf("%s\n", "syntax error near unexpected token `|'");
+			ft_putendl_fd("syntax error near unexpected token `|'", 2);
 		return (0);
 	}
 	return (1);
