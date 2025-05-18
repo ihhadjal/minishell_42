@@ -6,7 +6,7 @@
 /*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:02:26 by iheb              #+#    #+#             */
-/*   Updated: 2025/05/17 22:02:59 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/18 11:17:04 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	handle_redirection_errors2(t_lexer *lex)
 	{
 		if (!lex->next)
 			ft_putendl_fd("syntax error near unexpected token `|'", 2);
-		return (0);
+		return 0;
 	}
 	return (1);
 }
