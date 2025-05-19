@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:02:26 by iheb              #+#    #+#             */
-/*   Updated: 2025/05/18 11:17:04 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/19 10:50:07 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	error_handling(t_lexer *lex)
 {
-	if (lex->str[0] == '|')
-		ft_putendl_fd("syntax error near unexpected token `|'", 2);
 	while (lex)
 	{
 		if (lex->token_type == FAKE_REDIREC || lex->token_type == FAKE_REDIREC2)
@@ -65,6 +63,8 @@ int	handle_redirection_errors2(t_lexer *lex)
 	{
 		if (!lex->next)
 			ft_putendl_fd("syntax error near unexpected token `|'", 2);
+		else if (lex->str[0] == '|' && lex->next)
+		ft_putendl_fd("syntax error near unexpected token `|'", 2);
 		return 0;
 	}
 	return (1);
