@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 20:57:53 by fakambou          #+#    #+#             */
-/*   Updated: 2025/05/15 16:56:31 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:07:27 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,8 @@ void	export_builtin(t_lexer *builtin, t_environnement *mini_env)
 
 	if (builtin->token_type == EXPORT && !builtin->next)
 	{
-		print_env(mini_env);
 		env_copy = copy_env(mini_env);
 		env_copy = env_sort(env_copy);
-		print_env(env_copy);
 		current = env_copy;
 		while (current)
 		{
