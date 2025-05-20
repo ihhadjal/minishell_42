@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_builtin2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:57:06 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/19 11:47:57 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/20 20:21:47 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,11 @@ void	export_with_arguments(t_environnement *mini_env, t_lexer *builtin)
 	current = mini_env;
 	while (builtin)
 	{
-		if (builtin->token_type == EXPORT && builtin->next
-			&& ft_strchr(builtin->next->str, '='))
+		if (builtin->next && ft_strchr(builtin->next->str, '='))
 		{
 			builtin = builtin->next;
 			env_argument = add_argument_to_env(builtin);
-			if (env_argument)
+			if (env_argument && update_env(env_argument, mini_env) == 0)
 			{
 				while (current && current->next)
 					current = current->next;
@@ -65,6 +64,23 @@ void	export_with_arguments(t_environnement *mini_env, t_lexer *builtin)
 		}
 		builtin = builtin->next;
 	}
+}
+
+int	update_env(t_environnement  *env_argument, t_environnement *mini_env)
+{
+	t_environnement *current;
+
+	current = mini_env;
+	while (current)
+	{
+		if (ft_strcmp(current->variable_name, env_argument->variable_name) == 0)
+		{
+			current->variable_value = ft_strdup(env_argument->variable_value);
+			return (1);
+		}
+		current = current->next;
+	}
+	return (0);
 }
 t_environnement	*add_argument_to_env(t_lexer *builtin)
 {
