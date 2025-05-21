@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/21 10:22:39 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/21 18:40:54 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,4 +168,5 @@ void	expand_commands(t_lexer *lex, t_environnement *mini_env);
 int	update_env(t_environnement  *env_argument, t_environnement *mini_env);
 void	execute_builtins(t_lexer *current, t_environnement *mini_env);
 int		check_if_builtin(t_lexer *current, int command_found);
+int	find_dollar(char *str);
 #endif
