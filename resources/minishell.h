@@ -6,7 +6,7 @@
 /*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/20 20:21:58 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/21 10:22:39 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_parser_commands				*parser(t_lexer *lexer, t_mini *mini);
 void							pipe_handler(t_lexer *lexer, t_mini *mini);
 void							redirections_handler(t_lexer *lexer,
 									t_mini *mini);
-void							builtin(t_lexer *builtin,
+int							builtin(t_lexer *builtin,
 									t_environnement *mini_env);
 int								is_number(char *str);
 
@@ -166,4 +166,6 @@ int	expansion_checker(char *str);
 char	*expand_variable_value(char *str, t_environnement *mini_env);
 void	expand_commands(t_lexer *lex, t_environnement *mini_env);
 int	update_env(t_environnement  *env_argument, t_environnement *mini_env);
+void	execute_builtins(t_lexer *current, t_environnement *mini_env);
+int		check_if_builtin(t_lexer *current, int command_found);
 #endif

@@ -3,41 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   unset_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 14:46:18 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/19 15:56:30 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/21 10:28:17 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../resources/minishell.h"
 
-void	builtin(t_lexer *builtin, t_environnement *mini_env)
+int	builtin(t_lexer *builtin, t_environnement *mini_env)
 {
-	while (builtin)
+	t_lexer *current;
+    int command_found;
+    
+	current = builtin;
+	command_found = 0;
+    while (current)
+    {
+		if (check_if_builtin(current, command_found) == 1)
+			execute_builtins(current, mini_env);
+        current = current->next;
+    }
+    if (!command_found && builtin && builtin->token_type == WORD)
+    {
+        ft_putstr_fd(builtin->str, 2);
+        ft_putendl_fd(": command not found", 2);
+        return (127); 
+	}
+    return (0);
+}
+
+void	execute_builtins(t_lexer *current, t_environnement *mini_env)
+{
+	while (current)
 	{
-		if ((builtin->token_type == ECHO))
+		if (current->token_type == ECHO)
 		{
-			put_echo(builtin);
-			break ;
+			put_echo(current);
+			break;
 		}
-		else if (builtin->token_type == CD)
+		else if (current->token_type == CD)
 		{
-			cd(builtin);
-			break ;
+			cd(current);
+			break;
 		}
-		else if (builtin->token_type == PWD)
+		else if (current->token_type == PWD)
 			get_pwd();
-		else if (builtin->token_type == EXIT)
-			ft_exit(builtin);
-		else if (builtin->token_type == EXPORT)
-			export_builtin(builtin, mini_env);
-		else if (!ft_strncmp(builtin->str, "env", 3) && is_sep(builtin->str[3]))
+		else if (current->token_type == EXIT)
+			ft_exit(current);
+		else if (current->token_type == EXPORT)
+			export_builtin(current, mini_env);
+		else if (current->token_type == ENV)
 			print_env(mini_env);
-		handle_unset_builtin(builtin, mini_env);
-		builtin = builtin->next;
+		else if (current->token_type == UNSET)
+			handle_unset_builtin(current, mini_env);
+		current = current->next;
 	}
 }
+
 void	handle_unset_builtin(t_lexer *builtin, t_environnement *mini_env)
 {
 	if (builtin->token_type == UNSET && builtin->next)

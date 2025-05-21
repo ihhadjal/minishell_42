@@ -6,7 +6,7 @@
 /*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:57:06 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/20 20:21:47 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/21 10:28:29 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,6 @@ void	value_swap(t_environnement *current, char *temp_value)
 {
 	current->variable_value = current->next->variable_value;
 	current->next->variable_value = temp_value;
-}
-void	free_env_variables(t_environnement *temp)
-{
-	free(temp->variable_name);
-	free(temp->variable_value);
-	free(temp);
 }
 
 void	export_with_arguments(t_environnement *mini_env, t_lexer *builtin)
