@@ -6,86 +6,86 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:17:36 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/21 18:47:26 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:59:49 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../resources/minishell.h"
 
-void	expand_commands(t_lexer *lex, t_environnement *mini_env)
+void	expand_commands(t_lexer *lex, t_environnement *mini_env,
+		t_expander *exp)
 {
 	char	*expanded_variable;
+	int		start;
+	int		end;
+	t_lexer	*current;
 
-	(void)expanded_variable;
-	while (lex)
+	current = lex;
+	while (current)
 	{
-		if (expansion_checker(lex->str) == 1)
+		if (expansion_checker(current->str) == 1)
 		{
-			expanded_variable = expand_variable_value(lex->str, mini_env);
+			expanded_variable = expand_variable_value(current->str, mini_env,
+					exp);
 			if (expanded_variable)
-				printf("%s\n", expanded_variable);
-			else
-				printf("ca marche pas bekhe\n");
-		}
-		lex = lex->next;
-	}
-}
-char	*expand_variable_value(char *str, t_environnement *mini_env)
-{
-	int	i;
-	t_environnement *current;
-	int				var_len;
-	char			*var_name;
-	
-	current = mini_env;
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-		{
-			while (current)
 			{
-				var_len = ft_strlen(current->variable_name);
-				var_name = ft_substr(current->variable_name, 0, var_len - 1);
-				if (ft_strcmp(ft_substr(str, find_dollar(str) + 1, ft_strlen(str)), var_name) == 0)
-					return (current->variable_value);
-				current = current->next;
+				start = find_dollar(current->str);
+				end = find_var_end(current->str, start + 1);
+				substitution(current, current->str, start, end,
+					expanded_variable);
 			}
+			printf("%s\n", current->str);
 		}
-		i++;
+		current = current->next;
 	}
-	return (NULL);
 }
-int	find_dollar(char *str)
-{
-	int	i;
 
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			return i;
-		i++;
-	}
-	return i;
+void	substitution(t_lexer *current, char *str, int start_index,
+		int end_index, char *expanded_variable)
+{
+	int		total_length;
+	int		prefix_len;
+	int		suffix_len;
+	char	*new_str;
+
+	prefix_len = start_index;
+	suffix_len = ft_strlen(str) - end_index - 1;
+	total_length = prefix_len + ft_strlen(expanded_variable) + suffix_len;
+	new_str = malloc(sizeof(char) * (total_length + 1));
+	if (!new_str)
+		return ;
+	ft_strncpy(new_str, str, prefix_len);
+	new_str[prefix_len] = '\0';
+	ft_strcat(new_str, expanded_variable);
+	ft_strcat(new_str, str + end_index + 1);
+	free(current->str);
+	current->str = new_str;
 }
-int	expansion_checker(char *str)
+char	*expand_variable_value(char *str, t_environnement *mini_env,
+		t_expander *exp)
 {
-	int i;
-	int single_quote;
-
-	single_quote = 0;
-	i = 0;
-	while (str[i])
+	exp->dollar_pos = find_dollar(str);
+	if (exp->dollar_pos == -1 || str[exp->dollar_pos + 1] == '\0')
+		return (NULL);
+	exp->var_end = find_var_end(str, exp->dollar_pos + 1);
+	exp->var_len = exp->var_end - exp->dollar_pos;
+	exp->var_name = ft_substr(str, exp->dollar_pos + 1, exp->var_len);
+	if (!exp->var_name)
+		return (NULL);
+	exp->current = mini_env;
+	while (exp->current)
 	{
-		if (str[i] == '\'')
-			single_quote = 1;
-		else if (single_quote == 0)
+		exp->env_name = ft_substr(exp->current->variable_name, 0,
+				ft_strlen(exp->current->variable_name) - 1);
+		if (ft_strcmp(exp->var_name, exp->env_name) == 0)
 		{
-			if (str[i] == '$')
-				return (1);
+			free(exp->var_name);
+			free(exp->env_name);
+			return (exp->current->variable_value);
 		}
-		i++;
+		free(exp->env_name);
+		exp->current = exp->current->next;
 	}
-	return (0);
+	free(exp->var_name);
+	return (NULL);
 }
