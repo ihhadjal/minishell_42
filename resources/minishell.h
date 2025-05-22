@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/22 11:59:04 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:00:04 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,13 @@ typedef struct s_expander
 	int							var_end;
 	int							var_len;
 	char						*var_name;
-	t_environnement				*current;
+	t_environnement				*current1;
 	char						*env_name;
+	char						*expanded_variable;
+	int							start;
+	int							end;
+	int							i;
+	t_lexer						*current;
 }								t_expander;
 
 void							minishell_loop(t_mini *mini,
@@ -184,10 +189,7 @@ void							execute_builtins(t_lexer *current,
 int								check_if_builtin(t_lexer *current,
 									int command_found);
 int								find_dollar(char *str);
-void							substitution(t_lexer *current, char *str,
-									int start_index, int end_index,
-									char *expanded_variable);
+void							substitution(t_lexer *current, int start_index,
+									int end_index, char *expanded_variable);
 int								find_var_end(char *str, int start);
-void							init_variables(int dollar_pos, int var_end,
-									int var_len, char *var_name, char *str);
 #endif

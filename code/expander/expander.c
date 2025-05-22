@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:17:36 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/22 12:44:11 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/22 13:03:07 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,34 @@
 void	expand_commands(t_lexer *lex, t_environnement *mini_env,
 		t_expander *exp)
 {
-	char	*expanded_variable;
-	int		start;
-	int		end;
-	t_lexer	*current;
+	int	i;
 
-	current = lex;
-	int	i = 0;
-	while (current)
+	exp->current = lex;
+	i = 0;
+	while (exp->current)
 	{
-		while (current->str[i])
+		while (exp->current->str[i])
 		{
-			if (expansion_checker(current->str) == 1)
+			if (expansion_checker(exp->current->str) == 1)
 			{
-				expanded_variable = expand_variable_value(current->str, mini_env,
-						exp);
-				if (expanded_variable)
+				exp->expanded_variable = expand_variable_value(exp->current->str
+				,mini_env, exp);
+				if (exp->expanded_variable)
 				{
-					start = find_dollar(current->str);
-					end = find_var_end(current->str, start + 1);
-					substitution(current, current->str, start, end,
-						expanded_variable);
+					exp->start = find_dollar(exp->current->str);
+					exp->end = find_var_end(exp->current->str, exp->start + 1);
+					substitution(exp->current, exp->start, exp->end,
+						exp->expanded_variable);
 				}
 			}
 			i++;
 		}
-		printf("%s\n", current->str);
-		current = current->next;
+		exp->current = exp->current->next;
 	}
 }
 
-void	substitution(t_lexer *current, char *str, int start_index,
-		int end_index, char *expanded_variable)
+void	substitution(t_lexer *current, int start_index, int end_index,
+		char *expanded_variable)
 {
 	int		total_length;
 	int		prefix_len;
@@ -54,15 +50,15 @@ void	substitution(t_lexer *current, char *str, int start_index,
 	char	*new_str;
 
 	prefix_len = start_index;
-	suffix_len = ft_strlen(str) - end_index - 1;
+	suffix_len = ft_strlen(current->str) - end_index - 1;
 	total_length = prefix_len + ft_strlen(expanded_variable) + suffix_len;
 	new_str = malloc(sizeof(char) * (total_length + 1));
 	if (!new_str)
 		return ;
-	ft_strncpy(new_str, str, prefix_len);
+	ft_strncpy(new_str, current->str, prefix_len);
 	new_str[prefix_len] = '\0';
 	ft_strcat(new_str, expanded_variable);
-	ft_strcat(new_str, str + end_index + 1);
+	ft_strcat(new_str, current->str + end_index + 1);
 	free(current->str);
 	current->str = new_str;
 }
@@ -78,19 +74,19 @@ char	*expand_variable_value(char *str, t_environnement *mini_env,
 	exp->var_name = ft_substr(str, exp->dollar_pos + 1, exp->var_len);
 	if (!exp->var_name)
 		return (NULL);
-	exp->current = mini_env;
-	while (exp->current)
+	exp->current1 = mini_env;
+	while (exp->current1)
 	{
-		exp->env_name = ft_substr(exp->current->variable_name, 0,
-				ft_strlen(exp->current->variable_name) - 1);
+		exp->env_name = ft_substr(exp->current1->variable_name, 0,
+				ft_strlen(exp->current1->variable_name) - 1);
 		if (ft_strcmp(exp->var_name, exp->env_name) == 0)
 		{
 			free(exp->var_name);
 			free(exp->env_name);
-			return (exp->current->variable_value);
+			return (exp->current1->variable_value);
 		}
 		free(exp->env_name);
-		exp->current = exp->current->next;
+		exp->current1 = exp->current1->next;
 	}
 	free(exp->var_name);
 	return (NULL);
