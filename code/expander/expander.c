@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:17:36 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/22 16:26:38 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/22 22:15:46 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,18 @@ void	expand_commands(t_lexer *lex, t_environnement *mini_env,
 					substitution(exp->current, exp->start, exp->end,
 						exp->expanded_variable);
 				}
+				if (exp->current->token_type != HEREDOC)
+				{
+					exp->old_str = exp->current->str;
+					exp->current->str = remove_quotes(exp->old_str);
+					free(exp->old_str);
+				}
 			}
 			i++;
 		}
 		exp->current = exp->current->next;
 	}
 }
-
 
 void	substitution(t_lexer *current, int start_index, int end_index,
 		char *expanded_variable)

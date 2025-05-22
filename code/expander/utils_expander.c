@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expander.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:00:00 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/22 16:39:34 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/22 21:56:17 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,61 @@ void	handle_special_cases(t_lexer *lex, t_mini *mini)
 		}
 		i++;
 	}
+}
+char	*remove_quotes(char *str)
+{
+	int	i;
+	int	new_len;
+	char	*new_str;
+	int	j;
+	int	in_single;
+	int	in_double;
+	
+	j = 0;
+	i = 0;
+	in_single = 0;
+	in_double = 0;
+	if (str == NULL)
+		return (NULL);
+	new_len = count_new_len(str);
+	new_str = malloc(sizeof(char) * (new_len + 1));
+	if (!new_str)
+		return NULL;
+	while (str[i] && new_str[j])
+	{
+		if (str[i] == '"')
+		{
+			if (in_single == 1)
+				new_str[j++] = str[i];
+			else
+				in_double = !in_double;
+		}
+		else if (str[i] == '\'')
+		{
+			if (in_double == 1)
+				new_str[j++] = str[i];
+			else
+				in_single = !in_single;
+		}
+		else
+			new_str[j++] = str[i];
+		i++;
+	}
+	new_str[j] = '\0';
+	return (new_str);
+}
+int	count_new_len(char *str)
+{
+	int	new_len;
+	int	i;
+
+	i = 0;
+	new_len = 0;
+	while (str[i])
+	{
+		if (str[i] != '\'' || str[i] != '"')
+			new_len++;
+		i++;
+	}
+	return (new_len);
 }

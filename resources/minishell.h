@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/22 16:02:53 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/22 21:46:44 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_expander
 	int							start;
 	int							end;
 	int							i;
+	char						*old_str;
 	t_lexer						*current;
 }								t_expander;
 
@@ -195,4 +196,6 @@ void							substitution(t_lexer *current, int start_index,
 									int end_index, char *expanded_variable);
 int								find_var_end(char *str, int start);
 void							handle_special_cases(t_lexer *lex, t_mini *mini);
+char	*remove_quotes(char *str);
+int	count_new_len(char *str);
 #endif
