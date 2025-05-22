@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:17:36 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/22 11:59:49 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/22 12:44:11 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,26 @@ void	expand_commands(t_lexer *lex, t_environnement *mini_env,
 	t_lexer	*current;
 
 	current = lex;
+	int	i = 0;
 	while (current)
 	{
-		if (expansion_checker(current->str) == 1)
+		while (current->str[i])
 		{
-			expanded_variable = expand_variable_value(current->str, mini_env,
-					exp);
-			if (expanded_variable)
+			if (expansion_checker(current->str) == 1)
 			{
-				start = find_dollar(current->str);
-				end = find_var_end(current->str, start + 1);
-				substitution(current, current->str, start, end,
-					expanded_variable);
+				expanded_variable = expand_variable_value(current->str, mini_env,
+						exp);
+				if (expanded_variable)
+				{
+					start = find_dollar(current->str);
+					end = find_var_end(current->str, start + 1);
+					substitution(current, current->str, start, end,
+						expanded_variable);
+				}
 			}
-			printf("%s\n", current->str);
+			i++;
 		}
+		printf("%s\n", current->str);
 		current = current->next;
 	}
 }
@@ -61,6 +66,7 @@ void	substitution(t_lexer *current, char *str, int start_index,
 	free(current->str);
 	current->str = new_str;
 }
+
 char	*expand_variable_value(char *str, t_environnement *mini_env,
 		t_expander *exp)
 {
