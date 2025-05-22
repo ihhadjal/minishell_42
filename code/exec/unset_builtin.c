@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 14:46:18 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/21 10:28:17 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/22 16:39:17 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	builtin(t_lexer *builtin, t_environnement *mini_env)
     return (0);
 }
 
-void	execute_builtins(t_lexer *current, t_environnement *mini_env)
+int	execute_builtins(t_lexer *current, t_environnement *mini_env)
 {
 	while (current)
 	{
@@ -60,9 +60,10 @@ void	execute_builtins(t_lexer *current, t_environnement *mini_env)
 			handle_unset_builtin(current, mini_env);
 		current = current->next;
 	}
+	return (1);
 }
 
-void	handle_unset_builtin(t_lexer *builtin, t_environnement *mini_env)
+int	handle_unset_builtin(t_lexer *builtin, t_environnement *mini_env)
 {
 	if (builtin->token_type == UNSET && builtin->next)
 	{
@@ -71,7 +72,10 @@ void	handle_unset_builtin(t_lexer *builtin, t_environnement *mini_env)
 			delete_node(builtin, &mini_env);
 			builtin = builtin->next;
 		}
+		return (0);
 	}
+	else
+		return (1);
 }
 
 void	delete_node(t_lexer *builtin, t_environnement **mini_env)

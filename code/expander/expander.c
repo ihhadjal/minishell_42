@@ -6,14 +6,14 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:17:36 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/22 13:03:07 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/22 16:26:38 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../resources/minishell.h"
 
 void	expand_commands(t_lexer *lex, t_environnement *mini_env,
-		t_expander *exp)
+		t_expander *exp, t_mini *mini)
 {
 	int	i;
 
@@ -23,6 +23,7 @@ void	expand_commands(t_lexer *lex, t_environnement *mini_env,
 	{
 		while (exp->current->str[i])
 		{
+			handle_special_cases(exp->current, mini);
 			if (expansion_checker(exp->current->str) == 1)
 			{
 				exp->expanded_variable = expand_variable_value(exp->current->str
@@ -40,6 +41,7 @@ void	expand_commands(t_lexer *lex, t_environnement *mini_env,
 		exp->current = exp->current->next;
 	}
 }
+
 
 void	substitution(t_lexer *current, int start_index, int end_index,
 		char *expanded_variable)

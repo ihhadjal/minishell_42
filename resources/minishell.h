@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/22 13:00:04 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/22 16:02:53 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_mini
 	int							newline;
 	char						**new_array;
 	char						*array_temp;
+	int							last_exit_status;
 	t_parser_commands			*first_list_element;
 	t_parser_commands			*new_list_element;
 	t_parser_commands			*current_list_element;
@@ -150,7 +151,7 @@ void							check_next_token(t_lexer *next_lexer);
 int								handle_redirection_errors(t_lexer *lex);
 int								handle_redirection_errors2(t_lexer *lex);
 int								fake_redirec_token(char *str, t_lexer *token);
-void							export_builtin(t_lexer *builtin,
+int								export_builtin(t_lexer *builtin,
 									t_environnement *mini_env);
 void							init_env_container(t_environnement *env_container);
 t_environnement					*get_env(char **env);
@@ -164,7 +165,7 @@ void							free_env_variables(t_environnement *temp);
 void							export_with_arguments(t_environnement *mini_env,
 									t_lexer *builtin);
 t_environnement					*add_argument_to_env(t_lexer *builtin);
-void							handle_unset_builtin(t_lexer *builtin,
+int								handle_unset_builtin(t_lexer *builtin,
 									t_environnement *mini_env);
 void							unset_builtin(t_lexer *builtin,
 									t_environnement *mini_env);
@@ -174,17 +175,18 @@ void							free_node(char *var_name,
 									t_environnement *current);
 int								get_pwd(void);
 void							put_env(char **env);
-void							put_echo(t_lexer *lexer);
+int								put_echo(t_lexer *lexer);
 int								cd(t_lexer *lexer);
 int								ft_exit(t_lexer *lexer);
 int								expansion_checker(char *str);
 char							*expand_variable_value(char *str,
 									t_environnement *mini_env, t_expander *exp);
 void							expand_commands(t_lexer *lex,
-									t_environnement *mini_env, t_expander *exp);
+									t_environnement *mini_env, t_expander *exp,
+									t_mini *mini);
 int								update_env(t_environnement *env_argument,
 									t_environnement *mini_env);
-void							execute_builtins(t_lexer *current,
+int								execute_builtins(t_lexer *current,
 									t_environnement *mini_env);
 int								check_if_builtin(t_lexer *current,
 									int command_found);
@@ -192,4 +194,5 @@ int								find_dollar(char *str);
 void							substitution(t_lexer *current, int start_index,
 									int end_index, char *expanded_variable);
 int								find_var_end(char *str, int start);
+void							handle_special_cases(t_lexer *lex, t_mini *mini);
 #endif
