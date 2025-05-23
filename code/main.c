@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/23 12:40:34 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/23 21:18:55 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	minishell_loop(t_mini *mini, t_environnement *mini_env, t_expander *exp)
 			pars = parser(lex, mini);
 			if (pars)
 			{
-				mini->last_exit_status = builtin(lex, mini_env);
 				expand_commands(lex, mini_env, exp, mini);
+				mini->last_exit_status = builtin(lex, mini_env);
 				free_parser_list(pars);
 			}
 		}
