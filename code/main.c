@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/22 16:12:54 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/23 12:40:34 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	minishell_loop(t_mini *mini, t_environnement *mini_env, t_expander *exp)
 	char				*str;
 	t_lexer				*lex;
 	t_parser_commands	*pars;
+	
 	while (1)
 	{
 		str = readline("Minishell: ");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:17:36 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/22 22:15:46 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/23 19:01:04 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,32 @@
 void	expand_commands(t_lexer *lex, t_environnement *mini_env,
 		t_expander *exp, t_mini *mini)
 {
-	int	i;
-
 	exp->current = lex;
-	i = 0;
 	while (exp->current)
 	{
-		while (exp->current->str[i])
+		handle_special_cases(exp->current, mini);
+		while (expansion_checker(exp->current->str) == 1)
+			expansion_logic(exp, mini_env);
+		if (exp->current->token_type != HEREDOC)
 		{
-			handle_special_cases(exp->current, mini);
-			if (expansion_checker(exp->current->str) == 1)
-			{
-				exp->expanded_variable = expand_variable_value(exp->current->str
-				,mini_env, exp);
-				if (exp->expanded_variable)
-				{
-					exp->start = find_dollar(exp->current->str);
-					exp->end = find_var_end(exp->current->str, exp->start + 1);
-					substitution(exp->current, exp->start, exp->end,
-						exp->expanded_variable);
-				}
-				if (exp->current->token_type != HEREDOC)
-				{
-					exp->old_str = exp->current->str;
-					exp->current->str = remove_quotes(exp->old_str);
-					free(exp->old_str);
-				}
-			}
-			i++;
+			exp->old_str = exp->current->str;
+			exp->current->str = remove_quotes(exp->old_str);
+			printf("%s\n", exp->current->str);
+			free(exp->old_str);
 		}
 		exp->current = exp->current->next;
+	}
+}
+void	expansion_logic(t_expander *exp, t_environnement *mini_env)
+{
+	exp->expanded_variable = expand_variable_value(exp->current->str
+			,mini_env, exp);
+	if (exp->expanded_variable)
+	{
+		exp->start = find_dollar(exp->current->str);
+		exp->end = find_var_end(exp->current->str, exp->start + 1);
+		substitution(exp->current, exp->start, exp->end,
+			exp->expanded_variable);
 	}
 }
 

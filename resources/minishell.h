@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/22 21:46:44 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/23 12:22:13 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,4 +198,5 @@ int								find_var_end(char *str, int start);
 void							handle_special_cases(t_lexer *lex, t_mini *mini);
 char	*remove_quotes(char *str);
 int	count_new_len(char *str);
+void	expansion_logic(t_expander *exp, t_environnement *mini_env);
 #endif
