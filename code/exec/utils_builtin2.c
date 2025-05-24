@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:57:06 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/24 14:24:01 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/24 15:12:01 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,17 @@ int	export_with_arguments(t_environnement *mini_env, t_lexer *builtin)
 {
 	t_environnement	*env_argument;
 	t_environnement	*current;
+	char			*equal_sign;
+	int				name_lenght;
 
 	current = mini_env;
+	equal_sign = ft_strchr(builtin->next->str, '=');
+	name_lenght = equal_sign - builtin->next->str + 1;
 	while (builtin)
 	{
-		if (builtin->next && ft_strchr(builtin->next->str, '=')
-			&& !ft_isdigit(builtin->next->str[0]) && ft_symbols(builtin->next->str) == 0 && builtin->next->str && builtin->next->str[0] != '=')
+		if (builtin->next && !ft_isdigit(builtin->next->str[0])
+			&& ft_symbols(ft_substr(builtin->next->str, 0, name_lenght)) == 0
+			&& builtin->next->str && builtin->next->str[0] != '=')
 		{
 			builtin = builtin->next;
 			env_argument = add_argument_to_env(builtin);
@@ -56,6 +61,7 @@ int	export_with_arguments(t_environnement *mini_env, t_lexer *builtin)
 				else
 					mini_env = env_argument;
 			}
+			return (0);
 		}
 		else
 		{
@@ -74,9 +80,10 @@ int	ft_symbols(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if ((str[i] >= 33 && str[i] <= 47)|| (str[i] >= 58 && str[i] <= 60)
-			|| (str[i] >= 91 && str[i] <= 94) || (str[i] == 96) || (str[i] >= 123
-			&& str[i] <= 126) || (str[i] >= 62 && str[i] <= 63))
+		if ((str[i] >= 33 && str[i] <= 47) || (str[i] >= 58 && str[i] <= 60)
+			|| (str[i] >= 91 && str[i] <= 94) || (str[i] == 96)
+			|| (str[i] >= 123 && str[i] <= 126) || (str[i] >= 62
+				&& str[i] <= 63))
 			return (1);
 		i++;
 	}

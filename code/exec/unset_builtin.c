@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 14:46:18 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/24 14:34:35 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/24 15:16:45 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	execute_builtins(t_lexer *current, t_environnement *mini_env)
 
 int	handle_unset_builtin(t_lexer *builtin, t_environnement *mini_env)
 {
-	if (builtin->token_type == UNSET && builtin->next)
+	if (builtin->token_type == UNSET)
 	{
 		while (builtin->next)
 		{

@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 20:57:53 by fakambou          #+#    #+#             */
-/*   Updated: 2025/05/24 14:24:08 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:41:20 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ int	export_builtin(t_lexer *builtin, t_environnement *mini_env)
 	t_environnement	*env_copy;
 	t_environnement	*current;
 	t_environnement	*temp;
+	int	exit_status;
 
+	exit_status = 0;
 	if (builtin->token_type == EXPORT && !builtin->next)
 	{
 		env_copy = copy_env(mini_env);
@@ -65,8 +67,8 @@ int	export_builtin(t_lexer *builtin, t_environnement *mini_env)
 		return (0);
 	}
 	else if (builtin->token_type == EXPORT && builtin->next->token_type == WORD)
-		export_with_arguments(mini_env, builtin);
-	return (1);
+		exit_status = export_with_arguments(mini_env, builtin);
+	return (exit_status);
 }
 
 t_environnement	*env_sort(t_environnement *env_copy)
