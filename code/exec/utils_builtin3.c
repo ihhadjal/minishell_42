@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:27:55 by iheb              #+#    #+#             */
-/*   Updated: 2025/05/24 11:25:06 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/24 13:05:46 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,4 @@ void	print_error(char *str1, char *str)
 {
 	ft_putstr_fd(str1, 2);
 	ft_putendl_fd(str, 2);
-	// return (return_value);
 }

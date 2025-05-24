@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:17:36 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/24 11:23:00 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/24 12:51:28 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	expand_commands(t_lexer *lex, t_environnement *mini_env,
 		{
 			exp->old_str = exp->current->str;
 			exp->current->str = remove_quotes(exp->old_str);
-			printf("%s\n", exp->current->str);
+			// printf("%s\n", exp->current->str);
 			free(exp->old_str);
 		}
 		exp->current = exp->current->next;

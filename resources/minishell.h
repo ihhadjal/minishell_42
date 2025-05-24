@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/24 11:25:14 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/24 13:15:06 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ t_environnement					*env_sort(t_environnement *env_copy);
 void							value_swap(t_environnement *current,
 									char *temp_value);
 void							free_env_variables(t_environnement *temp);
-void							export_with_arguments(t_environnement *mini_env,
+int							export_with_arguments(t_environnement *mini_env,
 									t_lexer *builtin);
 t_environnement					*add_argument_to_env(t_lexer *builtin);
 int								handle_unset_builtin(t_lexer *builtin,
@@ -200,4 +200,5 @@ char	*remove_quotes(char *str);
 int	count_new_len(char *str);
 void	expansion_logic(t_expander *exp, t_environnement *mini_env);
 void	print_error(char *str1, char *str);
+int	ft_symbols(char *str);
 #endif

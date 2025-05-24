@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 20:57:53 by fakambou          #+#    #+#             */
-/*   Updated: 2025/05/22 15:52:39 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:24:08 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,7 @@ int	export_builtin(t_lexer *builtin, t_environnement *mini_env)
 		return (0);
 	}
 	else if (builtin->token_type == EXPORT && builtin->next->token_type == WORD)
-	{
 		export_with_arguments(mini_env, builtin);
-		return (0);
-	}
 	return (1);
 }
 
