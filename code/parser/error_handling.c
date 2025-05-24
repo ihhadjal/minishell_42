@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:02:26 by iheb              #+#    #+#             */
-/*   Updated: 2025/05/05 12:16:33 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/24 19:16:59 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int	handle_redirection_errors2(t_lexer *lex)
 	{
 		if (!lex->next)
 			printf("%s\n", "syntax error near unexpected token `|'");
-		else if (lex->str[0] == '|')
-			printf("%s\n", "syntax error near unexpected token `|'");
+		// else if (lex->str[0] == '|')
+		// 	printf("%s\n", "syntax error near unexpected token `|'");
 		return (0);
 	}
 	return (1);

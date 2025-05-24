@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/16 16:35:40 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/05/24 18:58:44 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,21 @@ typedef struct s_environnement
 	struct s_environnement		*next;
 }								t_environnement;
 
+typedef struct s_spipe
+{
+	char	*path;
+	char	*cmd_path;
+	char	*cmd_path1;
+	char	**cmd_args;
+	char	**cmd_args1;
+	int		infile;
+	int		outfile;
+	pid_t	process1;
+	pid_t	process2;
+}	t_pipe;
+
 void							minishell_loop(t_mini *mini,
-									t_environnement *mini_env);
+									t_environnement *mini_env, char **env);
 void							print_list(t_lexer *lex);
 t_lexer							*get_token(char *str);
 t_lexer							*lexer(char *str);
@@ -119,7 +132,6 @@ void							redirections_handler(t_lexer *lexer,
 void							builtin(t_lexer *builtin,
 									t_environnement *mini_env);
 int								is_number(char *str);
-void							redirections(t_lexer *redirections);
 t_lexer							*redirections_and_commands_handler(t_mini *mini);
 void							create_redirection_node(t_mini *mini);
 void							init_new_redirection(t_mini *mini);
@@ -163,4 +175,12 @@ void	put_env(char **env);
 void	put_echo(t_lexer *lexer);
 int	cd(t_lexer *lexer);
 int	ft_exit(t_lexer *lexer);
+void	handle_single_command(t_parser_commands *cmd, t_lexer *built, char **env, t_pipe *pipe);
+void	handle_redirections(t_lexer *redirections);
+void executor(t_parser_commands *parsed_cmds, t_lexer *built, char **env, t_pipe *pipe);
+void	free_string(char **str);
+char	*find_cmd(char **env, char *cmd, t_pipe *pipe);
+char	*search_path(char **env);
+int	is_builtin(t_lexer *builtin);
+void	execute_cmd(t_parser_commands *cmd, char *command_path, char **env);
 #endif

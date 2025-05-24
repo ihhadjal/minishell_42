@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/16 16:37:23 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/05/24 16:15:11 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,18 @@ int	main(int argc, char **argv, char **env)
 	else
 	{
 		mini_env = get_env(env);
-		minishell_loop(&mini, mini_env);
+		minishell_loop(&mini, mini_env, env);
 	}
 	return (0);
 }
 
-void	minishell_loop(t_mini *mini, t_environnement *mini_env)
+void	minishell_loop(t_mini *mini, t_environnement *mini_env, char **env)
 {
 	char				*str;
 	t_lexer				*lex;
 	t_parser_commands	*pars;
+	t_pipe				pipe;
+	(void)mini_env;
 	while (1)
 	{
 		str = readline("Minishell: ");
@@ -48,9 +50,9 @@ void	minishell_loop(t_mini *mini, t_environnement *mini_env)
 			pars = parser(lex, mini);
 			if (pars)
 			{
-				builtin(lex, mini_env);
+				//builtin(lex, mini_env);
+				executor(pars,lex, env, &pipe);
 				free_parser_list(pars);
-				// redirections(lex);
 			}
 		}
 		add_history(str);

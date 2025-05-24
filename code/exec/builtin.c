@@ -6,7 +6,7 @@
 /*   By: fakambou <fakambou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:03:00 by fakambou          #+#    #+#             */
-/*   Updated: 2025/05/16 16:35:01 by fakambou         ###   ########.fr       */
+/*   Updated: 2025/05/24 19:07:59 by fakambou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ int	cd(t_lexer *lexer)
 	if (!lexer || !lexer->next || !lexer->next->str)
 	{
 		ft_putstr_fd("path required\n", 2);
+		return (1);
+	}
+	if (lexer->next->next->str)
+	{
+		printf("cd: too many arguments\n");
 		return (1);
 	}
 	if (chdir(lexer->next->str) != 0)
