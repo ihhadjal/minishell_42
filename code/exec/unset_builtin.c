@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 14:46:18 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/23 21:17:50 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/24 11:26:45 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,16 @@ int	builtin(t_lexer *builtin, t_environnement *mini_env)
     }
     if (!command_found && builtin && builtin->token_type == WORD)
     {
-        ft_putstr_fd(builtin->str, 2);
-        ft_putendl_fd(": command not found", 2);
-        return (127); 
+		if (ft_strchr(builtin->str, '/'))
+		{
+			print_error(builtin->str, ": Is a directory");
+			return (126);
+		}
+		else
+		{
+			print_error(builtin->str, ": command not found");
+			return (127);
+		}
 	}
     return (0);
 }

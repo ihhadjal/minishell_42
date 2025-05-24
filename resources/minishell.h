@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/23 12:22:13 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/24 11:25:14 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,4 +199,5 @@ void							handle_special_cases(t_lexer *lex, t_mini *mini);
 char	*remove_quotes(char *str);
 int	count_new_len(char *str);
 void	expansion_logic(t_expander *exp, t_environnement *mini_env);
+void	print_error(char *str1, char *str);
 #endif
