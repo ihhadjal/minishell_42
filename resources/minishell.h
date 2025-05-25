@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/24 13:15:06 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/25 11:56:42 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,4 +201,6 @@ int	count_new_len(char *str);
 void	expansion_logic(t_expander *exp, t_environnement *mini_env);
 void	print_error(char *str1, char *str);
 int	ft_symbols(char *str);
+char *handle_dollar_quote(char *str);
+int	check_if_pipe(t_lexer *lex);
 #endif

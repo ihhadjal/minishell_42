@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:02:26 by iheb              #+#    #+#             */
-/*   Updated: 2025/05/24 19:38:13 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/25 12:01:06 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 int	error_handling(t_lexer *lex)
 {
+	if (lex->token_type == PIPE)
+	{
+		ft_putendl_fd("syntax error near unexpected token `|'", 2);
+		return (2);
+	}
 	while (lex)
 	{
 		if (lex->token_type == FAKE_REDIREC || lex->token_type == FAKE_REDIREC2)
@@ -62,8 +67,10 @@ int	handle_redirection_errors2(t_lexer *lex)
 	if (lex->token_type == PIPE)
 	{
 		if (!lex->next)
+		{
 			ft_putendl_fd("syntax error near unexpected token `|'", 2);
-		return 0;
+			return 0;
+		}
 	}
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/24 19:39:09 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/25 12:06:00 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,6 @@ void	minishell_loop(t_mini *mini, t_environnement *mini_env, t_expander *exp)
 			break ;
 		quotes_loop(&str, mini);
 		lex = lexer(str);
-		// print_list(lex);
-		if (lex->token_type == PIPE)
-		{
-			ft_putendl_fd("syntax error near unexpected token `|'", 2);
-			return (2);
-		}
 		if (error_handling(lex) == 1)
 		{
 			pars = parser(lex, mini);
@@ -65,4 +59,3 @@ void	minishell_loop(t_mini *mini, t_environnement *mini_env, t_expander *exp)
 		free_all(str, lex);
 	}
 }
-

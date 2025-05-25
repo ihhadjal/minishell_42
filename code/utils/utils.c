@@ -6,24 +6,11 @@
 /*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:57:56 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/05 11:44:25 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/25 11:52:21 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../resources/minishell.h"
-
-void	print_list(t_lexer *lex)
-{
-	char	*token_names[] = {"WORD", "PIPE", "REDIREC_IN", "REDIREC_OUT",
-			"APPEND", "HEREDOC", "ECHO", "CD", "PWD", "EXPORT", "UNSET", "ENV",
-			"EXIT", "ECHO2", "FAKE_REDIRECTION", "FAKE_REDIRECTION2"};
-	while (lex)
-	{
-		printf("token str: %s, token type: %s\n", lex->str,
-			token_names[lex->token_type]);
-		lex = lex->next;
-	}
-}
 
 void	quotes_loop(char **str, t_mini *mini)
 {

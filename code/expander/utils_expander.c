@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expander.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 12:00:00 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/23 18:59:40 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/25 11:48:01 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,19 @@ int	find_dollar(char *str)
 	}
 	return (-1);
 }
-
 int expansion_checker(char *str)
 {
-    int i = 0;
-    int single_quote = 0;
+    int i;
+    int single_quote;
 
+	i = 0;
+	single_quote = 0;
     while (str[i])
     {
         if (str[i] == '\'')
             single_quote = !single_quote;
+        else if (str[i] == '$' && str[i + 1] && str[i + 1] == '\'')
+            i++;
         else if (single_quote == 0 && str[i] == '$' && str[i + 1] &&
                  (ft_isalnum(str[i + 1]) || str[i + 1] == '_'))
             return (1);
@@ -146,4 +149,31 @@ int	count_new_len(char *str)
 		i++;
 	}
 	return (new_len);
+}
+
+char *handle_dollar_quote(char *str)
+{
+    int i;
+    char *result;
+	int start;
+	int end;
+	
+	i = 0;
+    while (str[i])
+    {
+        if (str[i] == '$' && str[i + 1] && str[i + 1] == '\'')
+        {
+            start = i + 2;
+            end = start;
+            while (str[end] && str[end] != '\'')
+                end++;
+            if (str[end] == '\'')
+            {
+                result = ft_substr(str, start, end - start);
+                return result;
+            }
+        }
+        i++;
+    }
+    return NULL;
 }
