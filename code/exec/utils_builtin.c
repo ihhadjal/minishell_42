@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 20:57:53 by fakambou          #+#    #+#             */
-/*   Updated: 2025/05/27 18:22:54 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 20:07:43 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,17 @@ t_environnement	*copy_env(t_environnement *mini_env)
 	return (head);
 }
 
-void	print_env(t_environnement *mini_env)
+int	add_and_update_env(t_environnement *env_argument, t_environnement *mini_env,
+		t_environnement *current)
 {
-	while (mini_env)
+	if (env_argument && update_env(env_argument, mini_env) == 0)
 	{
-		printf("%s%s\n", mini_env->variable_name, mini_env->variable_value);
-		mini_env = mini_env->next;
+		while (current && current->next)
+			current = current->next;
+		if (current)
+			current->next = env_argument;
+		else
+			mini_env = env_argument;
 	}
+	return (0);
 }

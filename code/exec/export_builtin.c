@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:28:16 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 19:33:06 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 20:04:36 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,17 @@ int	is_valid_identifier(char *str)
 {
 	char	*equal_sign;
 	int		name_lenght;
+	char	*tmp;
+	char	*variable_name;
 
 	equal_sign = ft_strchr(str, '=');
 	name_lenght = equal_sign - str + 1;
-	if (!ft_isdigit(str[0]) && ft_symbols(ft_substr(str, 0, name_lenght)) == 0
+	tmp = ft_substr(str, 0, name_lenght);
+	variable_name = tmp;
+	if (!ft_isdigit(str[0]) && ft_symbols(variable_name) == 0
 		&& str && str[0] != '=')
 		return (1);
+	free(tmp);
 	return (0);
 }
 
