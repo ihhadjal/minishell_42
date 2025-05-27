@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:14:26 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 15:35:05 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:37:16 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,6 @@ int	error_print(t_lexer *builtin)
 {
 	ft_putstr_fd("export : ", 2);
 	print_error(builtin->next->str, ": not a valid identifier");
-	return (1);
-}
-
-int	is_valid_export_argument(char *str, int name_length)
-{
-	if (!str || ft_isdigit(str[0]) || str[0] == '=')
-		return (0);
-	if (ft_symbols(ft_substr(str, 0, name_length)) != 0)
-		return (0);
 	return (1);
 }
 

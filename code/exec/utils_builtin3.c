@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:27:55 by iheb              #+#    #+#             */
-/*   Updated: 2025/05/27 15:36:22 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:36:59 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,4 @@ void	print_error(char *str1, char *str)
 {
 	ft_putstr_fd(str1, 2);
 	ft_putendl_fd(str, 2);
-}
-
-void	append_node(t_environnement *head, t_environnement *mini_env,
-		t_environnement *current)
-{
-	if (!head)
-		head = mini_env;
-	else
-		current->next = mini_env;
-	current = mini_env;
 }

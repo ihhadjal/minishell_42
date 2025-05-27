@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:57:06 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 19:27:28 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:36:37 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,66 +33,6 @@ void	value_swap(t_environnement *current, char *temp_value)
 	current->variable_value = current->next->variable_value;
 	current->next->variable_value = temp_value;
 }
-
-int	handle_valid_argument(t_lexer *builtin, t_environnement **mini_env)
-{
-	t_environnement	*env_argument;
-	t_environnement	*current;
-
-	builtin = builtin->next;
-	env_argument = add_argument_to_env(builtin);
-	if (env_argument && update_env(env_argument, *mini_env) == 0)
-	{
-		current = *mini_env;
-		while (current && current->next)
-			current = current->next;
-		if (current)
-			current->next = env_argument;
-		else
-			*mini_env = env_argument;
-	}
-	return (0);
-}
-
-// int	export_with_arguments(t_environnement *mini_env, t_lexer *builtin)
-// {
-// 	t_environnement	*env_argument;
-// 	t_environnement	*current;
-// 	char			*equal_sign;
-// 	int				name_lenght;
-
-// 	current = mini_env;
-// 	equal_sign = ft_strchr(builtin->next->str, '=');
-// 	name_lenght = equal_sign - builtin->next->str + 1;
-// 	while (builtin)
-// 	{
-// 		if (builtin->next && !ft_isdigit(builtin->next->str[0])
-// 			&& ft_symbols(ft_substr(builtin->next->str, 0, name_lenght)) == 0
-// 			&& builtin->next->str && builtin->next->str[0] != '=')
-// 		{
-// 			builtin = builtin->next;
-// 			env_argument = add_argument_to_env(builtin);
-// 			if (env_argument && update_env(env_argument, mini_env) == 0)
-// 			{
-// 				while (current && current->next)
-// 					current = current->next;
-// 				if (current)
-// 					current->next = env_argument;
-// 				else
-// 					mini_env = env_argument;
-// 			}
-// 			return (0);
-// 		}
-// 		else
-// 		{
-// 			ft_putstr_fd("export : ", 2);
-// 			print_error(builtin->next->str, ": not a valid identifier");
-// 			return (1);
-// 		}
-// 		builtin = builtin->next;
-// 	}
-// 	return (1);
-// }
 
 int	update_env(t_environnement *env_argument, t_environnement *mini_env)
 {
