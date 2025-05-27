@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 19:17:44 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:33:39 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ typedef struct s_expander
 
 int								minishell_loop(t_mini *mini,
 									t_environnement *mini_env);
-void							print_list(t_lexer *lex);
 t_lexer							*get_token(char *str);
 t_lexer							*lexer(char *str);
 int								check_quotes(char *str);
@@ -227,13 +226,14 @@ int								handle_valid_argument(t_lexer *builtin,
 									t_environnement **mini_env);
 int								is_not_builtin_command(t_lexer *builtin,
 									int command_found);
-int								dispatch_builtin(t_lexer *current,
-									t_environnement *mini_env, t_mini *mini);
 void							process_quote(char c, t_mini *mini,
 									char *new_str, int *j);
 int								ft_error(t_lexer *builtin);
-int								add_and_update_env(
-									t_environnement *env_argument,
-									t_environnement *mini_env,
-									t_environnement *current);
+int								is_valid_identifier(char *str);
+void							add_to_env_list(t_environnement *env_argument,
+									t_environnement *mini_env);
+int								process_valid_export(t_lexer *builtin,
+									t_environnement *mini_env);
+int								validate_and_add_export(t_lexer *builtin,
+									t_environnement *mini_env);
 #endif
