@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/25 11:56:42 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/27 14:34:59 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ typedef struct s_expander
 	t_lexer						*current;
 }								t_expander;
 
-void							minishell_loop(t_mini *mini,
+int							minishell_loop(t_mini *mini,
 									t_environnement *mini_env, t_expander *exp);
 void							print_list(t_lexer *lex);
 t_lexer							*get_token(char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:02:26 by iheb              #+#    #+#             */
-/*   Updated: 2025/05/25 12:01:06 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/27 14:35:57 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	error_handling(t_lexer *lex)
 				return (0);
 		}
 		if (handle_redirection_errors2(lex) == 0)
-			return (0);
+			return (2);
 		lex = lex->next;
 	}
 	return (1);
