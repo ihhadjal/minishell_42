@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 15:59:54 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:17:44 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,4 +231,9 @@ int								dispatch_builtin(t_lexer *current,
 									t_environnement *mini_env, t_mini *mini);
 void							process_quote(char c, t_mini *mini,
 									char *new_str, int *j);
+int								ft_error(t_lexer *builtin);
+int								add_and_update_env(
+									t_environnement *env_argument,
+									t_environnement *mini_env,
+									t_environnement *current);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 15:27:31 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:21:49 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int argc, char **argv, char **env)
 	t_mini			mini;
 	t_environnement	*mini_env;
 
+	mini.last_exit_status = 0;
 	if (argc != 1 || argv[1])
 	{
 		ft_putendl_fd("this program should not have any argument\n", 2);

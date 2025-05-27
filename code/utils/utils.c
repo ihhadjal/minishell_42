@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:57:56 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 15:40:58 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:40:15 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,17 @@ void	free_node(char *var_name, t_environnement *current)
 	free(current);
 }
 
-int	dispatch_builtin(t_lexer *current, t_environnement *mini_env, t_mini *mini)
+int	ft_error(t_lexer *builtin)
 {
-	if (current->token_type == ECHO)
-		return (put_echo(current, mini));
-	else if (current->token_type == CD)
-		return (cd(current));
-	else if (current->token_type == PWD)
-		return (get_pwd());
-	else if (current->token_type == EXIT)
-		ft_exit(current);
-	else if (current->token_type == EXPORT)
-		return (export_builtin(current, mini_env));
-	else if (current->token_type == ENV)
+	if (ft_strchr(builtin->str, '/'))
 	{
-		print_env(mini_env);
-		return (0);
+		print_error(builtin->str, ": Is a directory");
+		return (126);
 	}
-	else if (current->token_type == UNSET)
-		return (handle_unset_builtin(current, mini_env));
-	return (1);
+	else
+	{
+		print_error(builtin->str, ": command not found");
+		return (127);
+	}
+	return (0);
 }

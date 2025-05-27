@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:01:42 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 14:58:45 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:12:35 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,19 @@ int	fake_redirec_token(char *str, t_lexer *token)
 		}
 	}
 	return (1);
+}
+
+int	add_and_update_env(t_environnement *env_argument, t_environnement *mini_env,
+		t_environnement *current)
+{
+	if (env_argument && update_env(env_argument, mini_env) == 0)
+	{
+		while (current && current->next)
+			current = current->next;
+		if (current)
+			current->next = env_argument;
+		else
+			mini_env = env_argument;
+	}
+	return (0);
 }

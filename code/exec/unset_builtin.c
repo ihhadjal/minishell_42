@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 14:46:18 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 15:40:03 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:39:34 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,40 +24,35 @@ int	builtin(t_lexer *builtin, t_environnement *mini_env, t_mini *mini)
 	while (current)
 	{
 		if (check_if_builtin(current, command_found) == 1)
-		{
 			exit_status = execute_builtins(current, mini_env, mini);
-			command_found = 1;
-		}
 		current = current->next;
 	}
-	exit_status = is_not_builtin_command(builtin, command_found);
-	return (exit_status);
-}
-
-int	is_not_builtin_command(t_lexer *builtin, int command_found)
-{
 	if (!command_found && builtin && builtin->token_type == WORD)
-	{
-		if (ft_strchr(builtin->str, '/'))
-		{
-			print_error(builtin->str, ": Is a directory");
-			return (126);
-		}
-		else
-		{
-			print_error(builtin->str, ": command not found");
-			return (127);
-		}
-	}
-	return (0);
+		exit_status = ft_error(builtin);
+	return (exit_status);
 }
 
 int	execute_builtins(t_lexer *current, t_environnement *mini_env, t_mini *mini)
 {
 	while (current)
 	{
-		if (current->token_type >= ECHO && current->token_type <= UNSET)
-			return (dispatch_builtin(current, mini_env, mini));
+		if (current->token_type == ECHO)
+			return (put_echo(current, mini));
+		else if (current->token_type == CD)
+			return (cd(current));
+		else if (current->token_type == PWD)
+			return (get_pwd());
+		else if (current->token_type == EXIT)
+			ft_exit(current);
+		else if (current->token_type == EXPORT)
+			return (export_builtin(current, mini_env));
+		else if (current->token_type == ENV)
+		{
+			print_env(mini_env);
+			return (0);
+		}
+		else if (current->token_type == UNSET)
+			return (handle_unset_builtin(current, mini_env));
 		current = current->next;
 	}
 	return (1);
