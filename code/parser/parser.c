@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 09:18:17 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/30 12:57:09 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/27 15:01:33 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_parser_commands	*parser(t_lexer *lexer, t_mini *mini)
 			if (!mini->processed_token)
 			{
 				free(mini->new_list_element);
-				return NULL;
+				return (NULL);
 			}
 			mini->current_token = mini->processed_token->next;
 		}
@@ -62,12 +62,14 @@ t_lexer	*redirections_and_commands_handler(t_mini *mini)
 	}
 	else if (mini->token->token_type == WORD)
 	{
-		mini->new_list_element->cmd_str = add_string_to_array(mini->new_list_element->cmd_str,
+		mini->new_list_element->cmd_str = add_string_to_array
+			(mini->new_list_element->cmd_str,
 				mini->token->str, mini);
 		return (mini->token);
 	}
 	return (mini->token);
 }
+
 void	create_redirection_node(t_mini *mini)
 {
 	mini->new_redirec_element = malloc(sizeof(t_lexer));
@@ -87,6 +89,7 @@ void	create_redirection_node(t_mini *mini)
 		mini->current = mini->new_redirec_element;
 	}
 }
+
 char	**add_string_to_array(char **array, char *str, t_mini *mini)
 {
 	mini->i = 0;
@@ -97,7 +100,7 @@ char	**add_string_to_array(char **array, char *str, t_mini *mini)
 	}
 	mini->new_array = malloc(sizeof(char *) * (mini->i + 2));
 	if (!mini->new_array)
-		return NULL;
+		return (NULL);
 	mini->i = 0;
 	if (array)
 	{

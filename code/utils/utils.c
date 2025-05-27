@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:57:56 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/25 11:52:21 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/27 15:40:58 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,34 @@ void	free_all(char *str, t_lexer *lex)
 {
 	free(str);
 	free_lexer_list(lex);
+}
+
+void	free_node(char *var_name, t_environnement *current)
+{
+	free(var_name);
+	free(current->variable_name);
+	free(current->variable_value);
+	free(current);
+}
+
+int	dispatch_builtin(t_lexer *current, t_environnement *mini_env, t_mini *mini)
+{
+	if (current->token_type == ECHO)
+		return (put_echo(current, mini));
+	else if (current->token_type == CD)
+		return (cd(current));
+	else if (current->token_type == PWD)
+		return (get_pwd());
+	else if (current->token_type == EXIT)
+		ft_exit(current);
+	else if (current->token_type == EXPORT)
+		return (export_builtin(current, mini_env));
+	else if (current->token_type == ENV)
+	{
+		print_env(mini_env);
+		return (0);
+	}
+	else if (current->token_type == UNSET)
+		return (handle_unset_builtin(current, mini_env));
+	return (1);
 }

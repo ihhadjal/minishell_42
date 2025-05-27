@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 21:39:06 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/22 11:41:37 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:02:10 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ int					ft_puthex(unsigned long long n, int uppercase);
 int					ft_putptr(void *ptr);
 char				*ft_strcpy(char *dest, char *src);
 char				*ft_strncpy(char *dest, char *src, unsigned int n);
-char	*ft_strcat(char *dest, char *src);
+char				*ft_strcat(char *dest, char *src);
 #endif

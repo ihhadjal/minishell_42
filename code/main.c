@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 14:36:35 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:27:31 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_mini	mini;
-	t_environnement *mini_env;
-	t_expander		exp;
+	t_mini			mini;
+	t_environnement	*mini_env;
 
-	// mini.last_exit_status = 0;
 	if (argc != 1 || argv[1])
 	{
 		ft_putendl_fd("this program should not have any argument\n", 2);
@@ -27,12 +25,12 @@ int	main(int argc, char **argv, char **env)
 	else
 	{
 		mini_env = get_env(env);
-		mini.last_exit_status = minishell_loop(&mini, mini_env, &exp);
+		mini.last_exit_status = minishell_loop(&mini, mini_env);
 	}
 	return (mini.last_exit_status);
 }
 
-int	minishell_loop(t_mini *mini, t_environnement *mini_env, t_expander *exp)
+int	minishell_loop(t_mini *mini, t_environnement *mini_env)
 {
 	char				*str;
 	t_lexer				*lex;
@@ -51,12 +49,7 @@ int	minishell_loop(t_mini *mini, t_environnement *mini_env, t_expander *exp)
 		if (error_code == 1)
 		{
 			pars = parser(lex, mini);
-			if (pars)
-			{
-				expand_commands(lex, mini_env, exp, mini);
-				mini->last_exit_status = builtin(lex, mini_env);
-				free_parser_list(pars);
-			}
+			minishell_logic(pars, lex, mini, mini_env);
 		}
 		else
 			mini->last_exit_status = error_code;
@@ -64,4 +57,17 @@ int	minishell_loop(t_mini *mini, t_environnement *mini_env, t_expander *exp)
 		free_all(str, lex);
 	}
 	return (mini->last_exit_status);
+}
+
+void	minishell_logic(t_parser_commands *pars, t_lexer *lex, t_mini *mini,
+		t_environnement *mini_env)
+{
+	t_expander	exp;
+
+	if (pars)
+	{
+		expand_commands(lex, mini_env, &exp, mini);
+		mini->last_exit_status = builtin(lex, mini_env, mini);
+		free_parser_list(pars);
+	}
 }

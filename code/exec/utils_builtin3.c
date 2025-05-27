@@ -6,21 +6,18 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:27:55 by iheb              #+#    #+#             */
-/*   Updated: 2025/05/24 13:05:46 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:36:22 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../resources/minishell.h"
 
-int		check_if_builtin(t_lexer *current, int command_found)
+int	check_if_builtin(t_lexer *current, int command_found)
 {
-	if (current->token_type == ECHO || 
-		current->token_type == CD ||
-		current->token_type == PWD ||
-		current->token_type == EXIT ||
-		current->token_type == EXPORT ||
-		current->token_type == ENV ||
-		current->token_type == UNSET)
+	if (current->token_type == ECHO || current->token_type == CD
+		|| current->token_type == PWD || current->token_type == EXIT
+		|| current->token_type == EXPORT || current->token_type == ENV
+		|| current->token_type == UNSET)
 	{
 		if (command_found)
 			command_found = 1;
@@ -40,4 +37,14 @@ void	print_error(char *str1, char *str)
 {
 	ft_putstr_fd(str1, 2);
 	ft_putendl_fd(str, 2);
+}
+
+void	append_node(t_environnement *head, t_environnement *mini_env,
+		t_environnement *current)
+{
+	if (!head)
+		head = mini_env;
+	else
+		current->next = mini_env;
+	current = mini_env;
 }

@@ -6,15 +6,17 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:24:53 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/17 09:25:06 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:01:12 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/libft.h"
 
-int    ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);

@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:03:00 by fakambou          #+#    #+#             */
-/*   Updated: 2025/05/22 15:41:44 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:26:34 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,20 @@ void	put_env(char **env)
 	}
 }
 
-int	put_echo(t_lexer *lexer)
+int	put_echo(t_lexer *lexer, t_mini *mini)
 {
-	int	newline;
-	int	i;
-
-	newline = 1;
+	mini->newline1 = 1;
 	while (lexer->next)
 	{
-		i = 1;
+		mini->i1 = 1;
 		if (lexer->next->str[0] == '-' && lexer->next->str[1] == 'n')
-			while (lexer->next->str[i] == 'n')
-				i++;
+			while (lexer->next->str[mini->i1] == 'n')
+				mini->i1++;
 		else
-			i = 0;
-		if (lexer->next->str[i] != '\0')
+			mini->i1 = 0;
+		if (lexer->next->str[mini->i1] != '\0')
 			break ;
-		newline = 0;
+		mini->newline1 = 0;
 		lexer = lexer->next;
 	}
 	while (lexer->next)
@@ -65,7 +62,7 @@ int	put_echo(t_lexer *lexer)
 			ft_putchar(' ');
 		lexer = lexer->next;
 	}
-	if (newline)
+	if (mini->newline1)
 		ft_putchar('\n');
 	return (0);
 }

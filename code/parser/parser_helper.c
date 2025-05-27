@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 09:37:43 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/08 12:05:54 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:59:28 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ void	init_new_cmd(t_mini *mini)
 	mini->new_list_element->prev = NULL;
 }
 
-
 void	handle_heredocs(t_mini *mini)
 {
-	t_lexer *token_tmp;
+	t_lexer	*token_tmp;
 
 	token_tmp = mini->token;
 	if (mini->token->token_type == HEREDOC)
@@ -38,14 +37,14 @@ void	handle_heredocs(t_mini *mini)
 
 void	handle_filename(t_mini *mini)
 {
-	t_lexer *token_tmp;
+	t_lexer	*token_tmp;
 
 	token_tmp = mini->token;
 	if (token_tmp->token_type == WORD)
 	{
 		mini->filename = malloc(sizeof(t_lexer));
 		if (!mini->filename)
-			exit (1);
+			exit(1);
 		mini->filename->str = ft_strdup(token_tmp->str);
 		mini->filename->token_type = token_tmp->token_type;
 		mini->filename->next = NULL;

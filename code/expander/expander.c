@@ -3,49 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:17:36 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/25 11:48:26 by iheb             ###   ########.fr       */
+/*   Updated: 2025/05/27 15:55:41 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../resources/minishell.h"
 
-void expand_commands(t_lexer *lex, t_environnement *mini_env,
-        t_expander *exp, t_mini *mini)
+void	expand_commands(t_lexer *lex, t_environnement *mini_env,
+		t_expander *exp, t_mini *mini)
 {
-    char *dollar_quote_str;
-    
-    exp->current = lex;
-    while (exp->current)
-    {
-        handle_special_cases(exp->current, mini);
-        dollar_quote_str = handle_dollar_quote(exp->current->str);
-        if (dollar_quote_str)
-        {
-            free(exp->current->str);
-            exp->current->str = dollar_quote_str;
-        }
-        else
-        {
-            while (expansion_checker(exp->current->str) == 1)
-                expansion_logic(exp, mini_env);
-        }
-        if (exp->current->token_type != HEREDOC)
-        {
-            exp->old_str = exp->current->str;
-            exp->current->str = remove_quotes(exp->old_str);
-            free(exp->old_str);
-        }
-        exp->current = exp->current->next;
-    }
+	char	*dollar_quote_str;
+
+	exp->current = lex;
+	while (exp->current)
+	{
+		handle_special_cases(exp->current, mini);
+		dollar_quote_str = handle_dollar_quote(exp->current->str);
+		if (dollar_quote_str)
+		{
+			free(exp->current->str);
+			exp->current->str = dollar_quote_str;
+		}
+		else
+		{
+			while (expansion_checker(exp->current->str) == 1)
+				expansion_logic(exp, mini_env);
+		}
+		if (exp->current->token_type != HEREDOC)
+		{
+			exp->old_str = exp->current->str;
+			exp->current->str = remove_quotes(exp->old_str, mini);
+			free(exp->old_str);
+		}
+		exp->current = exp->current->next;
+	}
 }
 
 void	expansion_logic(t_expander *exp, t_environnement *mini_env)
 {
-	exp->expanded_variable = expand_variable_value(exp->current->str
-			,mini_env, exp);
+	exp->expanded_variable = expand_variable_value(exp->current->str, mini_env,
+			exp);
 	if (exp->expanded_variable)
 	{
 		exp->start = find_dollar(exp->current->str);

@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 21:54:15 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/17 09:24:08 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:01:31 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,3 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		i++;
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
-
-// int main(void)
-// {
-// 	char s1[] = "iheb crack";
-// 	char s2[] = "crack";
-
-// 	printf("%d", ft_strncmp(s1, s2, 10));
-// 	return 0;
-// }

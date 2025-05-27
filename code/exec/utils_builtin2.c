@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:57:06 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/24 15:12:01 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:35:42 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,35 +34,42 @@ void	value_swap(t_environnement *current, char *temp_value)
 	current->next->variable_value = temp_value;
 }
 
-int	export_with_arguments(t_environnement *mini_env, t_lexer *builtin)
+int	handle_valid_argument(t_lexer *builtin, t_environnement **mini_env)
 {
 	t_environnement	*env_argument;
 	t_environnement	*current;
-	char			*equal_sign;
-	int				name_lenght;
 
-	current = mini_env;
+	builtin = builtin->next;
+	env_argument = add_argument_to_env(builtin);
+	if (env_argument && update_env(env_argument, *mini_env) == 0)
+	{
+		current = *mini_env;
+		while (current && current->next)
+			current = current->next;
+		if (current)
+			current->next = env_argument;
+		else
+			*mini_env = env_argument;
+	}
+	return (0);
+}
+
+int	export_with_arguments(t_environnement *mini_env, t_lexer *builtin)
+{
+	int		name_length;
+	char	*equal_sign;
+
+	if (!builtin || !builtin->next || !builtin->next->str)
+		return (1);
 	equal_sign = ft_strchr(builtin->next->str, '=');
-	name_lenght = equal_sign - builtin->next->str + 1;
+	if (!equal_sign)
+		return (1);
+	name_length = equal_sign - builtin->next->str + 1;
 	while (builtin)
 	{
-		if (builtin->next && !ft_isdigit(builtin->next->str[0])
-			&& ft_symbols(ft_substr(builtin->next->str, 0, name_lenght)) == 0
-			&& builtin->next->str && builtin->next->str[0] != '=')
-		{
-			builtin = builtin->next;
-			env_argument = add_argument_to_env(builtin);
-			if (env_argument && update_env(env_argument, mini_env) == 0)
-			{
-				while (current && current->next)
-					current = current->next;
-				if (current)
-					current->next = env_argument;
-				else
-					mini_env = env_argument;
-			}
-			return (0);
-		}
+		if (builtin->next && is_valid_export_argument(builtin->next->str,
+				name_length))
+			return (handle_valid_argument(builtin, &mini_env));
 		else
 		{
 			ft_putstr_fd("export : ", 2);
@@ -73,22 +80,7 @@ int	export_with_arguments(t_environnement *mini_env, t_lexer *builtin)
 	}
 	return (1);
 }
-int	ft_symbols(char *str)
-{
-	int	i;
 
-	i = 0;
-	while (str[i])
-	{
-		if ((str[i] >= 33 && str[i] <= 47) || (str[i] >= 58 && str[i] <= 60)
-			|| (str[i] >= 91 && str[i] <= 94) || (str[i] == 96)
-			|| (str[i] >= 123 && str[i] <= 126) || (str[i] >= 62
-				&& str[i] <= 63))
-			return (1);
-		i++;
-	}
-	return (0);
-}
 int	update_env(t_environnement *env_argument, t_environnement *mini_env)
 {
 	t_environnement	*current;
@@ -104,31 +96,4 @@ int	update_env(t_environnement *env_argument, t_environnement *mini_env)
 		current = current->next;
 	}
 	return (0);
-}
-t_environnement	*add_argument_to_env(t_lexer *builtin)
-{
-	t_environnement	*new_argument_node;
-	char			*temp;
-	char			*equal_sign;
-	int				name_lenght;
-
-	new_argument_node = malloc(sizeof(t_environnement));
-	if (!new_argument_node)
-		return (NULL);
-	equal_sign = ft_strchr(builtin->str, '=');
-	if (equal_sign)
-	{
-		name_lenght = equal_sign - builtin->str + 1;
-		temp = ft_substr(builtin->str, 0, name_lenght);
-		new_argument_node->variable_name = ft_strdup(temp);
-		free(temp);
-		new_argument_node->variable_value = ft_strdup(equal_sign + 1);
-	}
-	else
-	{
-		free(new_argument_node);
-		return (NULL);
-	}
-	new_argument_node->next = NULL;
-	return (new_argument_node);
 }

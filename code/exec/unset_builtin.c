@@ -6,29 +6,38 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 14:46:18 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/24 15:16:45 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:40:03 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../resources/minishell.h"
 
-int	builtin(t_lexer *builtin, t_environnement *mini_env)
+int	builtin(t_lexer *builtin, t_environnement *mini_env, t_mini *mini)
 {
-	t_lexer *current;
-    int command_found;
-	int	exit_status;
-    
+	t_lexer	*current;
+	int		command_found;
+	int		exit_status;
+
 	current = builtin;
 	command_found = 0;
 	exit_status = 0;
-    while (current)
-    {
+	while (current)
+	{
 		if (check_if_builtin(current, command_found) == 1)
-			exit_status = execute_builtins(current, mini_env);
-        current = current->next;
-    }
-    if (!command_found && builtin && builtin->token_type == WORD)
-    {
+		{
+			exit_status = execute_builtins(current, mini_env, mini);
+			command_found = 1;
+		}
+		current = current->next;
+	}
+	exit_status = is_not_builtin_command(builtin, command_found);
+	return (exit_status);
+}
+
+int	is_not_builtin_command(t_lexer *builtin, int command_found)
+{
+	if (!command_found && builtin && builtin->token_type == WORD)
+	{
 		if (ft_strchr(builtin->str, '/'))
 		{
 			print_error(builtin->str, ": Is a directory");
@@ -39,38 +48,16 @@ int	builtin(t_lexer *builtin, t_environnement *mini_env)
 			print_error(builtin->str, ": command not found");
 			return (127);
 		}
-		return (0);
 	}
-    return (exit_status);
+	return (0);
 }
 
-int	execute_builtins(t_lexer *current, t_environnement *mini_env)
+int	execute_builtins(t_lexer *current, t_environnement *mini_env, t_mini *mini)
 {
 	while (current)
 	{
-		if (current->token_type == ECHO)
-		{
-			return(put_echo(current));
-			break;
-		}
-		else if (current->token_type == CD)
-		{
-			return (cd(current));
-			break;
-		}
-		else if (current->token_type == PWD)
-			return get_pwd();
-		else if (current->token_type == EXIT)
-			ft_exit(current);
-		else if (current->token_type == EXPORT)
-			return (export_builtin(current, mini_env));
-		else if (current->token_type == ENV)
-		{
-			print_env(mini_env);
-			return (0);
-		}
-		else if (current->token_type == UNSET)
-			return handle_unset_builtin(current, mini_env);
+		if (current->token_type >= ECHO && current->token_type <= UNSET)
+			return (dispatch_builtin(current, mini_env, mini));
 		current = current->next;
 	}
 	return (1);
@@ -117,12 +104,4 @@ void	delete_node(t_lexer *builtin, t_environnement **mini_env)
 		prev = current;
 		current = current->next;
 	}
-}
-
-void	free_node(char *var_name, t_environnement *current)
-{
-	free(var_name);
-	free(current->variable_name);
-	free(current->variable_value);
-	free(current);
 }

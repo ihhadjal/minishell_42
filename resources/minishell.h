@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 14:34:59 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:59:54 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define NEWLINE_ERROR "syntax error near unexpected token `newline'"
 # define HEREDOC_ERROR "syntax error near unexpected token `<<'"
 # define APPEND_ERROR "syntax error near unexpected token `>>'"
+
 typedef enum e_tokens
 {
 	WORD,
@@ -72,6 +73,10 @@ typedef struct s_mini
 	char						**new_array;
 	char						*array_temp;
 	int							last_exit_status;
+	int							newline1;
+	int							i1;
+	int							in_single;
+	int							in_double;
 	t_parser_commands			*first_list_element;
 	t_parser_commands			*new_list_element;
 	t_parser_commands			*current_list_element;
@@ -109,8 +114,8 @@ typedef struct s_expander
 	t_lexer						*current;
 }								t_expander;
 
-int							minishell_loop(t_mini *mini,
-									t_environnement *mini_env, t_expander *exp);
+int								minishell_loop(t_mini *mini,
+									t_environnement *mini_env);
 void							print_list(t_lexer *lex);
 t_lexer							*get_token(char *str);
 t_lexer							*lexer(char *str);
@@ -133,10 +138,11 @@ void							pipe_handler(t_lexer *lexer, t_mini *mini);
 void							redirections_handler(t_lexer *lexer,
 									t_mini *mini);
 int								builtin(t_lexer *builtin,
-									t_environnement *mini_env);
+									t_environnement *mini_env, t_mini *mini);
 int								is_number(char *str);
 
-t_lexer							*redirections_and_commands_handler(t_mini *mini);
+t_lexer							*redirections_and_commands_handler(
+									t_mini *mini);
 void							create_redirection_node(t_mini *mini);
 void							init_new_redirection(t_mini *mini);
 void							handle_heredocs(t_mini *mini);
@@ -154,7 +160,8 @@ int								handle_redirection_errors2(t_lexer *lex);
 int								fake_redirec_token(char *str, t_lexer *token);
 int								export_builtin(t_lexer *builtin,
 									t_environnement *mini_env);
-void							init_env_container(t_environnement *env_container);
+void							init_env_container(
+									t_environnement *env_container);
 t_environnement					*get_env(char **env);
 void							print_env(t_environnement *mini_env);
 char							**sort_variable_name(t_environnement *mini_env);
@@ -163,7 +170,7 @@ t_environnement					*env_sort(t_environnement *env_copy);
 void							value_swap(t_environnement *current,
 									char *temp_value);
 void							free_env_variables(t_environnement *temp);
-int							export_with_arguments(t_environnement *mini_env,
+int								export_with_arguments(t_environnement *mini_env,
 									t_lexer *builtin);
 t_environnement					*add_argument_to_env(t_lexer *builtin);
 int								handle_unset_builtin(t_lexer *builtin,
@@ -176,7 +183,7 @@ void							free_node(char *var_name,
 									t_environnement *current);
 int								get_pwd(void);
 void							put_env(char **env);
-int								put_echo(t_lexer *lexer);
+int								put_echo(t_lexer *lexer, t_mini *mini);
 int								cd(t_lexer *lexer);
 int								ft_exit(t_lexer *lexer);
 int								expansion_checker(char *str);
@@ -188,19 +195,40 @@ void							expand_commands(t_lexer *lex,
 int								update_env(t_environnement *env_argument,
 									t_environnement *mini_env);
 int								execute_builtins(t_lexer *current,
-									t_environnement *mini_env);
+									t_environnement *mini_env, t_mini *mini);
 int								check_if_builtin(t_lexer *current,
 									int command_found);
 int								find_dollar(char *str);
 void							substitution(t_lexer *current, int start_index,
 									int end_index, char *expanded_variable);
 int								find_var_end(char *str, int start);
-void							handle_special_cases(t_lexer *lex, t_mini *mini);
-char	*remove_quotes(char *str);
-int	count_new_len(char *str);
-void	expansion_logic(t_expander *exp, t_environnement *mini_env);
-void	print_error(char *str1, char *str);
-int	ft_symbols(char *str);
-char *handle_dollar_quote(char *str);
-int	check_if_pipe(t_lexer *lex);
+void							handle_special_cases(t_lexer *lex,
+									t_mini *mini);
+char							*remove_quotes(char *str, t_mini *mini);
+int								count_new_len(char *str);
+void							expansion_logic(t_expander *exp,
+									t_environnement *mini_env);
+void							print_error(char *str1, char *str);
+int								ft_symbols(char *str);
+char							*handle_dollar_quote(char *str);
+int								check_if_pipe(t_lexer *lex);
+void							minishell_logic(t_parser_commands *pars,
+									t_lexer *lex, t_mini *mini,
+									t_environnement *mini_env);
+void							append_node(t_environnement *head,
+									t_environnement *mini_env,
+									t_environnement *current);
+void							name_swap(t_environnement *current,
+									char *temp_name);
+int								error_print(t_lexer *builtin);
+int								is_valid_export_argument(char *str,
+									int name_length);
+int								handle_valid_argument(t_lexer *builtin,
+									t_environnement **mini_env);
+int								is_not_builtin_command(t_lexer *builtin,
+									int command_found);
+int								dispatch_builtin(t_lexer *current,
+									t_environnement *mini_env, t_mini *mini);
+void							process_quote(char c, t_mini *mini,
+									char *new_str, int *j);
 #endif

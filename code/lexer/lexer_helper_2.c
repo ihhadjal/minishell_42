@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:01:42 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/08 11:43:19 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/27 14:58:45 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	builtin_tokens2(char *str, t_lexer *lexer)
 		lexer->token_type = EXIT;
 	}
 }
+
 int	fake_redirec_token(char *str, t_lexer *token)
 {
 	if (str[0] == '<')
