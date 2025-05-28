@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:02:26 by iheb              #+#    #+#             */
-/*   Updated: 2025/05/27 19:50:08 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/28 16:20:32 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,22 @@ int	error_handling(t_lexer *lex)
 
 int	handle_redirection_errors(t_lexer *lex)
 {
-	if (lex->token_type == APPEND && lex->next->token_type != WORD)
+	if ((lex->token_type == APPEND && lex->next->token_type != WORD)
+		|| (lex->token_type == APPEND && lex->next->token_type == REDIREC_OUT))
 	{
-		ft_putendl_fd("syntax error near unexpected token `>>'", 2);
+		if (lex->next->token_type == REDIREC_OUT)
+			ft_putendl_fd("syntax error near unexpected token `>'", 2);
+		else
+			ft_putendl_fd("syntax error near unexpected token `>>'", 2);
 		return (0);
 	}
-	else if (lex->token_type == HEREDOC && lex->next->token_type != WORD)
+	else if ((lex->token_type == HEREDOC && lex->next->token_type != WORD)
+		|| (lex->token_type == HEREDOC && lex->next->token_type == REDIREC_IN))
 	{
-		ft_putendl_fd("syntax error near unexpected token `<<'", 2);
+		if (lex->next->token_type == REDIREC_IN)
+			ft_putendl_fd("syntax error near unexpected token `<'", 2);
+		else
+			ft_putendl_fd("syntax error near unexpected token `<<'", 2);
 		return (0);
 	}
 	else if (lex->token_type == REDIREC_IN && lex->next->token_type != WORD)
