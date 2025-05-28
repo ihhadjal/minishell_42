@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:17:36 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 15:55:41 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/28 12:02:01 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	expand_commands(t_lexer *lex, t_environnement *mini_env,
 		{
 			exp->old_str = exp->current->str;
 			exp->current->str = remove_quotes(exp->old_str, mini);
-			free(exp->old_str);
+			// free(exp->old_str);
 		}
 		exp->current = exp->current->next;
 	}
