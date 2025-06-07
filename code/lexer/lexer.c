@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:09:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/07 16:13:10 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/07 19:17:55 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ t_lexer	*get_token(char *str)
 	token->next = NULL;
 	token->str = NULL;
 	token->token_type = WORD;
-	// builtin_tokens(str, token);
-	// builtin_tokens2(str, token);
 	pipe_token(str, token);
 	redirec_in_token(str, token);
 	redirec_out_token(str, token);
