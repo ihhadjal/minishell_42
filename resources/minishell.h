@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 19:33:39 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/07 19:16:01 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,4 +236,20 @@ int								process_valid_export(t_lexer *builtin,
 									t_environnement *mini_env);
 int								validate_and_add_export(t_lexer *builtin,
 									t_environnement *mini_env);
+int	execute_parsarg_builtins(t_parser_commands *pars, t_environnement *mini_env,
+		t_mini *mini);
+int	parsarg_echo(char **str);
+int	parsarg_cd(char **str);
+int	parsarg_pwd(void);
+int	parsarg_exit(char **str);
+int	parsarg_export(char **str, t_environnement *mini_env);
+int	parsarg_export_with_arguments(t_environnement *mini_env, char **str);
+int	parsarg_validate(char *str, t_environnement *mini_env);
+int	parsarg_valid_id(char *str);
+t_environnement	*parsadd_argument_to_env(char *str);
+int	parsarg_valid_export(char *str, t_environnement *mini_env);
+int	parsupdate_env(t_environnement *env_argument, t_environnement *mini_env);
+int	parsarg_unset(char **str, t_environnement *mini_env);
+void	parsdelete_node(char *var_to_unset, t_environnement **mini_env);
+void	parsfree_node(char *var_name, t_environnement *node);
 #endif

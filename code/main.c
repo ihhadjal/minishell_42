@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 19:44:48 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/07 17:14:58 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	minishell_logic(t_parser_commands *pars, t_lexer *lex, t_mini *mini,
 	if (pars)
 	{
 		expand_commands(lex, mini_env, &exp, mini);
-		mini->last_exit_status = builtin(lex, mini_env, mini);
+		mini->last_exit_status = execute_parsarg_builtins(pars, mini_env, mini);
+		// mini->last_exit_status = builtin(lex, mini_env, mini);
 		free_parser_list(pars);
 	}
 }
