@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:26:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 13:02:11 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:29:08 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,20 @@ void	execute_pipe_processes(t_parser_commands *pars,
 {
 	t_parser_commands	*current;
 	int					i;
+	int					cmd_count;
 
+	cmd_count = count_commands(pars);
+	i = 0;
+	while (i < cmd_count - 1)
+	{
+		if (pipe(pipes[i]) == -1)
+		{
+			perror("pipe");
+			cleanup_pipes(pipes, i);
+			exit(1);
+		}
+		i++;
+	}
 	i = 0;
 	current = pars;
 	while (current)
@@ -90,6 +103,11 @@ void	execute_pipe_processes(t_parser_commands *pars,
 		pids[i] = fork();
 		if (pids[i] == 0)
 			execute_child_process(current, mini_env, pipes, i);
+		else if (pids[i] < 0)
+		{
+			perror("fork");
+			exit(1);
+		}
 		current = current->next;
 		i++;
 	}

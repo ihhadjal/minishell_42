@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 10:27:55 by iheb              #+#    #+#             */
-/*   Updated: 2025/05/27 20:08:06 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:42:16 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	print_env(t_environnement *mini_env)
 {
 	while (mini_env)
 	{
-		printf("%s%s\n", mini_env->variable_name, mini_env->variable_value);
+		if (mini_env->variable_name)
+			printf("%s%s\n", mini_env->variable_name, mini_env->variable_value);
 		mini_env = mini_env->next;
 	}
 }
