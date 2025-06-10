@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:26:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 15:08:43 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/10 22:07:55 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,40 @@ int	count_commands(t_parser_commands *pars)
 	}
 	return (count);
 }
-int	execute_single_command(t_parser_commands *cmd, t_environnement *mini_env,
-		t_mini *mini)
+// int	execute_single_command(t_parser_commands *cmd, t_environnement *mini_env,
+// 		t_mini *mini)
+// {
+// 	if (is_builtin_command(cmd))
+// 		return (execute_parsarg_builtins(cmd, mini_env, mini));
+// 	return (execute_external_command(cmd, mini_env));
+// }
+
+int	execute_single_command(t_parser_commands *cmd, t_environnement *mini_env, t_mini *mini)
 {
-	if (is_builtin_command(cmd))
-		return (execute_parsarg_builtins(cmd, mini_env, mini));
-	return (execute_external_command(cmd, mini_env));
+    int status_code;
+    int original_stdin;
+    int original_stdout;
+
+    original_stdin = dup(STDIN_FILENO);
+    original_stdout = dup(STDOUT_FILENO);
+    if (setup_redirections(cmd) == -1)
+    {
+        restore_stdio(original_stdin, original_stdout);
+        return (1);
+    }
+    if (cmd->cmd_str == NULL || cmd->cmd_str[0] == NULL)
+	{
+        restore_stdio(original_stdin, original_stdout);
+        return (0);
+    }
+    if (is_builtin_command(cmd))
+        status_code = execute_parsarg_builtins(cmd, mini_env, mini);
+    else
+        status_code = execute_external_command(cmd, mini_env);
+    restore_stdio(original_stdin, original_stdout);
+    return (status_code);
 }
+
 
 int	is_builtin_command(t_parser_commands *cmd)
 {

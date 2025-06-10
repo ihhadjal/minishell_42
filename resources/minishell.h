@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 15:54:17 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/10 22:04:21 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,5 +318,5 @@ void	execute_external_in_pipe(t_parser_commands *cmd, t_environnement *mini_env)
 int	count_env_vars(t_environnement *mini_env);
 char	*create_env_string(t_environnement *env_var);
 void	free_env_array_partial(char **env_array, int count);
-
+void restore_stdio(int original_stdin, int original_stdout);
 #endif
