@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 17:00:17 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/07 18:42:17 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:18:53 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ int	parsarg_valid_id(char *str)
 	char	*variable_name;
 
 	equal_sign = ft_strchr(str, '=');
-	if (!equal_sign)
-		return (0);
 	name_lenght = equal_sign - str + 1;
 	tmp = ft_substr(str, 0, name_lenght);
 	variable_name = tmp;

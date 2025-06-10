@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/07 19:16:01 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/10 13:03:42 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@
 # include "libft/header/ft_printf.h"
 # include "libft/header/get_next_line.h"
 # include "libft/header/libft.h"
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/wait.h>
 # include <unistd.h>
 
 # define NEWLINE_ERROR "syntax error near unexpected token `newline'"
@@ -140,8 +143,7 @@ int								builtin(t_lexer *builtin,
 									t_environnement *mini_env, t_mini *mini);
 int								is_number(char *str);
 
-t_lexer							*redirections_and_commands_handler(
-									t_mini *mini);
+t_lexer							*redirections_and_commands_handler(t_mini *mini);
 void							create_redirection_node(t_mini *mini);
 void							init_new_redirection(t_mini *mini);
 void							handle_heredocs(t_mini *mini);
@@ -159,8 +161,7 @@ int								handle_redirection_errors2(t_lexer *lex);
 int								fake_redirec_token(char *str, t_lexer *token);
 int								export_builtin(t_lexer *builtin,
 									t_environnement *mini_env);
-void							init_env_container(
-									t_environnement *env_container);
+void							init_env_container(t_environnement *env_container);
 t_environnement					*get_env(char **env);
 void							print_env(t_environnement *mini_env);
 char							**sort_variable_name(t_environnement *mini_env);
@@ -212,8 +213,7 @@ int								ft_symbols(char *str);
 char							*handle_dollar_quote(char *str);
 int								check_if_pipe(t_lexer *lex);
 void							minishell_logic(t_parser_commands *pars,
-									t_lexer *lex, t_mini *mini,
-									t_environnement *mini_env);
+									t_mini *mini, t_environnement *mini_env);
 void							append_node(t_environnement *head,
 									t_environnement *mini_env,
 									t_environnement *current);
@@ -236,20 +236,88 @@ int								process_valid_export(t_lexer *builtin,
 									t_environnement *mini_env);
 int								validate_and_add_export(t_lexer *builtin,
 									t_environnement *mini_env);
-int	execute_parsarg_builtins(t_parser_commands *pars, t_environnement *mini_env,
-		t_mini *mini);
-int	parsarg_echo(char **str);
-int	parsarg_cd(char **str);
-int	parsarg_pwd(void);
-int	parsarg_exit(char **str);
-int	parsarg_export(char **str, t_environnement *mini_env);
-int	parsarg_export_with_arguments(t_environnement *mini_env, char **str);
-int	parsarg_validate(char *str, t_environnement *mini_env);
-int	parsarg_valid_id(char *str);
-t_environnement	*parsadd_argument_to_env(char *str);
-int	parsarg_valid_export(char *str, t_environnement *mini_env);
-int	parsupdate_env(t_environnement *env_argument, t_environnement *mini_env);
-int	parsarg_unset(char **str, t_environnement *mini_env);
-void	parsdelete_node(char *var_to_unset, t_environnement **mini_env);
-void	parsfree_node(char *var_name, t_environnement *node);
+int								execute_parsarg_builtins(t_parser_commands *pars,
+									t_environnement *mini_env, t_mini *mini);
+int								parsarg_echo(char **str);
+int								parsarg_cd(char **str);
+int								parsarg_pwd(void);
+int								parsarg_exit(char **str);
+int								parsarg_export(char **str,
+									t_environnement *mini_env);
+int								parsarg_export_with_arguments(t_environnement *mini_env,
+									char **str);
+int								parsarg_validate(char *str,
+									t_environnement *mini_env);
+int								parsarg_valid_id(char *str);
+t_environnement					*parsadd_argument_to_env(char *str);
+int								parsarg_valid_export(char *str,
+									t_environnement *mini_env);
+int								parsupdate_env(t_environnement *env_argument,
+									t_environnement *mini_env);
+int								parsarg_unset(char **str,
+									t_environnement *mini_env);
+void							parsdelete_node(char *var_to_unset,
+									t_environnement **mini_env);
+void							parsfree_node(char *var_name,
+									t_environnement *node);
+
+void							setup_signals(void);
+void							setup_child_signals(void);
+void							ignore_signals(void);
+void							handle_sigint(int sig);
+void							handle_sigquit(int sig);
+
+int								execute_commands(t_parser_commands *pars,
+									t_environnement *mini_env, t_mini *mini);
+int								execute_pipeline(t_parser_commands *pars,
+									t_environnement *mini_env, t_mini *mini);
+int								execute_single_command(t_parser_commands *cmd,
+									t_environnement *mini_env, t_mini *mini);
+int								execute_external_command(t_parser_commands *cmd,
+									t_environnement *mini_env);
+int								is_builtin_command(t_parser_commands *cmd);
+int								count_commands(t_parser_commands *pars);
+
+int								execute_pipe_chain(t_parser_commands *pars,
+									t_environnement *mini_env, int cmd_count);
+int								**create_pipes(int pipe_count);
+void							cleanup_pipes(int **pipes, int pipe_count);
+void							execute_pipe_processes(t_parser_commands *pars,
+									t_environnement *mini_env, int **pipes,
+									int *pids);
+int								wait_for_children(int *pids, int cmd_count);
+void							execute_child_process(t_parser_commands *cmd,
+									t_environnement *mini_env, int **pipes,
+									int cmd_index);
+
+int								setup_redirections(t_parser_commands *cmd);
+int								handle_single_redirection(t_lexer *redir);
+int								handle_input_redirection(char *filename);
+int								handle_output_redirection(char *filename);
+int								handle_append_redirection(char *filename);
+int								handle_heredoc_redirection(char *delimiter);
+void							handle_heredoc_child(int *pipefd,
+									char *delimiter);
+int								handle_heredoc_parent(int *pipefd, int pid);
+
+char							**env_to_array(t_environnement *mini_env);
+char							*get_env_value(char *var_name,
+									t_environnement *mini_env);
+char							*find_command_path(char *cmd,
+									t_environnement *mini_env);
+char							*create_full_path(char *dir, char *cmd);
+void							free_env_array(char **env_array);
+void							free_split_array(char **array);
+int	handle_command_not_found(char *cmd_name, char **env_array);
+void	execute_external_child(t_parser_commands *cmd, char *path,
+		char **env_array);
+int	wait_for_external_child(int pid, char *path, char **env_array);
+void	setup_pipe_redirections(int **pipes, int cmd_index);
+void	close_all_pipes(int **pipes);
+int	execute_builtin_in_pipe(t_parser_commands *cmd, t_environnement *mini_env);
+void	execute_external_in_pipe(t_parser_commands *cmd, t_environnement *mini_env);
+int	count_env_vars(t_environnement *mini_env);
+char	*create_env_string(t_environnement *env_var);
+void	free_env_array_partial(char **env_array, int count);
+
 #endif

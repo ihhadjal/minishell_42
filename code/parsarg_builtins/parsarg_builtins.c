@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:22:20 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/07 19:10:45 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:27:22 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,19 @@ int	parsarg_exit(char **str)
 	ft_putstr("exit\n");
 	if (!str[1])
 		exit (0);
+	if (str[2])
+	{
+		ft_putendl_fd(" too many arguments", 2);
+		exit (1);
+	}
 	while (str[i])
 	{
 		if (is_number(str[i]))
 		{
-			ft_printf("exit: numeric argument required\n");
-			exit (255);
+			ft_putendl_fd(" numeric argument required", 2);
+			exit (2);
 		}
 		i++;
-	}
-	if (str[2])
-	{
-		ft_printf("exit: too many arguments\n");
-		return (1);
 	}
 	i = 1;
 	while (str[i])
@@ -92,6 +92,11 @@ int	parsarg_cd(char **str)
 	if (!str[1])
 	{
 		ft_putstr_fd("path required\n", 2);
+		return (1);
+	}
+	if (str[2])
+	{
+		ft_putstr_fd(" too many arguments\n", 2);
 		return (1);
 	}
 	if (chdir(str[1]) != 0)

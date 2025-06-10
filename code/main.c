@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/07 19:17:47 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/10 12:53:53 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **argv, char **env)
 	else
 	{
 		mini_env = get_env(env);
+		setup_signals();
 		mini.last_exit_status = minishell_loop(&mini, mini_env);
 	}
 	return (mini.last_exit_status);
@@ -36,6 +37,7 @@ int	minishell_loop(t_mini *mini, t_environnement *mini_env)
 	char				*str;
 	t_lexer				*lex;
 	t_parser_commands	*pars;
+	t_expander			exp;
 	int					error_code;
 
 	error_code = 0;
@@ -49,8 +51,9 @@ int	minishell_loop(t_mini *mini, t_environnement *mini_env)
 		error_code = error_handling(lex);
 		if (error_code == 1)
 		{
+			expand_commands(lex, mini_env, &exp, mini);
 			pars = parser(lex, mini);
-			minishell_logic(pars, lex, mini, mini_env);
+			minishell_logic(pars, mini, mini_env);
 		}
 		else
 			mini->last_exit_status = error_code;
@@ -60,15 +63,12 @@ int	minishell_loop(t_mini *mini, t_environnement *mini_env)
 	return (mini->last_exit_status);
 }
 
-void	minishell_logic(t_parser_commands *pars, t_lexer *lex, t_mini *mini,
+void	minishell_logic(t_parser_commands *pars, t_mini *mini,
 		t_environnement *mini_env)
 {
-	t_expander	exp;
-
 	if (pars)
 	{
-		expand_commands(lex, mini_env, &exp, mini);
-		mini->last_exit_status = execute_parsarg_builtins(pars, mini_env, mini);
+		mini->last_exit_status = execute_commands(pars, mini_env, mini);
 		free_parser_list(pars);
 	}
 }
