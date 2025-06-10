@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:48:10 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 15:29:59 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:53:26 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	execute_child_process(t_parser_commands *cmd, t_environnement *mini_env,
 void	setup_pipe_redirections(int **pipes, int cmd_index)
 {
 	// If not the first command, redirect stdin from previous pipe
-	if (cmd_index > 0)
+	if (cmd_index > 0 && pipes[cmd_index - 1])
 	{
 		dup2(pipes[cmd_index - 1][0], STDIN_FILENO);
 	}
@@ -86,3 +86,4 @@ void	execute_external_in_pipe(t_parser_commands *cmd,
 	free_env_array(env_array);
 	exit(1);
 }
+

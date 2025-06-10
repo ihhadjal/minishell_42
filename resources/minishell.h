@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 15:30:20 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:54:17 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,9 +282,8 @@ int								execute_pipe_chain(t_parser_commands *pars,
 									t_environnement *mini_env, int cmd_count);
 int								**create_pipes(int pipe_count);
 void							cleanup_pipes(int **pipes, int pipe_count);
-void							execute_pipe_processes(t_parser_commands *pars,
-									t_environnement *mini_env, int **pipes,
-									int *pids);
+void execute_pipe_processes(t_parser_commands *pars, t_environnement *mini_env, int **pipes, int *pids, int cmd_count);
+void close_all_pipes_in_parent(int **pipes, int pipe_count);
 int								wait_for_children(int *pids, int cmd_count);
 void							execute_child_process(t_parser_commands *cmd,
 									t_environnement *mini_env, int **pipes,

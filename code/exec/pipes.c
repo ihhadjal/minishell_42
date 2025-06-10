@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:26:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 15:29:08 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:47:34 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	execute_pipe_chain(t_parser_commands *pars, t_environnement *mini_env,
 		cleanup_pipes(pipes, cmd_count - 1);
 		return (1);
 	}
-	execute_pipe_processes(pars, mini_env, pipes, pids);
+	execute_pipe_processes(pars, mini_env, pipes, pids, cmd_count);
 	cleanup_pipes(pipes, cmd_count - 1);
 	exit_status = wait_for_children(pids, cmd_count);
 	free(pids);
@@ -40,10 +40,12 @@ int	**create_pipes(int pipe_count)
 	int	**pipes;
 	int	i;
 
-	i = 0;
-	pipes = malloc(sizeof(int *) * pipe_count);
+	// Allocate pipe_count + 1 to have NULL terminator
+	pipes = malloc(sizeof(int *) * (pipe_count + 1));
 	if (!pipes)
 		return (NULL);
+	
+	i = 0;
 	while (i < pipe_count)
 	{
 		pipes[i] = malloc(sizeof(int) * 2);
@@ -54,6 +56,7 @@ int	**create_pipes(int pipe_count)
 		}
 		i++;
 	}
+	pipes[pipe_count] = NULL; // NULL terminate the array
 	return (pipes);
 }
 
@@ -78,13 +81,10 @@ void	cleanup_pipes(int **pipes, int pipe_count)
 }
 
 void	execute_pipe_processes(t_parser_commands *pars,
-		t_environnement *mini_env, int **pipes, int *pids)
+		t_environnement *mini_env, int **pipes, int *pids, int cmd_count)
 {
 	t_parser_commands	*current;
 	int					i;
-	int					cmd_count;
-
-	cmd_count = count_commands(pars);
 	i = 0;
 	while (i < cmd_count - 1)
 	{
@@ -109,6 +109,23 @@ void	execute_pipe_processes(t_parser_commands *pars,
 			exit(1);
 		}
 		current = current->next;
+		i++;
+	}
+	close_all_pipes_in_parent(pipes, cmd_count - 1);
+}
+
+void	close_all_pipes_in_parent(int **pipes, int pipe_count)
+{
+	int	i;
+
+	i = 0;
+	while (i < pipe_count)
+	{
+		if (pipes[i])
+		{
+			close(pipes[i][0]);
+			close(pipes[i][1]);
+		}
 		i++;
 	}
 }
