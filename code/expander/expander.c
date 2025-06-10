@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:17:36 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/28 12:03:55 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/10 22:32:47 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,14 @@ void	expansion_logic(t_expander *exp, t_environnement *mini_env)
 {
 	exp->expanded_variable = expand_variable_value(exp->current->str, mini_env,
 			exp);
+	exp->start = find_dollar(exp->current->str);
+	exp->end = find_var_end(exp->current->str, exp->start + 1);
 	if (exp->expanded_variable)
-	{
-		exp->start = find_dollar(exp->current->str);
-		exp->end = find_var_end(exp->current->str, exp->start + 1);
 		substitution(exp->current, exp->start, exp->end,
 			exp->expanded_variable);
-	}
+	else
+		substitution(exp->current, exp->start, exp->end, "");
+	
 }
 
 void	substitution(t_lexer *current, int start_index, int end_index,
