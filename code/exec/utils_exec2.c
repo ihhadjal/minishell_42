@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:49:49 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 12:50:00 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:47:06 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*create_full_path(char *dir, char *cmd)
 
 void	free_split_array(char **array)
 {
-	int i;
+	int	i;
 
 	if (!array)
 		return ;

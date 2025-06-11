@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:51:43 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 12:59:18 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:45:23 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	handle_heredoc_child(int *pipefd, char *delimiter)
 
 int	handle_heredoc_parent(int *pipefd, int pid)
 {
-	int status;
+	int	status;
 
 	close(pipefd[1]);
 	ignore_signals();

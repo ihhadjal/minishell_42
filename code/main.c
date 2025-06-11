@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/11 14:22:25 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:24:08 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,9 @@ int	main(int argc, char **argv, char **env)
 
 int	minishell_loop(t_mini *mini, t_environnement *mini_env)
 {
-	char				*str;
-	t_lexer				*lex;
-	t_parser_commands	*pars;
-	t_expander			exp;
-	int					error_code;
+	char	*str;
+	t_lexer	*lex;
+	int		error_code;
 
 	error_code = 0;
 	while (1)
@@ -50,11 +48,7 @@ int	minishell_loop(t_mini *mini, t_environnement *mini_env)
 		lex = lexer(str);
 		error_code = error_handling(lex);
 		if (error_code == 1)
-		{
-			expand_commands(lex, mini_env, &exp, mini);
-			pars = parser(lex, mini);
-			minishell_logic(pars, mini, mini_env);
-		}
+			minishell_logic(mini, mini_env, lex);
 		else
 			mini->last_exit_status = error_code;
 		add_history(str);
@@ -63,9 +57,13 @@ int	minishell_loop(t_mini *mini, t_environnement *mini_env)
 	return (mini->last_exit_status);
 }
 
-void	minishell_logic(t_parser_commands *pars, t_mini *mini,
-		t_environnement *mini_env)
+void	minishell_logic(t_mini *mini, t_environnement *mini_env, t_lexer *lex)
 {
+	t_expander			exp;
+	t_parser_commands	*pars;
+
+	expand_commands(lex, mini_env, &exp, mini);
+	pars = parser(lex, mini);
 	if (pars)
 	{
 		mini->last_exit_status = execute_commands(pars, mini_env, mini);

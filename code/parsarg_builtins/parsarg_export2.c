@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 18:41:49 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/07 18:42:14 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:49:30 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_environnement	*parsadd_argument_to_env(char *str)
 
 int	parsupdate_env(t_environnement *env_argument, t_environnement *mini_env)
 {
-	t_environnement *current;
+	t_environnement	*current;
 
 	current = mini_env;
 	while (current)

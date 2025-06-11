@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 09:18:17 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/11 14:30:37 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:17:06 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 void	skip_empty_tokens(t_mini *mini)
 {
-    while (mini->current_token && mini->current_token->str && 
-           ft_strlen(mini->current_token->str) == 0)
-    {
-        mini->current_token = mini->current_token->next;
-    }
+	while (mini->current_token && mini->current_token->str
+		&& ft_strlen(mini->current_token->str) == 0)
+	{
+		mini->current_token = mini->current_token->next;
+	}
 }
 
 t_parser_commands	*parser(t_lexer *lexer, t_mini *mini)
 {
-	mini->first_list_element = NULL;
-	mini->current_list_element = NULL;
-	mini->current_token = lexer;
+	init_list(mini, lexer);
 	while (mini->current_token)
 	{
 		skip_empty_tokens(mini);
@@ -72,9 +70,8 @@ t_lexer	*redirections_and_commands_handler(t_mini *mini)
 	}
 	else if (mini->token->token_type == WORD)
 	{
-		mini->new_list_element->cmd_str = add_string_to_array
-			(mini->new_list_element->cmd_str,
-				mini->token->str, mini);
+		mini->new_list_element->cmd_str = add_string_to_array(
+				mini->new_list_element->cmd_str, mini->token->str, mini);
 		return (mini->token);
 	}
 	return (mini->token);

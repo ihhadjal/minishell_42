@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:43:12 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/11 15:14:15 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:39:54 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,18 @@ int	execute_external_command(t_parser_commands *cmd, t_environnement *mini_env)
 	return (0);
 }
 
-void	execute_external_child(t_parser_commands *cmd, char *path, char **env_array)
+void	execute_external_child(t_parser_commands *cmd, char *path,
+		char **env_array)
 {
-	DIR *dir;
+	DIR	*dir;
+
 	setup_child_signals();
 	if (setup_redirections(cmd) == -1)
 		exit(1);
 	if (access(path, F_OK) == 0)
 	{
 		dir = opendir(path);
-		if (dir != NULL)
-		{
-			closedir(dir);
-			ft_putstr_fd(path, 2);
-			ft_putendl_fd(": Is a directory", 2);
-			exit(126);
-		}
+		check_dir(path, dir);
 		if (access(path, X_OK) != 0)
 		{
 			ft_putstr_fd(path, 2);
@@ -105,8 +101,6 @@ char	*find_command_path(char *cmd, t_environnement *mini_env)
 	if (!path_env)
 		return (NULL);
 	paths = ft_split(path_env, ':');
-	if (!paths)
-		return (NULL);
 	i = 0;
 	while (paths[i])
 	{

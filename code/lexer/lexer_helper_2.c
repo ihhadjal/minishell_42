@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_helper_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:01:42 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 22:08:22 by iheb             ###   ########.fr       */
+/*   Updated: 2025/06/11 15:15:42 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ int	fake_redirec_token(char *str, t_lexer *token)
 	return (1);
 }
 
-void restore_stdio(int original_stdin, int original_stdout)
+void	restore_stdio(int original_stdin, int original_stdout)
 {
-    if (original_stdin != -1)
-    {
-        dup2(original_stdin, STDIN_FILENO);
-        close(original_stdin);
-    }
-    if (original_stdout != -1)
-    {
-        dup2(original_stdout, STDOUT_FILENO);
-        close(original_stdout);
-    }
+	if (original_stdin != -1)
+	{
+		dup2(original_stdin, STDIN_FILENO);
+		close(original_stdin);
+	}
+	if (original_stdout != -1)
+	{
+		dup2(original_stdout, STDOUT_FILENO);
+		close(original_stdout);
+	}
 }

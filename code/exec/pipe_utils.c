@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:48:10 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/11 15:09:39 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:44:04 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,3 @@ void	execute_external_in_pipe(t_parser_commands *cmd,
 	free_env_array(env_array);
 	exit(1);
 }
-

@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:49:14 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 12:49:24 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:46:55 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	free_env_array(char **env_array)
 
 void	free_env_array_partial(char **env_array, int count)
 {
-	int i;
+	int	i;
 
 	if (!env_array)
 		return ;

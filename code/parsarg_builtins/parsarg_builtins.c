@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 15:22:20 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 14:27:22 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:58:08 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ int	execute_parsarg_builtins(t_parser_commands *pars, t_environnement *mini_env,
 			print_env(mini_env);
 			return (0);
 		}
-		else if (!ft_strcmp(current->cmd_str[i], "export"))
-			return (parsarg_export(&current->cmd_str[i], mini_env));
-		else if (!ft_strcmp(current->cmd_str[i], "unset"))
-			return (parsarg_unset(&current->cmd_str[i], mini_env));
+		return (export_and_unset(current, i, mini_env));
 		i++;
 	}
 	return (0);
@@ -132,7 +129,6 @@ int	parsarg_echo(char **str)
 			ft_putchar_fd(' ', 1);
 		i++;
 	}
-	if (newline)
-		ft_putchar_fd('\n', 1);
+	check_newline(newline);
 	return (0);
 }

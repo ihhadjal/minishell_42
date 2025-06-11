@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:26:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 15:47:34 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:43:12 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,23 @@
 int	execute_pipe_chain(t_parser_commands *pars, t_environnement *mini_env,
 		int cmd_count)
 {
-	int	**pipes;
-	int	*pids;
-	int	exit_status;
+	t_pipe_data	pipe_data;
+	int			exit_status;
 
-	pipes = create_pipes(cmd_count - 1);
-	if (!pipes)
+	pipe_data.pipes = create_pipes(cmd_count - 1);
+	if (!pipe_data.pipes)
 		return (1);
-	pids = malloc(sizeof(int) * cmd_count);
-	if (!pids)
+	pipe_data.pids = malloc(sizeof(int) * cmd_count);
+	if (!pipe_data.pids)
 	{
-		cleanup_pipes(pipes, cmd_count - 1);
+		cleanup_pipes(pipe_data.pipes, cmd_count - 1);
 		return (1);
 	}
-	execute_pipe_processes(pars, mini_env, pipes, pids, cmd_count);
-	cleanup_pipes(pipes, cmd_count - 1);
-	exit_status = wait_for_children(pids, cmd_count);
-	free(pids);
+	pipe_data.cmd_count = cmd_count;
+	execute_pipe_processes(pars, mini_env, &pipe_data, cmd_count);
+	cleanup_pipes(pipe_data.pipes, cmd_count - 1);
+	exit_status = wait_for_children(pipe_data.pids, cmd_count);
+	free(pipe_data.pids);
 	return (exit_status);
 }
 
@@ -40,11 +40,9 @@ int	**create_pipes(int pipe_count)
 	int	**pipes;
 	int	i;
 
-	// Allocate pipe_count + 1 to have NULL terminator
 	pipes = malloc(sizeof(int *) * (pipe_count + 1));
 	if (!pipes)
 		return (NULL);
-	
 	i = 0;
 	while (i < pipe_count)
 	{
@@ -56,7 +54,7 @@ int	**create_pipes(int pipe_count)
 		}
 		i++;
 	}
-	pipes[pipe_count] = NULL; // NULL terminate the array
+	pipes[pipe_count] = NULL;
 	return (pipes);
 }
 
@@ -81,29 +79,25 @@ void	cleanup_pipes(int **pipes, int pipe_count)
 }
 
 void	execute_pipe_processes(t_parser_commands *pars,
-		t_environnement *mini_env, int **pipes, int *pids, int cmd_count)
+		t_environnement *mini_env, t_pipe_data *pipe_data, int cmd_count)
 {
 	t_parser_commands	*current;
 	int					i;
+
 	i = 0;
 	while (i < cmd_count - 1)
 	{
-		if (pipe(pipes[i]) == -1)
-		{
-			perror("pipe");
-			cleanup_pipes(pipes, i);
-			exit(1);
-		}
+		check_pipe_error(pipe_data, i);
 		i++;
 	}
 	i = 0;
 	current = pars;
 	while (current)
 	{
-		pids[i] = fork();
-		if (pids[i] == 0)
-			execute_child_process(current, mini_env, pipes, i);
-		else if (pids[i] < 0)
+		pipe_data->pids[i] = fork();
+		if (pipe_data->pids[i] == 0)
+			execute_child_process(current, mini_env, pipe_data->pipes, i);
+		else if (pipe_data->pids[i] < 0)
 		{
 			perror("fork");
 			exit(1);
@@ -111,7 +105,7 @@ void	execute_pipe_processes(t_parser_commands *pars,
 		current = current->next;
 		i++;
 	}
-	close_all_pipes_in_parent(pipes, cmd_count - 1);
+	close_all_pipes_in_parent(pipe_data->pipes, cmd_count - 1);
 }
 
 void	close_all_pipes_in_parent(int **pipes, int pipe_count)
@@ -128,27 +122,4 @@ void	close_all_pipes_in_parent(int **pipes, int pipe_count)
 		}
 		i++;
 	}
-}
-
-int	wait_for_children(int *pids, int cmd_count)
-{
-	int	status;
-	int	exit_status;
-	int	i;
-
-	exit_status = 0;
-	i = 0;
-	while (i < cmd_count)
-	{
-		waitpid(pids[i], &status, 0);
-		if (i == cmd_count - 1)
-		{
-			if (WIFEXITED(status))
-				exit_status = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
-				exit_status = 128 + WTERMSIG(status);
-		}
-		i++;
-	}
-	return (exit_status);
 }
