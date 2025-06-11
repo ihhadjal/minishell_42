@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:43:12 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 12:59:02 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:14:15 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,30 @@ int	execute_external_command(t_parser_commands *cmd, t_environnement *mini_env)
 
 void	execute_external_child(t_parser_commands *cmd, char *path, char **env_array)
 {
+	DIR *dir;
 	setup_child_signals();
 	if (setup_redirections(cmd) == -1)
 		exit(1);
+	if (access(path, F_OK) == 0)
+	{
+		dir = opendir(path);
+		if (dir != NULL)
+		{
+			closedir(dir);
+			ft_putstr_fd(path, 2);
+			ft_putendl_fd(": Is a directory", 2);
+			exit(126);
+		}
+		if (access(path, X_OK) != 0)
+		{
+			ft_putstr_fd(path, 2);
+			ft_putendl_fd(": Permission denied", 2);
+			exit(126);
+		}
+	}
 	execve(path, cmd->cmd_str, env_array);
 	perror("execve");
-	exit(1);
+	exit(127);
 }
 
 int	wait_for_external_child(int pid, char *path, char **env_array)

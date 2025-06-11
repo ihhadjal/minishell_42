@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 22:04:21 by iheb             ###   ########.fr       */
+/*   Updated: 2025/06/11 14:30:11 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>
-
+#include <sys/types.h>
+#include <dirent.h>
 # define NEWLINE_ERROR "syntax error near unexpected token `newline'"
 # define HEREDOC_ERROR "syntax error near unexpected token `<<'"
 # define APPEND_ERROR "syntax error near unexpected token `>>'"
@@ -319,4 +320,5 @@ int	count_env_vars(t_environnement *mini_env);
 char	*create_env_string(t_environnement *env_var);
 void	free_env_array_partial(char **env_array, int count);
 void restore_stdio(int original_stdin, int original_stdout);
+void	skip_empty_tokens(t_mini *mini);
 #endif

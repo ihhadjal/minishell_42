@@ -6,11 +6,20 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 09:18:17 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/05/27 15:01:33 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 14:30:37 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../resources/minishell.h"
+
+void	skip_empty_tokens(t_mini *mini)
+{
+    while (mini->current_token && mini->current_token->str && 
+           ft_strlen(mini->current_token->str) == 0)
+    {
+        mini->current_token = mini->current_token->next;
+    }
+}
 
 t_parser_commands	*parser(t_lexer *lexer, t_mini *mini)
 {
@@ -19,6 +28,7 @@ t_parser_commands	*parser(t_lexer *lexer, t_mini *mini)
 	mini->current_token = lexer;
 	while (mini->current_token)
 	{
+		skip_empty_tokens(mini);
 		mini->new_list_element = malloc(sizeof(t_parser_commands));
 		init_new_cmd(mini);
 		mini->head = NULL;

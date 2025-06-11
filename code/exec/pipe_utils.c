@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:48:10 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/10 15:53:26 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:09:39 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,10 @@ void	execute_child_process(t_parser_commands *cmd, t_environnement *mini_env,
 
 void	setup_pipe_redirections(int **pipes, int cmd_index)
 {
-	// If not the first command, redirect stdin from previous pipe
 	if (cmd_index > 0 && pipes[cmd_index - 1])
 	{
 		dup2(pipes[cmd_index - 1][0], STDIN_FILENO);
 	}
-	
-	// If there's a pipe at current index, redirect stdout to it
-	// (this means we're not the last command)
 	if (pipes[cmd_index])
 	{
 		dup2(pipes[cmd_index][1], STDOUT_FILENO);
@@ -73,7 +69,7 @@ void	execute_external_in_pipe(t_parser_commands *cmd,
 
 	env_array = env_to_array(mini_env);
 	path = find_command_path(cmd->cmd_str[0], mini_env);
-	if (!path)
+	if (!path && cmd != NULL)
 	{
 		ft_putstr_fd(cmd->cmd_str[0], 2);
 		ft_putendl_fd(": command not found", 2);
