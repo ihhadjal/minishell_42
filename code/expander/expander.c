@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 11:17:36 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/11 13:19:55 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:49:03 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	expansion_logic(t_expander *exp, t_environnement *mini_env)
 	{
 		substitution(exp->current, exp->start, exp->end,
 			exp->expanded_variable);
-		free(exp->expanded_variable);
 	}
 	else
 		substitution(exp->current, exp->start, exp->end, "");
