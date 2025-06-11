@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/11 16:24:08 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:42:56 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char **argv, char **env)
 		mini_env = get_env(env);
 		setup_signals();
 		mini.last_exit_status = minishell_loop(&mini, mini_env);
+		free_env(mini_env);
 	}
 	return (mini.last_exit_status);
 }

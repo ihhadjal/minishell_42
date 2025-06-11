@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:04:20 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/11 16:10:59 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:41:32 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,18 @@ void	init_list(t_mini *mini, t_lexer *lexer)
 	mini->first_list_element = NULL;
 	mini->current_list_element = NULL;
 	mini->current_token = lexer;
+}
+
+void	free_env(t_environnement *env)
+{
+	t_environnement	*tmp;
+
+	while (env)
+	{
+		tmp = env->next;
+		free(env->variable_name);
+		free(env->variable_value);
+		free(env);
+		env = tmp;
+	}
 }

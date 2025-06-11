@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/11 16:30:46 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/11 16:42:02 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,4 +348,5 @@ int								export_and_unset(t_parser_commands *current,
 void							check_newline(int newline);
 int								check_redirections(t_lexer *lex);
 void							init_list(t_mini *mini, t_lexer *lexer);
+void							free_env(t_environnement *env);
 #endif
