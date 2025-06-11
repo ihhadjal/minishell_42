@@ -1,5 +1,0 @@
-code
-Makefile
-minishell
-outfile.txt
-resources
