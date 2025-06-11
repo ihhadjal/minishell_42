@@ -6,7 +6,7 @@
 #    By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/06 16:36:14 by ihhadjal          #+#    #+#              #
-#    Updated: 2024/12/13 11:02:11 by ihhadjal         ###   ########.fr        #
+#    Updated: 2025/05/22 11:41:57 by ihhadjal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ LIBFT_SRC = ${addprefix ${LIBFT_PATH}/, ft_atoi.c ft_bzero.c ft_isalnum.c ft_isa
 			ft_strchr.c ft_strrchr.c ft_strncmp.c ft_memchr.c ft_memcmp.c \
 			ft_strlcat.c ft_strnstr.c ft_strdup.c ft_calloc.c ft_putchar_fd.c \
 			ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_strjoin.c ft_substr.c \
-			ft_strtrim.c ft_itoa.c ft_striteri.c ft_strmapi.c ft_split.c}
+			ft_strtrim.c ft_itoa.c ft_striteri.c ft_strmapi.c ft_split.c ft_strcmp.c \
+			ft_strcpy.c ft_strncpy.c ft_strcat.c}
 PRINTF_PATH = ./printf
 
 PRINTF_SRC = ${addprefix ${PRINTF_PATH}/, ft_printf.c ft_putchar.c ft_putstr.c ft_putnbr.c ft_uputnbr.c ft_puthex.c ft_putptr.c}

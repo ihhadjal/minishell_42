@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 12:09:23 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/07 12:45:09 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/07 19:17:55 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_lexer	*lexer(char *str)
 	list = NULL;
 	while (str[i])
 	{
-		if (str[i] == ' ' || str[i] == '\t')
+		while (str[i] == ' ' || str[i] == '\t')
 			i++;
 		if (str[i] == '\0')
 			break ;
@@ -51,6 +51,7 @@ t_lexer	*get_token(char *str)
 	pipe_token(str, token);
 	redirec_in_token(str, token);
 	redirec_out_token(str, token);
+	fake_redirec_token(str, token);
 	if (token->str == NULL)
 		token = get_word(str, token);
 	return (token);
@@ -80,10 +81,13 @@ t_lexer	*get_word(char *str, t_lexer *token)
 	token->token_type = WORD;
 	return (token);
 }
+
 int	is_sep(char c)
 {
-	return (c == ' ' || c == '\t' || c == '|' || c == '<' || c == '>');
+	return (c == ' ' || c == '\t' || c == '\0' || c == '|' || c == '<'
+		|| c == '>');
 }
+
 int	check_quotes(char *str)
 {
 	int	i;

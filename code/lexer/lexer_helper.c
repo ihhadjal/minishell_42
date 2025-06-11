@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 13:47:05 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/01 10:59:02 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:43:20 by iheb             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	redirec_in_token(char *str, t_lexer *token)
 	}
 	return (1);
 }
+
 void	free_lexer_list(t_lexer *list)
 {
 	t_lexer	*tmp;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iheb <iheb@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:37:28 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/04/23 13:00:28 by iheb             ###   ########.fr       */
+/*   Updated: 2025/06/11 18:20:09 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,32 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_mini	mini;
+	t_mini			mini;
+	t_environnement	*mini_env;
 
-	(void)env;
+	mini.last_exit_status = 0;
 	if (argc != 1 || argv[1])
 	{
-		ft_printf("this program should not have any argument\n");
+		ft_putendl_fd("this program should not have any argument\n", 2);
 		exit(1);
 	}
-	minishell_loop(&mini);
-	return (0);
+	else
+	{
+		mini_env = get_env(env);
+		setup_signals();
+		mini.last_exit_status = minishell_loop(&mini, mini_env);
+		free_env(mini_env);
+	}
+	return (mini.last_exit_status);
 }
 
-void	minishell_loop(t_mini *mini)
+int	minishell_loop(t_mini *mini, t_environnement *mini_env)
 {
-	char		*str;
-	t_lexer		*lex;
+	char	*str;
+	t_lexer	*lex;
+	int		error_code;
 
+	error_code = 0;
 	while (1)
 	{
 		str = readline("Minishell: ");
@@ -38,8 +47,27 @@ void	minishell_loop(t_mini *mini)
 			break ;
 		quotes_loop(&str, mini);
 		lex = lexer(str);
-		print_list(lex);
+		error_code = error_handling(lex);
+		if (error_code == 1)
+			minishell_logic(mini, mini_env, lex);
+		else
+			mini->last_exit_status = error_code;
 		add_history(str);
 		free_all(str, lex);
+	}
+	return (mini->last_exit_status);
+}
+
+void	minishell_logic(t_mini *mini, t_environnement *mini_env, t_lexer *lex)
+{
+	t_expander			exp;
+	t_parser_commands	*pars;
+
+	expand_commands(lex, mini_env, &exp, mini);
+	pars = parser(lex, mini);
+	if (pars)
+	{
+		mini->last_exit_status = execute_commands(pars, mini_env, mini);
+		free_parser_list(pars);
 	}
 }
