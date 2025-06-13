@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:43:12 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/11 15:39:54 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:07:15 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void	execute_external_child(t_parser_commands *cmd, char *path,
 	DIR	*dir;
 
 	setup_child_signals();
-	if (setup_redirections(cmd) == -1)
-		exit(1);
 	if (access(path, F_OK) == 0)
 	{
 		dir = opendir(path);

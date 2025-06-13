@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:48:10 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/11 15:44:04 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:57:23 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	execute_builtin_in_pipe(t_parser_commands *cmd, t_environnement *mini_env)
 {
 	t_mini	mini;
 
-	ft_memset(&mini, 0, sizeof(t_mini));
 	return (execute_parsarg_builtins(cmd, mini_env, &mini));
 }
 
