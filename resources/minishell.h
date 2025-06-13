@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/11 16:42:02 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:29:02 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define NEWLINE_ERROR "syntax error near unexpected token `newline'"
 # define HEREDOC_ERROR "syntax error near unexpected token `<<'"
 # define APPEND_ERROR "syntax error near unexpected token `>>'"
+# define HEREDOC_ERROR1 "warning: here-document delimited by end-of-file (wanted `eof')"
 
 typedef enum e_tokens
 {
