@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/16 11:47:49 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:59:12 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define NEWLINE_ERROR "syntax error near unexpected token `newline'"
 # define HEREDOC_ERROR "syntax error near unexpected token `<<'"
 # define APPEND_ERROR "syntax error near unexpected token `>>'"
-# define HEREDOC_ERROR1 "warning: here-document delimited by end-of-file (wanted `eof')"
+# define H_ERR "warning: here-document delimited by end-of-file (wanted `eof')"
 
 typedef enum e_tokens
 {
@@ -350,6 +350,6 @@ void							check_newline(int newline);
 int								check_redirections(t_lexer *lex);
 void							init_list(t_mini *mini, t_lexer *lexer);
 void							free_env(t_environnement *env);
-void 							test_handler(int sig);
+void							test_handler(int sig);
 void							handle_sigint_parent(int sig);
 #endif

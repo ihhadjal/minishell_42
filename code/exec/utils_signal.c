@@ -1,45 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   utils_signal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/10 10:59:58 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/16 11:55:46 by ihhadjal         ###   ########.fr       */
+/*   Created: 2025/06/16 11:56:04 by ihhadjal          #+#    #+#             */
+/*   Updated: 2025/06/16 11:59:34 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../resources/minishell.h"
 
-void	handle_sigint(int sig)
+void	ignore_signals(void)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-void	handle_sigint_parent(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-}
-
-void	handle_sigquit(int sig)
-{
-	(void)sig;
-}
-
-void	setup_signals(void)
-{
-	signal(SIGINT, handle_sigint);
+	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	setup_child_signals(void)
+void	test_handler(int sig)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	if (sig == SIGQUIT)
+		ft_putendl_fd("Quit (core dumped)", 2);
 }

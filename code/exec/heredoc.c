@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 12:51:43 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/13 18:46:04 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:58:59 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	handle_heredoc_child(int *pipefd, char *delimiter)
 		line = readline("> ");
 		if (!line)
 		{
-			ft_putendl_fd(HEREDOC_ERROR1, 2);
+			ft_putendl_fd(H_ERR, 2);
 			close(pipefd[1]);
 			exit(0);
 		}
