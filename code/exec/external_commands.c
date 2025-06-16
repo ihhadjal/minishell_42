@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 11:43:12 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/13 16:07:15 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:47:08 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ int	wait_for_external_child(int pid, char *path, char **env_array)
 	int	status;
 	int	exit_status;
 
-	ignore_signals();
+	signal(SIGINT, handle_sigint_parent);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, test_handler);
 	waitpid(pid, &status, 0);
 	setup_signals();
 	free(path);

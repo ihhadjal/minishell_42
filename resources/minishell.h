@@ -6,7 +6,7 @@
 /*   By: ihhadjal <ihhadjal@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 12:16:45 by ihhadjal          #+#    #+#             */
-/*   Updated: 2025/06/13 18:29:02 by ihhadjal         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:47:49 by ihhadjal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,4 +350,6 @@ void							check_newline(int newline);
 int								check_redirections(t_lexer *lex);
 void							init_list(t_mini *mini, t_lexer *lexer);
 void							free_env(t_environnement *env);
+void 							test_handler(int sig);
+void							handle_sigint_parent(int sig);
 #endif
